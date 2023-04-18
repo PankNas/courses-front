@@ -3,7 +3,7 @@ import React from 'react';
 import Main from "./pages/Main/Main";
 import {Route, Routes} from "react-router-dom";
 import Login from "./pages/Login/Login";
-import Register from "./pages/Regiter/Register";
+import Register from "./pages/Register/Register";
 import Courses from "./components/Courses/Courses";
 
 function App() {

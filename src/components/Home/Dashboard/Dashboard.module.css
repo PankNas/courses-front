@@ -7,69 +7,69 @@
   background-color: rgb(246, 244, 252);
 }
 
-.content__home__title {
-  font-size: 20px;
-  margin-top: 0;
-}
+/*.content__home__title {*/
+/*  font-size: 20px;*/
+/*  margin-top: 0;*/
+/*}*/
 
-.content__home__greeting {
-  margin-top: 15px;
-  margin-bottom: 30px;
-  width: 100%;
-  min-height: 120px;
+/*.content__home__greeting {*/
+/*  margin-top: 15px;*/
+/*  margin-bottom: 30px;*/
+/*  width: 100%;*/
+/*  min-height: 120px;*/
 
-  background-color: rgb(248, 229, 233);
-  border-radius: 15px;
-}
+/*  background-color: rgb(248, 229, 233);*/
+/*  border-radius: 15px;*/
+/*}*/
 
-.content__home__statistic {
-  display: flex;
-  justify-content: space-between;
+/*.content__home__statistic {*/
+/*  display: flex;*/
+/*  justify-content: space-between;*/
 
-  margin-bottom: 30px;
-}
+/*  margin-bottom: 30px;*/
+/*}*/
 
-.content__home__statistic__results {
-  width: 40%;
-  min-height: 300px;
+/*.content__home__statistic__results {*/
+/*  width: 40%;*/
+/*  min-height: 300px;*/
 
-  background-color: #ffff;
-  border-radius: 15px;
-}
+/*  background-color: #ffff;*/
+/*  border-radius: 15px;*/
+/*}*/
 
-.content__home__statistic__time {
-  width: 55%;
-  min-height: 300px;
+/*.content__home__statistic__time {*/
+/*  width: 55%;*/
+/*  min-height: 300px;*/
 
-  background-color: #ffff;
-  border-radius: 15px;
-}
+/*  background-color: #ffff;*/
+/*  border-radius: 15px;*/
+/*}*/
 
-.content__home__courses__title {
-  font-size: 16px;
-}
+/*.content__home__courses__title {*/
+/*  font-size: 16px;*/
+/*}*/
 
-.content__home__courses__items {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 24px;
-}
+/*.content__home__courses__items {*/
+/*  display: grid;*/
+/*  grid-template-columns: repeat(3, 1fr);*/
+/*  grid-gap: 24px;*/
+/*}*/
 
-.content__home__courses__items__item {
-  height: 100px;
+/*.content__home__courses__items__item {*/
+/*  height: 100px;*/
 
-  background-color: #ffff;
-  border-radius: 15px;
-}
+/*  background-color: #ffff;*/
+/*  border-radius: 15px;*/
+/*}*/
 
-.content__home__courses__items__item_violet {
-  background-color: var(--violet);
-}
+/*.content__home__courses__items__item_violet {*/
+/*  background-color: var(--violet);*/
+/*}*/
 
-.content__home__courses__items__item_light-purple {
-  background-color: var(--purple);
-}
+/*.content__home__courses__items__item_light-purple {*/
+/*  background-color: var(--purple);*/
+/*}*/
 
-.content__home__courses__items__item_light-pink {
-  background-color: var(--pink);
-}
+/*.content__home__courses__items__item_light-pink {*/
+/*  background-color: var(--pink);*/
+/*}*/

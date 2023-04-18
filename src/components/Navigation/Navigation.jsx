@@ -12,9 +12,19 @@ const Navigation = () => {
       navigate: '/',
     },
     {
-      name: 'Курсы',
+      name: 'Каталог',
       icon: '',
       navigate: '/courses',
+    },
+    {
+      name: 'Моё обучение',
+      icon: '',
+      navigate: '/courses',
+    },
+    {
+      name: 'Преподавание',
+      icon: '',
+      navigate: '/teach',
     },
     {
       name: 'Настройки',
