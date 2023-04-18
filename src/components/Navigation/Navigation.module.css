@@ -1,0 +1,23 @@
+.nav {
+  min-height: calc(72vh - 280px);
+  /*flex: 1 0 auto;*/
+}
+
+.navItem {
+  margin-left: -25px;
+  margin-bottom: 25px;
+
+  list-style: none;
+
+  /*padding-left: 50px;*/
+  /*background: url('../../img/main.png') no-repeat 0 50%;*/
+  /*background-size: contain;*/
+}
+
+.navImg {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+
+  margin-right: 30px;
+}
