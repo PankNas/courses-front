@@ -1,8 +1,8 @@
 import React from 'react';
 
 import styles from './Navigation.module.css';
-import {List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import {Link} from "react-router-dom";
+import {List, ListItem, ListItemIcon, ListItemText} from "@mui/material";
+import {NavLink} from "react-router-dom";
 
 const Navigation = () => {
   const itemNavigate = [
@@ -25,24 +25,22 @@ const Navigation = () => {
       name: 'Преподавание',
       icon: '',
       navigate: '/teach',
-    },
-    {
-      name: 'Настройки',
-      icon: '',
-      navigate: '/settings',
-    },
+    }
   ];
 
   return (
     <List classes={styles.nav}>
       {
         itemNavigate.map((item, index) =>
-          <ListItem key={index}>
-            <Link to={item.navigate}>
-                <ListItemIcon />
-                <ListItemText primary={item.name}/>
-            </Link>
-          </ListItem>
+          <NavLink
+            to={item.navigate}
+            // className={({isActive}) => isActive ? styles.activeLink : styles.link}
+          >
+            <ListItem key={index}>
+              <ListItemIcon/>
+              <ListItemText primary={item.name}/>
+            </ListItem>
+          </NavLink>
         )
       }
     </List>

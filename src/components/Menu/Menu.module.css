@@ -1,6 +1,6 @@
 .menu {
   width: 17%;
-  height: 100%;
+  min-height: 100%;
   padding: 30px;
   color: rgb(153, 151, 181);
 
@@ -10,6 +10,8 @@
   top: 0;
   overflow-x: auto;
   overflow-y: hidden;
+
+  border-right: 2px solid black;
 
   /*display: flex;*/
   /*flex-direction: column;*/

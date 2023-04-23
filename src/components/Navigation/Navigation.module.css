@@ -1,6 +1,5 @@
 .nav {
   min-height: calc(72vh - 280px);
-  /*flex: 1 0 auto;*/
 }
 
 .navItem {
@@ -8,10 +7,6 @@
   margin-bottom: 25px;
 
   list-style: none;
-
-  /*padding-left: 50px;*/
-  /*background: url('../../img/main.png') no-repeat 0 50%;*/
-  /*background-size: contain;*/
 }
 
 .navImg {
@@ -20,4 +15,16 @@
   object-fit: contain;
 
   margin-right: 30px;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--font-color);
+}
+
+.activeLink {
+  text-decoration: none;
+
+  background-color: var(--purple);
+  color: var(--font-color);
 }

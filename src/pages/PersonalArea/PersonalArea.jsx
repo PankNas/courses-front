@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './Main.module.css'
+import styles from './PersonalArea.module.css'
 
 import Menu from "../../components/Menu/Menu";
 import {Route, Routes} from "react-router-dom";
@@ -8,12 +8,12 @@ import Home from "../../components/Home/Home";
 import Courses from "../../components/Courses/Courses";
 import Teaching from "../../components/Teaching/Teaching";
 
-const Main = () => {
+const PersonalArea = () => {
   return (
     <div className={styles.root}>
       <Menu />
 
-      <div style={{width: "83%"}}>
+      <div style={{width: '700px'}}>
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/courses" element={<Courses />}/>
@@ -24,4 +24,4 @@ const Main = () => {
   )
 };
 
-export default Main;
+export default PersonalArea;
