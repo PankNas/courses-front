@@ -1,7 +1,7 @@
 .menu {
   width: 17%;
-  min-height: 100%;
-  padding: 30px;
+  min-height: 100vh;
+  padding: 30px 30px 0 30px;
   color: rgb(153, 151, 181);
 
   box-sizing: border-box;
