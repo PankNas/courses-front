@@ -6,14 +6,22 @@ import cn from 'classnames';
 import Button from "@mui/material/Button";
 import {Link} from "react-router-dom";
 import TextField from "@mui/material/TextField";
-import {FormControl, Select} from "@mui/material";
+import {FormControl, Menu, MenuItem, Select} from "@mui/material";
 
 const CreateCourse = () => {
   const [nameCourse, setName] = useState('');
   const [desc, setDesc] = useState('');
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleInputName = (event) => setName(event.target.value);
   const handleInputDesc = (event) => setDesc(event.target.value);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <div>
@@ -79,11 +87,29 @@ const CreateCourse = () => {
         </FormControl>
       </div>
       <div className={styles.block}>
-        <p>Модули<span style={{color: "red"}}> *</span></p>
-        <div className={styles.addModule}>
-          <div className={styles.addModulePlus}>dfgdfg</div>
-          <p>dgdg</p>
-        </div>
+        <p>Уроки<span style={{color: "red"}}> *</span></p>
+        <Button
+          style={{padding: '0'}}
+          className={styles.moduleAdd}
+          onClick={handleClick}
+        >
+          <div className={styles.moduleAddPlus}>+</div>
+          <p className={styles.moduleAddText}>Добавить урок</p>
+        </Button>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+          PaperProps={{sx: {width: '650px'}}}
+        >
+          <MenuItem onClick={handleClose}>
+            <p>text <br/><span style={{color: 'red'}}>text</span></p>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>Видео</MenuItem>
+          <MenuItem onClick={handleClose}>Тест</MenuItem>
+        </Menu>
       </div>
 
       <Button variant="outlined">Сохранить</Button>

@@ -33,6 +33,7 @@ const Navigation = () => {
       {
         itemNavigate.map((item, index) =>
           <NavLink
+            key={index}
             to={item.navigate}
             // className={({isActive}) => isActive ? styles.activeLink : styles.link}
           >
