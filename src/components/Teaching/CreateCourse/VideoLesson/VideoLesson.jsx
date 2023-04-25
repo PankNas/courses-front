@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import ReactPlayer from 'react-player';
 
-import styles from './VideoLesson.module.css';
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
+import styles from './VideoLesson.module.scss';
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -25,16 +27,30 @@ const VideoLesson = () => {
       case 'url-video':
         setUrlVideo(event.target.value);
         break;
-      case 'desc-lesson':
-        setDesc(event.target.value);
+      default:
         break;
-      default: break;
     }
   };
+
+  const options = React.useMemo(
+    () => ({
+      spellChecker: false,
+      maxHeight: "400px",
+      autofocus: true,
+      placeholder: "Введите короткое описание урока...",
+      status: false,
+      autosave: {
+        enabled: true,
+        delay: 1000,
+      },
+    }),
+    []
+  );
 
   const handleAddBtn = () => setIsUrl(true);
   const handleDelBtn = () => setIsUrl(false);
   const handleReady = () => setIsReady(true);
+  const handleChangeEdit = React.useCallback((value) => setDesc(value), []);
 
   return (
     <div>
@@ -43,17 +59,6 @@ const VideoLesson = () => {
         id={'name-lesson'}
         value={nameLesson}
         label="Название урока"
-        onChange={handleChange}
-        variant="outlined"
-        fullWidth
-        style={{marginBottom: '20px'}}
-      />
-      <TextField
-        id={'desc-lesson'}
-        value={descLesson}
-        label={'Краткое описание урока'}
-        multiline
-        rows={3}
         onChange={handleChange}
         variant="outlined"
         fullWidth
@@ -97,12 +102,14 @@ const VideoLesson = () => {
           </div>
         </>
       }
-      {/*<SimpleMDE*/}
-      {/*  className={styles.editor}*/}
-      {/*  value={description}*/}
-      {/*  onChange={onChange}*/}
-      {/*  options={options}*/}
-      {/*/>*/}
+      <SimpleMDE
+        id={'desc-lesson'}
+        className={styles.editor}
+        value={descLesson}
+        onChange={handleChangeEdit}
+        options={options}
+        style={{padding: '30px'}}
+      />
     </div>
   );
 };
