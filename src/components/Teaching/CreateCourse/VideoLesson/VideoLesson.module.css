@@ -1,26 +1,43 @@
 .videoWrapper {
   position: relative;
-  width: 700px;
+  background-color: gray;
 }
 
-.videoControls {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 40px;
+.videoPlayer {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  z-index: 2;
 }
 
-.videoControlsPlay {
+.spinner {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  top: calc(50% - 25px);
+  left: calc(50% - 25px);
   transform: translate(-50%, -50%);
-
-  background-color: yellow;
-  width: 40px;
-  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
+
+  height: 50px;
+  width: 50px;
+  border-left: 3px solid #ffff;
+  border-bottom: 3px solid #ffff;
+  border-right: 3px solid #ffff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spinner 1s linear infinite;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }

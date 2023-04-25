@@ -1,73 +1,110 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactPlayer from 'react-player';
 
 import styles from './VideoLesson.module.css';
 
 import Button from "@mui/material/Button";
-import {Container} from "@mui/material";
-import InputItem from "../../../InputItem";
-import axios from "../../../../axios";
+import TextField from "@mui/material/TextField";
 
 const VideoLesson = () => {
+  const [nameLesson, setName] = useState('');
+  const [descLesson, setDesc] = useState('');
   const [urlVideo, setUrlVideo] = useState('');
-  const inputFileRef = React.useRef(null);
+  const [isUrl, setIsUrl] = useState(false);
+  const [isReadyVideo, setIsReady] = useState(false);
 
-  const handleUrlValue = (newUrl) => setUrlVideo(newUrl);
-  const handleUrlButton = () => inputFileRef.current.click();
-  const handleChangeFile = async (event) => {
-    try {
-      const formData = new FormData();
-      const file = event.target.files[0];
+  useEffect(() => {
+    setIsReady(false);
+  }, [isUrl]);
 
-      console.log('formData', file);
-
-      formData.append("file", file);
-
-      console.log('formData', formData);
-
-      const { data } = await axios.post("/upload", formData);
-
-      console.log('data', data);
-
-      setUrlVideo(data.url.slice(4));
-    } catch (err) {
-      console.warn(err);
-      alert("Ошибка при загрузке файла!");
+  const handleChange = (event) => {
+    switch (event.target.id) {
+      case 'name-lesson':
+        setName(event.target.value);
+        break;
+      case 'url-video':
+        setUrlVideo(event.target.value);
+        break;
+      case 'desc-lesson':
+        setDesc(event.target.value);
+        break;
+      default: break;
     }
   };
+
+  const handleAddBtn = () => setIsUrl(true);
+  const handleDelBtn = () => setIsUrl(false);
+  const handleReady = () => setIsReady(true);
 
   return (
     <div>
       <h1>Видеоурок</h1>
-      {/*<ReactPlayer*/}
-      {/*  url={`${urlVideo}`}*/}
-      {/*  playing*/}
-      {/*  controls={true}*/}
-      {/*  width='100%'*/}
-      {/*  height='400px'*/}
-      {/*  style={{marginBottom: '20px'}}*/}
-      {/*/>*/}
+      <TextField
+        id={'name-lesson'}
+        value={nameLesson}
+        label="Название урока"
+        onChange={handleChange}
+        variant="outlined"
+        fullWidth
+        style={{marginBottom: '20px'}}
+      />
+      <TextField
+        id={'desc-lesson'}
+        value={descLesson}
+        label={'Краткое описание урока'}
+        multiline
+        rows={3}
+        onChange={handleChange}
+        variant="outlined"
+        fullWidth
+        style={{marginBottom: '20px'}}
+      />
+      <TextField
+        id={'url-video'}
+        value={urlVideo}
+        label="Вставьте сюда ссылку на видео с YouTube"
+        onChange={handleChange}
+        variant="outlined"
+        fullWidth
+        style={{marginBottom: '20px'}}
+      />
       <Button
         variant="outlined"
-        style={{marginBottom: '15px'}}
-        onClick={() => inputFileRef.current.click()}
+        style={{marginRight: '15px'}}
+        onClick={handleAddBtn}
       >
-        Загрузить видео из файла
+        {isUrl ? 'Заменить видео' : 'Добавить видео'}
       </Button>
-      <input
-        ref={inputFileRef}
-        type="file"
-        onChange={handleChangeFile}
-        hidden
-      />
-      <InputItem
-        id={'url-video'}
-        multiline={false}
-        label='или вставьте сюда ссылку на видео с YouTube'
-        onInputChange={handleUrlValue}
-      />
+      {isUrl &&
+        <>
+          <Button
+            variant="outlined"
+            onClick={handleDelBtn}
+            style={{borderColor: 'red', color: 'red'}}
+          >
+            Удалить
+          </Button>
+          <div className={styles.videoWrapper}>
+            <ReactPlayer
+              url={`${urlVideo}`}
+              onReady={handleReady}
+              controls={true}
+              width="100%"
+              height="400px"
+              style={{marginBottom: '20px', marginTop: '20px'}}
+            />
+            {!isReadyVideo && <div className={styles.spinner}></div>}
+          </div>
+        </>
+      }
+      {/*<SimpleMDE*/}
+      {/*  className={styles.editor}*/}
+      {/*  value={description}*/}
+      {/*  onChange={onChange}*/}
+      {/*  options={options}*/}
+      {/*/>*/}
     </div>
-  )
-}
+  );
+};
 
 export default VideoLesson;

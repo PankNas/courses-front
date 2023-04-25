@@ -4,7 +4,7 @@ import styles from './CreateCourse.module.css';
 
 import Button from "@mui/material/Button";
 import {Menu, MenuItem} from "@mui/material";
-import InputItem from "../../InputItem.jsx";
+import InputItem from "../../InputItem.tsx";
 import SelectItem from "../../SelectItem.jsx";
 import {Navigate, Outlet} from "react-router-dom";
 
