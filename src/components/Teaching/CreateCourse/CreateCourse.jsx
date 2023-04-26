@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import styles from './CreateCourse.module.css';
 import {languages, levelLanguages} from "./helper";
@@ -6,12 +6,14 @@ import {languages, levelLanguages} from "./helper";
 import Button from "@mui/material/Button";
 import {Menu, MenuItem} from "@mui/material";
 import SelectItem from "../../SelectItem.tsx";
-import {Link, Navigate, useParams} from "react-router-dom";
+import {Link, Navigate, useNavigate, useParams} from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import axios from "../../../axios";
 import {useForm} from "react-hook-form";
 
 const CreateCourse = () => {
+  const {id} = useParams();
+
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [language, setLanguage] = useState('');
@@ -19,7 +21,15 @@ const CreateCourse = () => {
   const [imageUrl, setImageUrl] = useState(levelLanguages[0].value);
   // const [anchorEl, setAnchorEl] = useState(null);
 
+  const navigate = useNavigate();
+
   const inputFileRef = useRef(null);
+
+  useEffect(() => {
+    return (
+      setImageUrl('')
+    )
+  }, []);
 
   const handleChangeFile = async (event) => {
     try {
@@ -70,13 +80,9 @@ const CreateCourse = () => {
         levelLanguage,
       };
 
-      console.log('hello');
+      await axios.patch(`/courses/${id}`, fields);
 
-      const {data} = axios.post("/courses", fields);
-
-      console.log(data);
-
-      // navigate(`/courses/${isEditing ? id : data._id}`);
+      // navigate(`/teach`);
     } catch (err) {
       console.warn(err);
 
@@ -148,7 +154,7 @@ const CreateCourse = () => {
           style={{width: '48%'}}
         />
       </div>
-      <Button variant="outlined" onClick={onSubmit}>Создать</Button>
+      <Button variant="outlined" onClick={onSubmit}>Сохранить</Button>
 
       {/*<div className={styles.block}>*/}
       {/*  <p>Уроки<span style={{color: "red"}}> *</span></p>*/}

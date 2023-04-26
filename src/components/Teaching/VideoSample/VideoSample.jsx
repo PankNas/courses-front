@@ -3,13 +3,13 @@ import ReactPlayer from 'react-player';
 
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
-import styles from './VideoLesson.module.scss';
+import styles from './VideoSample.module.scss';
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import {useNavigate} from "react-router-dom";
 
-const VideoLesson = () => {
+const VideoSample = () => {
   const [nameLesson, setName] = useState('');
   const [descLesson, setDesc] = useState('');
   const [urlVideo, setUrlVideo] = useState('');
@@ -126,4 +126,4 @@ const VideoLesson = () => {
   );
 };
 
-export default VideoLesson;
+export default VideoSample;
