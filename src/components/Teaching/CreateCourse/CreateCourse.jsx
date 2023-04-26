@@ -4,12 +4,11 @@ import styles from './CreateCourse.module.css';
 import {languages, levelLanguages} from "./helper";
 
 import Button from "@mui/material/Button";
-import {Menu, MenuItem} from "@mui/material";
 import SelectItem from "../../SelectItem.tsx";
-import {Link, Navigate, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import axios from "../../../axios";
-import {useForm} from "react-hook-form";
+import AddLessons from "../AddLessons/AddLessons";
 
 const CreateCourse = () => {
   const {id} = useParams();
@@ -154,28 +153,10 @@ const CreateCourse = () => {
           style={{width: '48%'}}
         />
       </div>
-      <Button variant="outlined" onClick={onSubmit}>Сохранить</Button>
 
-      {/*<div className={styles.block}>*/}
-      {/*  <p>Уроки<span style={{color: "red"}}> *</span></p>*/}
-      {/*  <Button style={{padding: '0'}} className={styles.moduleAdd} onClick={handleClick}>*/}
-      {/*    <div className={styles.moduleAddPlus}>+</div>*/}
-      {/*    <p className={styles.moduleAddText}>Добавить урок</p>*/}
-      {/*  </Button>*/}
-      {/*  <Menu*/}
-      {/*    id="simple-menu"*/}
-      {/*    anchorEl={anchorEl}*/}
-      {/*    keepMounted*/}
-      {/*    open={Boolean(anchorEl)}*/}
-      {/*    onClose={handleClose}*/}
-      {/*    PaperProps={{sx: {width: '650px'}}}*/}
-      {/*  >*/}
-      {/*    <Link to='/teach/new/video-lesson'>*/}
-      {/*      <MenuItem onClick={handleClose}>Видео</MenuItem>*/}
-      {/*    </Link>*/}
-      {/*    <MenuItem onClick={handleClose}>Тест</MenuItem>*/}
-      {/*  </Menu>*/}
-      {/*</div>*/}
+      <AddLessons />
+
+      <Button variant="outlined" onClick={onSubmit}>Сохранить</Button>
     </div>
   );
 };
