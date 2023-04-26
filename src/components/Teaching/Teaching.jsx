@@ -10,8 +10,8 @@ const Teaching = () => {
     <div style={{margin: '30px'}}>
       <Routes>
         <Route path="/" element={<PersonCourses />}/>
-        <Route path="/:id/edit" element={<CreateCourse />} />
-        <Route path="/:id/edit/video-lesson" element={<VideoSample />}/>
+        <Route path="/:id/edit/*" element={<CreateCourse />} />
+        <Route path="/:id/edit/video-sample" element={<VideoSample />}/>
       </Routes>
     </div>
   )

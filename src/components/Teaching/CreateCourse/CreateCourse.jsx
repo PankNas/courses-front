@@ -15,10 +15,9 @@ const CreateCourse = () => {
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
-  const [language, setLanguage] = useState('');
-  const [levelLanguage, setLevelLanguage] = useState(languages[0].value);
-  const [imageUrl, setImageUrl] = useState(levelLanguages[0].value);
-  // const [anchorEl, setAnchorEl] = useState(null);
+  const [language, setLanguage] = useState(languages[0].value);
+  const [levelLanguage, setLevelLanguage] = useState(levelLanguages[0].value);
+  const [imageUrl, setImageUrl] = useState('');
 
   const navigate = useNavigate();
 
@@ -45,9 +44,6 @@ const CreateCourse = () => {
       alert("Ошибка при загрузке файла!");
     }
   };
-
-  // const handleClick = (event) => setAnchorEl(event.currentTarget);
-  // const handleClose = () => setAnchorEl(null);
 
   const handleChange = (event) => {
     switch (event.target.id) {

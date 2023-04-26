@@ -27,7 +27,7 @@ const AddLessons = () => {
         onClose={handleClose}
         PaperProps={{sx: {width: '650px'}}}
       >
-        <Link to='teach/:id/edit/video-lesson'>
+        <Link to={`video-sample`}>
           <MenuItem onClick={handleClose}>Видео</MenuItem>
         </Link>
         <MenuItem onClick={handleClose}>Тест</MenuItem>

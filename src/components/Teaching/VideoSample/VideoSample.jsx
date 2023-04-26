@@ -7,15 +7,17 @@ import styles from './VideoSample.module.scss';
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import axios from "../../../axios";
 
 const VideoSample = () => {
-  const [nameLesson, setName] = useState('');
-  const [descLesson, setDesc] = useState('');
-  const [urlVideo, setUrlVideo] = useState('');
+  const [title, setTitle] = useState('');
+  const [desc, setDesc] = useState('');
+  const [videoUrl, setVideoUrl] = useState('');
   const [isUrl, setIsUrl] = useState(false);
   const [isReadyVideo, setIsReady] = useState(false);
 
+  const {id} = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,10 +27,10 @@ const VideoSample = () => {
   const handleChange = (event) => {
     switch (event.target.id) {
       case 'name-lesson':
-        setName(event.target.value);
+        setTitle(event.target.value);
         break;
       case 'url-video':
-        setUrlVideo(event.target.value);
+        setVideoUrl(event.target.value);
         break;
       default:
         break;
@@ -38,8 +40,8 @@ const VideoSample = () => {
   const options = React.useMemo(
     () => ({
       spellChecker: false,
-      maxHeight: "400px",
-      autofocus: true,
+      maxHeight: "200px",
+      // autofocus: true,
       placeholder: "Введите короткое описание урока...",
       status: false,
       autosave: {
@@ -53,12 +55,27 @@ const VideoSample = () => {
   const handleAddBtn = () => setIsUrl(true);
   const handleDelBtn = () => {
     setIsUrl(false);
-    setUrlVideo('');
+    setVideoUrl('');
   };
   const handleReady = () => setIsReady(true);
   const handleChangeEdit = React.useCallback((value) => setDesc(value), []);
-  const handleSaveBtn = () => {
-    navigate('/teach/new');
+  const handleSaveBtn = async () => {
+    try {
+      const fields = {
+        title,
+        desc,
+        videoUrl,
+        courseId: id,
+      };
+
+      await axios.post(`/lessons/video`, fields);
+
+      navigate(`/teach/${id}/edit`);
+    } catch (err) {
+      console.warn(err);
+
+      alert('Ошибка при создании видеоурока');
+    }
   };
 
   return (
@@ -66,7 +83,7 @@ const VideoSample = () => {
       <h1>Видеоурок</h1>
       <TextField
         id={'name-lesson'}
-        value={nameLesson}
+        value={title}
         label="Название урока"
         onChange={handleChange}
         variant="outlined"
@@ -75,7 +92,7 @@ const VideoSample = () => {
       />
       <TextField
         id={'url-video'}
-        value={urlVideo}
+        value={videoUrl}
         label="Вставьте сюда ссылку на видео с YouTube"
         onChange={handleChange}
         variant="outlined"
@@ -100,7 +117,7 @@ const VideoSample = () => {
           </Button>
           <div className={styles.videoWrapper}>
             <ReactPlayer
-              url={`${urlVideo}`}
+              url={`${videoUrl}`}
               onReady={handleReady}
               controls={true}
               width="100%"
@@ -114,7 +131,7 @@ const VideoSample = () => {
       <SimpleMDE
         id={'desc-lesson'}
         className={styles.editor}
-        value={descLesson}
+        value={desc}
         onChange={handleChangeEdit}
         options={options}
         style={{paddingRight: '30px', paddingLeft: '30px'}}
