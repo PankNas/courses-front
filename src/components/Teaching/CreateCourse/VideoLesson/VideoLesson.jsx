@@ -7,6 +7,7 @@ import styles from './VideoLesson.module.scss';
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import {useNavigate} from "react-router-dom";
 
 const VideoLesson = () => {
   const [nameLesson, setName] = useState('');
@@ -14,6 +15,8 @@ const VideoLesson = () => {
   const [urlVideo, setUrlVideo] = useState('');
   const [isUrl, setIsUrl] = useState(false);
   const [isReadyVideo, setIsReady] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsReady(false);
@@ -48,9 +51,15 @@ const VideoLesson = () => {
   );
 
   const handleAddBtn = () => setIsUrl(true);
-  const handleDelBtn = () => setIsUrl(false);
+  const handleDelBtn = () => {
+    setIsUrl(false);
+    setUrlVideo('');
+  };
   const handleReady = () => setIsReady(true);
   const handleChangeEdit = React.useCallback((value) => setDesc(value), []);
+  const handleSaveBtn = () => {
+    navigate('/teach/new');
+  };
 
   return (
     <div>
@@ -108,8 +117,11 @@ const VideoLesson = () => {
         value={descLesson}
         onChange={handleChangeEdit}
         options={options}
-        style={{padding: '30px'}}
+        style={{paddingRight: '30px', paddingLeft: '30px'}}
       />
+      <Button variant="outlined" onClick={handleSaveBtn}>
+        Сохранить
+      </Button>
     </div>
   );
 };
