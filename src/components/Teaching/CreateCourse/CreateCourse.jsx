@@ -9,6 +9,8 @@ import {useNavigate, useParams} from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import axios from "../../../axios";
 import AddLessons from "../AddLessons/AddLessons";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchCourses} from "../../../redux/slices/courses";
 
 const CreateCourse = () => {
   const {id} = useParams();
@@ -24,17 +26,18 @@ const CreateCourse = () => {
   const inputFileRef = useRef(null);
 
   useEffect(() => {
-    return (
-      setImageUrl('')
-    )
+
+
+    return () => {
+      setImageUrl('');
+    }
   }, []);
 
   const handleChangeFile = async (event) => {
     try {
       const formData = new FormData();
-      const file = event.target.files[0];
 
-      formData.append("file", file);
+      formData.append("file", event.target.files[0]);
 
       const {data} = await axios.post("/upload", formData);
 
@@ -48,19 +51,14 @@ const CreateCourse = () => {
   const handleChange = (event) => {
     switch (event.target.id) {
       case 'name-course':
-        setTitle(event.target.value);
-        break;
+        return setTitle(event.target.value);
       case 'desc-course':
-        setDesc(event.target.value);
-        break;
+        return setDesc(event.target.value);
       case 'languages':
-        setLanguage(event.target.value);
-        break;
+        return setLanguage(event.target.value);
       case 'levelLanguages':
-        setLevelLanguage(event.target.value);
-        break;
-      default:
-        break;
+        return setLevelLanguage(event.target.value);
+      default: break;
     }
   };
   const handleDelBtn = () => setImageUrl('');

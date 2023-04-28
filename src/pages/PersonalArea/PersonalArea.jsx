@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useDispatch, useSelector } from "react-redux";
 
 import styles from './PersonalArea.module.css'
 
@@ -7,6 +8,7 @@ import {Route, Routes} from "react-router-dom";
 import Home from "../../components/Home/Home";
 import Courses from "../../components/Courses/Courses";
 import Teaching from "../../components/Teaching/Teaching";
+import {fetchCourses} from "../../redux/slices/courses";
 
 const PersonalArea = () => {
   return (

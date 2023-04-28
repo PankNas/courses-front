@@ -22,10 +22,10 @@ const SelectItem = (props:SelectItemType):JSX.Element => {
           id: `${props.id}`,
         }}
       >
-        <option aria-label="None" value=""/>
+        <option key={0} aria-label="None" value=""/>
         {
-          props.options.map(option =>
-            <option value={option.value}>{option.text}</option>
+          props.options.map((option, index) =>
+            <option key={index + 1} value={option.value}>{option.text}</option>
           )
         }
       </Select>

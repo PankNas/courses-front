@@ -65,12 +65,12 @@ const VideoSample = () => {
         title,
         desc,
         videoUrl,
-        courseId: id,
+        course: id,
       };
 
       await axios.post(`/lessons/video`, fields);
 
-      navigate(`/teach/${id}/edit`);
+      navigate(-1);
     } catch (err) {
       console.warn(err);
 

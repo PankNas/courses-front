@@ -6,11 +6,6 @@ export const fetchCourses = createAsyncThunk(
   async () => (await axios.get("/courses")).data
 );
 
-export const fetchTags = createAsyncThunk(
-  "courses/fetchTags",
-  async () => (await axios.get("/tags")).data
-);
-
 export const fetchRemoveCourse = createAsyncThunk(
   "courses/fetchRemovePosts",
   async (id) => await axios.delete(`/courses/${id}`)
