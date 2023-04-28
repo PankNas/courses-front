@@ -17,23 +17,32 @@ const VideoSample = () => {
   const [isUrl, setIsUrl] = useState(false);
   const [isReadyVideo, setIsReady] = useState(false);
 
-  const {id} = useParams();
+  const {id, sampleId} = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsReady(false);
-  }, [isUrl]);
+    // setIsReady(false);
+
+    if (!sampleId) return;
+
+    axios
+      .get(`lessons/video/${sampleId}`)
+      .then(({data}) => {
+        setTitle(data.title);
+        setDesc(data.desc);
+        setVideoUrl(data.videoUrl);
+        setIsUrl(true);
+      })
+
+  }, []);
 
   const handleChange = (event) => {
     switch (event.target.id) {
       case 'name-lesson':
-        setTitle(event.target.value);
-        break;
+        return setTitle(event.target.value);
       case 'url-video':
-        setVideoUrl(event.target.value);
-        break;
-      default:
-        break;
+        return setVideoUrl(event.target.value);
+      default: break;
     }
   };
 
@@ -52,7 +61,10 @@ const VideoSample = () => {
     []
   );
 
-  const handleAddBtn = () => setIsUrl(true);
+  const handleAddBtn = () => {
+    setIsUrl(true);
+    setIsReady(false);
+  };
   const handleDelBtn = () => {
     setIsUrl(false);
     setVideoUrl('');
@@ -62,13 +74,16 @@ const VideoSample = () => {
   const handleSaveBtn = async () => {
     try {
       const fields = {
+        type: 'video',
         title,
         desc,
         videoUrl,
         course: id,
       };
 
-      await axios.post(`/lessons/video`, fields);
+      sampleId ?
+        await axios.patch(`/lessons/video/${sampleId}`, fields)
+        : await axios.post(`/lessons/video`, fields);
 
       navigate(-1);
     } catch (err) {
@@ -124,7 +139,7 @@ const VideoSample = () => {
               height="400px"
               style={{marginBottom: '20px', marginTop: '20px'}}
             />
-            {!isReadyVideo && <div className={styles.spinner}></div>}
+            {/*{!isReadyVideo && <div className={styles.spinner}></div>}*/}
           </div>
         </>
       }
@@ -136,8 +151,11 @@ const VideoSample = () => {
         options={options}
         style={{paddingRight: '30px', paddingLeft: '30px'}}
       />
-      <Button variant="outlined" onClick={handleSaveBtn}>
+      <Button variant="outlined" onClick={handleSaveBtn} style={{marginRight: '15px'}}>
         Сохранить
+      </Button>
+      <Button variant="outlined" onClick={() => navigate(-1)}>
+        Отмена
       </Button>
     </div>
   );

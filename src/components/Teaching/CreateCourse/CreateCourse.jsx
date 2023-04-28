@@ -26,8 +26,6 @@ const CreateCourse = () => {
   const inputFileRef = useRef(null);
 
   useEffect(() => {
-
-
     return () => {
       setImageUrl('');
     }
@@ -82,6 +80,11 @@ const CreateCourse = () => {
       alert('Ошибка при создании курса');
     }
   };
+
+  const onCancel = () => {
+
+    navigate(-1)
+  }
 
   return (
     <div>
@@ -150,7 +153,10 @@ const CreateCourse = () => {
 
       <AddLessons />
 
-      <Button variant="outlined" onClick={onSubmit}>Сохранить</Button>
+      <Button variant="outlined" onClick={onSubmit} style={{marginRight: '15px'}}>
+        Сохранить
+      </Button>
+      <Button variant="outlined" onClick={onCancel}>Отмена</Button>
     </div>
   );
 };

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
 import axios from "../../../axios";
+import {useDispatch, useSelector} from "react-redux";
 
 const PersonCourses = () => {
   const navigate = useNavigate();

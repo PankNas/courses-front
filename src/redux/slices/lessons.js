@@ -3,12 +3,16 @@ import axios from "../../axios";
 
 export const fetchLessons = createAsyncThunk(
   "lessons/fetchLessons",
-  async (id) => (await axios.get(`/courses/${id}`)).data
+  async (id) => {
+    const {lessons} = (await axios.get(`/courses/${id}`)).data;
+
+    return lessons;
+  }
 );
 
 export const fetchRemoveLesson = createAsyncThunk(
   "lessons/fetchRemoveLessons",
-  async (id) => (await axios.get(`/lesson/video/${id}`)).data
+  async (id) => (await axios.delete(`/lessons/video/${id}`)).data
 );
 
 const initialState = {
@@ -26,7 +30,7 @@ const lessonsSlice = createSlice({
       state.status = "loading";
     },
     [fetchLessons.fulfilled]: (state, action) => {
-      state.items = action.payload.lessons;
+      state.items = action.payload;
       state.status = "loaded";
     },
     [fetchLessons.rejected]: (state) => {
@@ -36,7 +40,7 @@ const lessonsSlice = createSlice({
 
     // удаление урока
     [fetchRemoveLesson.pending]: (state, action) => {
-      state.items = state.courses.items.filter(obj => obj._id !== action.meta.arg);
+      state.items = state.items.filter(obj => obj._id !== action.meta.arg);
     },
   }
 });

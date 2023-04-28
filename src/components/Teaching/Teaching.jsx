@@ -11,7 +11,8 @@ const Teaching = () => {
       <Routes>
         <Route path="/" element={<PersonCourses />}/>
         <Route path="/:id/edit/*" element={<CreateCourse />} />
-        <Route path="/:id/edit/video-sample" element={<VideoSample />}/>
+        <Route path="/:id/edit/video-sample/" element={<VideoSample />}/>
+        <Route path="/:id/edit/video-sample/:sampleId" element={<VideoSample />}/>
       </Routes>
     </div>
   )

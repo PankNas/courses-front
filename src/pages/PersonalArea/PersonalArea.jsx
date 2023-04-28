@@ -9,8 +9,15 @@ import Home from "../../components/Home/Home";
 import Courses from "../../components/Courses/Courses";
 import Teaching from "../../components/Teaching/Teaching";
 import {fetchCourses} from "../../redux/slices/courses";
+import {fetchAuthMe} from '../../redux/slices/auth';
 
 const PersonalArea = () => {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(fetchAuthMe());
+  }, []);
+
   return (
     <div className={styles.root}>
       <Menu />

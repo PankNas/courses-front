@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 
 import styles from "./AddLessons.module.css";
 
 import {Menu, MenuItem, Button, List, ListItem, ListItemIcon, ListItemText, IconButton} from "@mui/material";
 import axios from "../../../axios";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchLessons} from "../../../redux/slices/lessons";
-import {light} from "@mui/material/styles/createPalette";
+import {fetchLessons, fetchRemoveLesson} from "../../../redux/slices/lessons";
 
 const AddLessons = () => {
   const {id} = useParams();
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const {items} = useSelector(state => state.lessons);
@@ -19,10 +19,18 @@ const AddLessons = () => {
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const onClickRemove = (event) => {
-    console.log(event.target);
-    // if (!window.confirm("Вы действительно хотите удалить урок?")) return;
+    if (!window.confirm("Вы действительно хотите удалить урок?")) return;
 
-    // dispatch(fetchRemoveLesson(items[event.target]));
+    dispatch(fetchRemoveLesson(items[event.target.id]._id));
+  };
+  const onClickEdit = (event) => {
+    const item = items[event.target.id];
+
+    switch (item.type) {
+      case 'video':
+        return navigate(`video-sample/${item._id}`);
+      default: return;
+    }
   };
 
   useEffect(() => {
@@ -53,9 +61,12 @@ const AddLessons = () => {
         {
           items.map((item, index) =>
             <ListItem key={index} className={styles.lessonsItem}>
-                <ListItemIcon/>
-                <ListItemText primary={item.title}/>
-              <IconButton onClick={onClickRemove} color="secondary">
+              <ListItemIcon/>
+              <ListItemText primary={item.title}/>
+              <IconButton id={index} onClick={onClickEdit} color="secondary">
+                E
+              </IconButton>
+              <IconButton id={index} onClick={onClickRemove} color="secondary">
                 X
               </IconButton>
             </ListItem>
@@ -63,7 +74,7 @@ const AddLessons = () => {
         }
       </List>
     </div>
-  )
+  );
 };
 
 export default AddLessons;
