@@ -29,7 +29,7 @@ const Navigation = () => {
   ];
 
   return (
-    <List classes={styles.nav}>
+    <List className={styles.nav}>
       {
         itemNavigate.map((item, index) =>
           <NavLink

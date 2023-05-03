@@ -26,7 +26,7 @@ const VideoSample = () => {
     if (!sampleId) return;
 
     axios
-      .get(`lessons/video/${sampleId}`)
+      .get(`lessons/${sampleId}`)
       .then(({data}) => {
         setTitle(data.title);
         setDesc(data.desc);

@@ -12,7 +12,7 @@ export const fetchLessons = createAsyncThunk(
 
 export const fetchRemoveLesson = createAsyncThunk(
   "lessons/fetchRemoveLessons",
-  async (id) => (await axios.delete(`/lessons/video/${id}`)).data
+  async (id) => (await axios.delete(`/lessons/${id}`)).data
 );
 
 const initialState = {

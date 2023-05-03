@@ -81,10 +81,7 @@ const CreateCourse = () => {
     }
   };
 
-  const onCancel = () => {
-
-    navigate(-1)
-  }
+  const onCancel = () => navigate(-1);
 
   return (
     <div>

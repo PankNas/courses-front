@@ -29,6 +29,8 @@ const AddLessons = () => {
     switch (item.type) {
       case 'video':
         return navigate(`video-sample/${item._id}`);
+      case 'text':
+        return navigate(`text-sample/${item._id}`)
       default: return;
     }
   };
@@ -52,10 +54,12 @@ const AddLessons = () => {
         onClose={handleClose}
         PaperProps={{sx: {width: '650px'}}}
       >
+        <Link to={`text-sample`}>
+          <MenuItem onClick={handleClose}>Теория</MenuItem>
+        </Link>
         <Link to={`video-sample`}>
           <MenuItem onClick={handleClose}>Видео</MenuItem>
         </Link>
-        <MenuItem onClick={handleClose}>Тест</MenuItem>
       </Menu>
       <List className={styles.lessons}>
         {

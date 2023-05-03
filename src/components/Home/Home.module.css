@@ -1,0 +1,15 @@
+.personalInfo {
+  width: 20%;
+  padding: 30px;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  margin-top: 15px;
+}
+
+.fullName {
+  text-align: center;
+}
