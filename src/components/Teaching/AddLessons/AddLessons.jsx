@@ -30,7 +30,9 @@ const AddLessons = () => {
       case 'video':
         return navigate(`video-sample/${item._id}`);
       case 'text':
-        return navigate(`text-sample/${item._id}`)
+        return navigate(`text-sample/${item._id}`);
+      case 'sentence':
+        return navigate(`sentence-sample/${item._id}`);
       default: return;
     }
   };
@@ -59,6 +61,9 @@ const AddLessons = () => {
         </Link>
         <Link to={`video-sample`}>
           <MenuItem onClick={handleClose}>Видео</MenuItem>
+        </Link>
+        <Link to={`sentence-sample`}>
+          <MenuItem onClick={handleClose}>Составить текст</MenuItem>
         </Link>
       </Menu>
       <List className={styles.lessons}>

@@ -4,7 +4,6 @@ import axios from "../../../axios";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import styles from "../VideoSample/VideoSample.module.scss";
-import ReactPlayer from "react-player";
 import SimpleMDE from "react-simplemde-editor";
 
 const TextSample = () => {

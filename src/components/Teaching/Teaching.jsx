@@ -5,6 +5,7 @@ import PersonCourses from "./PersonCourses/PersonCourses";
 import CreateCourse from "./CreateCourse/CreateCourse";
 import VideoSample from "./VideoSample/VideoSample.jsx";
 import TextSample from "./TextSample/TextSample";
+import SentenceSample from "./SentenceSample/SentenceSample";
 
 const Teaching = () => {
   return (
@@ -18,6 +19,9 @@ const Teaching = () => {
 
         <Route path="/:id/edit/text-sample" element={<TextSample />}/>
         <Route path="/:id/edit/text-sample/:sampleId" element={<TextSample />}/>
+
+        <Route path="/:id/edit/sentence-sample" element={<SentenceSample />}/>
+        <Route path="/:id/edit/sentence-sample/:sampleId" element={<SentenceSample />}/>
       </Routes>
     </div>
   )
