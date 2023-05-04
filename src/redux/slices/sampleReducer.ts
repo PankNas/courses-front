@@ -12,6 +12,18 @@ const sampleSlice = createSlice({
   name: 'sample',
   initialState,
   reducers: {
+    setDataVideoSample: (state, action) => {
+      state.welcomeText = 'Видеоурок';
+      state.title = action.payload.title;
+      state.desc = action.payload.desc;
+      state.videoUrl = action.payload.videoUrl;
+    },
+    setDataTextSample: (state, action) => {
+      state.welcomeText = 'Теоретический урок';
+      state.title = action.payload.title;
+      state.desc = action.payload.desc;
+    },
+
     setType: (state, action) => {
       state.type = action.payload
     },
@@ -32,6 +44,9 @@ const sampleSlice = createSlice({
 
 export const sampleReducer = sampleSlice.reducer;
 export const {
+  setDataVideoSample,
+  setDataTextSample,
+
   setType,
   setWelcomeText,
   setTitle,

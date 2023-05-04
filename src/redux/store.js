@@ -4,8 +4,7 @@ import { coursesReducer } from "./slices/courses";
 import { authReducer } from "./slices/auth";
 import {lessonsReducer} from "./slices/lessons";
 import {getDefaultMiddleware} from '@reduxjs/toolkit';
-import {videoReducer} from "./samples/videoReducer";
-import {sampleReducer} from "./samples/sampleReducer";
+import {sampleReducer} from "./slices/sampleReducer";
 
 const customizedMiddleware = getDefaultMiddleware({serializableCheck: false});
 
@@ -15,8 +14,6 @@ const store = configureStore({
     auth: authReducer,
     lessons: lessonsReducer,
     sample: sampleReducer,
-
-    videoLesson: videoReducer,
   },
   middleware: (getDefaultMiddleware) => customizedMiddleware,
 });

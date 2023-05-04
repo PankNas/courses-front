@@ -7,7 +7,7 @@ import {Menu, MenuItem, Button, List, ListItem, ListItemIcon, ListItemText, Icon
 import axios from "../../../axios";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchLessons, fetchRemoveLesson} from "../../../redux/slices/lessons";
-import {setType} from "../../../redux/samples/sampleReducer";
+import {setType} from "../../../redux/slices/sampleReducer";
 
 const AddLessons = () => {
   const {id} = useParams();

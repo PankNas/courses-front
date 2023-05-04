@@ -8,7 +8,7 @@ import styles from './VideoSample.module.scss';
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import {useDispatch} from "react-redux";
-import {setDesc, setVideoUrl, setWelcomeText} from "../../../../redux/samples/sampleReducer";
+import {setDataVideoSample, setDesc, setVideoUrl, setWelcomeText} from "../../../../redux/slices/sampleReducer";
 
 const VideoSample = ({desc, videoUrl}) => {
   const dispatch = useDispatch();
@@ -17,7 +17,11 @@ const VideoSample = ({desc, videoUrl}) => {
   const [isReadyVideo, setIsReady] = useState(false);
 
   useEffect(() => {
-    dispatch(setWelcomeText('', 'Видеоурок'));
+    dispatch(setDataVideoSample({
+      title: '',
+      desc: '',
+      videoUrl: '',
+    }));
   }, []);
 
   const options = React.useMemo(
