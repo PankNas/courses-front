@@ -49,7 +49,7 @@ const Sample = () => {
         onChange={handleInput}
         variant="outlined"
         fullWidth
-        style={{marginBottom: '10px'}}
+        style={{marginBottom: '20px'}}
       />
 
       {setSampleComponent(sampleLesson)}
