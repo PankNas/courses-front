@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const videoSlice = createSlice({
-  name: 'lessons',
+  name: 'videoSample',
   initialState,
   reducers: {
     setTitle: (state, action) => state.title = action.payload,

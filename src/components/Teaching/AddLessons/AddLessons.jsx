@@ -7,6 +7,7 @@ import {Menu, MenuItem, Button, List, ListItem, ListItemIcon, ListItemText, Icon
 import axios from "../../../axios";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchLessons, fetchRemoveLesson} from "../../../redux/slices/lessons";
+import {setType} from "../../../redux/samples/sampleReducer";
 
 const AddLessons = () => {
   const {id} = useParams();
@@ -17,7 +18,11 @@ const AddLessons = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => setAnchorEl(event.currentTarget);
-  const handleClose = () => setAnchorEl(null);
+  const handleClose = (event) => {
+    setAnchorEl(null);
+
+    dispatch(setType(event.target.id));
+  };
   const onClickRemove = (event) => {
     if (!window.confirm("Вы действительно хотите удалить урок?")) return;
 
@@ -48,18 +53,18 @@ const AddLessons = () => {
         onClose={handleClose}
         PaperProps={{sx: {width: '650px'}}}
       >
-        <Link to={`text-sample`}>
-          <MenuItem onClick={handleClose}>Теория</MenuItem>
-        </Link>
-        <Link to={`video-sample`}>
-          <MenuItem onClick={handleClose}>Видео</MenuItem>
-        </Link>
-        <Link to={`sentence-sample`}>
-          <MenuItem onClick={handleClose}>Составить текст</MenuItem>
-        </Link>
-        <Link to={`passes-sample`}>
-          <MenuItem onClick={handleClose}>Пропуски</MenuItem>
-        </Link>
+        {/*<Link to={`text-sample`}>*/}
+          <MenuItem id={`text`} onClick={handleClose}>Теория</MenuItem>
+        {/*</Link>*/}
+        {/*<Link to={`video-sample`}>*/}
+          <MenuItem id={'video'} onClick={handleClose}>Видео</MenuItem>
+        {/*</Link>*/}
+        {/*<Link to={`sentence-sample`}>*/}
+          <MenuItem id={'sentence'} onClick={handleClose}>Составить текст</MenuItem>
+        {/*</Link>*/}
+        {/*<Link to={`passes-sample`}>*/}
+          <MenuItem id={'passes'} onClick={handleClose}>Пропуски</MenuItem>
+        {/*</Link>*/}
       </Menu>
       <List className={styles.lessons}>
         {

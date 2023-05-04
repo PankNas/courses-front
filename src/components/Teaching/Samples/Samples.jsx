@@ -1,34 +1,60 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "../../../axios";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
+import {setTitle} from "../../../redux/samples/sampleReducer";
+import VideoSample from "./VideoSample/VideoSample";
+import TextSample from "./TextSample/TextSample";
+import SentenceSample from "./SentenceSample/SentenceSample";
+import PassesSample from "./PassesSample/PassesSample";
 
 const Samples = () => {
   const dispatch = useDispatch();
-
-  const dataLesson = useSelector(state => state.videoLesson);
+  const sampleLesson = useSelector(state => state.sample);
 
   const {id, sampleId} = useParams();
   const navigate = useNavigate();
 
   const handleNavigate = () => navigate(-1);
+  const handleInput = (event) => dispatch(setTitle(event.target.value));
+  const handleSaveBtn = async () => {
+    try {
+      // const fields = {
+      //   type: 'sentence',
+      //   title,
+      //   sentence,
+      //   translate,
+      //   course: id,
+      // };
+      //
+      // sampleId ?
+      //   await axios.patch(`/lessons/sentence/${sampleId}`, fields)
+      //   : await axios.post(`/lessons/sentence`, fields);
+      //
+      // navigate(-1);
+    } catch (err) {
+      console.warn(err);
+
+      alert('Ошибка при создании урока');
+    }
+  };
 
   return (
     <div>
-      <h1>Составить текст</h1>
+      <h1>{sampleLesson.welcomeText}</h1>
       <TextField
         id={'name-lesson'}
-        value={title}
+        value={sampleLesson.title}
         label="Название урока"
-        onChange={handleChange}
+        onChange={handleInput}
         variant="outlined"
         fullWidth
         style={{marginBottom: '10px'}}
       />
 
-      {/*вставка урока*/}
+      {setComponent(sampleLesson.typeLesson)}
 
       <Button variant="outlined" onClick={handleSaveBtn} style={{marginRight: '15px'}}>
         Сохранить
@@ -138,5 +164,20 @@ const Samples = () => {
   //   </div>
   // );
 };
+
+function setComponent(type) {
+  switch (type) {
+    case 'video':
+      return <VideoSample />;
+    case 'text':
+      return <TextSample />;
+    case 'sentence':
+      return <SentenceSample />;
+    case 'passes':
+      return <PassesSample />;
+    default:
+      return;
+  }
+}
 
 export default Samples;
