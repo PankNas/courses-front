@@ -7,105 +7,45 @@ import styles from './VideoSample.module.scss';
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import {useNavigate, useParams} from "react-router-dom";
-import axios from "../../../../axios";
+import {useDispatch} from "react-redux";
+import {setDesc, setVideoUrl, setWelcomeText} from "../../../../redux/samples/sampleReducer";
 
-const VideoSample = () => {
-  const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
-  const [videoUrl, setVideoUrl] = useState('');
+const VideoSample = ({desc, videoUrl}) => {
+  const dispatch = useDispatch();
+
   const [isUrl, setIsUrl] = useState(false);
   const [isReadyVideo, setIsReady] = useState(false);
 
-  const {id, sampleId} = useParams();
-  const navigate = useNavigate();
-
   useEffect(() => {
-    // setIsReady(false);
-
-    if (!sampleId) return;
-
-    axios
-      .get(`lessons/${sampleId}`)
-      .then(({data}) => {
-        setTitle(data.title);
-        setDesc(data.desc);
-        setVideoUrl(data.videoUrl);
-
-        setIsUrl(true);
-      })
-
+    dispatch(setWelcomeText('', 'Видеоурок'));
   }, []);
-
-  const handleChange = (event) => {
-    switch (event.target.id) {
-      case 'name-lesson':
-        return setTitle(event.target.value);
-      case 'url-video':
-        return setVideoUrl(event.target.value);
-      default: break;
-    }
-  };
 
   const options = React.useMemo(
     () => ({
       spellChecker: false,
       maxHeight: "200px",
-      // autofocus: true,
       placeholder: "Введите короткое описание урока...",
       status: false,
       autosave: {
         enabled: true,
         delay: 1000,
       },
-    }),
-    []
-  );
+    }), []);
 
+  const handleChange = (event) => dispatch(setVideoUrl(event.target.value));
+  const handleReady = () => setIsReady(true);
+  const handleChangeEdit = React.useCallback((value) => dispatch(setDesc(value)), []);
   const handleAddBtn = () => {
     setIsUrl(true);
     setIsReady(false);
   };
   const handleDelBtn = () => {
     setIsUrl(false);
-    setVideoUrl('');
-  };
-  const handleReady = () => setIsReady(true);
-  const handleChangeEdit = React.useCallback((value) => setDesc(value), []);
-  const handleSaveBtn = async () => {
-    try {
-      const fields = {
-        type: 'video',
-        title,
-        desc,
-        videoUrl,
-        course: id,
-      };
-
-      sampleId ?
-        await axios.patch(`/lessons/video/${sampleId}`, fields)
-        : await axios.post(`/lessons/video`, fields);
-
-      navigate(-1);
-    } catch (err) {
-      console.warn(err);
-
-      alert('Ошибка при создании видеоурока');
-    }
+    dispatch(setVideoUrl('', ''));
   };
 
   return (
-    <div>
-      <h1>Видеоурок</h1>
-      <TextField
-        id={'name-lesson'}
-        value={title}
-        label="Название урока"
-        onChange={handleChange}
-        variant="outlined"
-        fullWidth
-        style={{marginBottom: '20px'}}
-      />
+    <>
       <TextField
         id={'url-video'}
         value={videoUrl}
@@ -152,13 +92,7 @@ const VideoSample = () => {
         options={options}
         style={{paddingRight: '30px', paddingLeft: '30px'}}
       />
-      <Button variant="outlined" onClick={handleSaveBtn} style={{marginRight: '15px'}}>
-        Сохранить
-      </Button>
-      <Button variant="outlined" onClick={() => navigate(-1)}>
-        Отмена
-      </Button>
-    </div>
+    </>
   );
 };
 

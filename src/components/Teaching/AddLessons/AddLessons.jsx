@@ -22,6 +22,7 @@ const AddLessons = () => {
     setAnchorEl(null);
 
     dispatch(setType(event.target.id));
+    navigate('sample');
   };
   const onClickRemove = (event) => {
     if (!window.confirm("Вы действительно хотите удалить урок?")) return;
