@@ -8,7 +8,13 @@ import styles from './VideoSample.module.scss';
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import {useDispatch} from "react-redux";
-import {setDataVideoSample, setDesc, setVideoUrl, setWelcomeText} from "../../../../redux/slices/sampleReducer";
+import {
+  setDataVideoSample,
+  setDesc,
+  setVideoUrl,
+} from "../../../../redux/slices/sampleReducer";
+import axios from "../../../../axios";
+import {useParams} from "react-router-dom";
 
 const VideoSample = ({desc, videoUrl}) => {
   const dispatch = useDispatch();
@@ -16,12 +22,28 @@ const VideoSample = ({desc, videoUrl}) => {
   const [isUrl, setIsUrl] = useState(false);
   const [isReadyVideo, setIsReady] = useState(false);
 
+  const {sampleId} = useParams();
+
   useEffect(() => {
-    dispatch(setDataVideoSample({
-      title: '',
-      desc: '',
-      videoUrl: '',
-    }));
+    if (!sampleId) {
+      dispatch(setDataVideoSample({
+        title: '',
+        desc: '',
+        videoUrl: '',
+      }));
+
+      return;
+    }
+
+    axios
+      .get(`lessons/${sampleId}`)
+      .then(({data}) => {
+        dispatch(setDataVideoSample({
+          title: data.title,
+          desc: data.desc,
+          videoUrl: data.videoUrl,
+        }))
+      });
   }, []);
 
   const options = React.useMemo(

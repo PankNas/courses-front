@@ -1,21 +1,34 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate, useParams} from "react-router-dom";
+import React, {useEffect} from 'react';
+import {useParams} from "react-router-dom";
 import axios from "../../../../axios";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import styles from "../VideoSample/VideoSample.module.scss";
 import SimpleMDE from "react-simplemde-editor";
-import {setDataTextSample, setDesc, setWelcomeText} from "../../../../redux/slices/sampleReducer";
+import {setDataTextSample, setDesc} from "../../../../redux/slices/sampleReducer";
 import {useDispatch} from "react-redux";
 
 const TextSample = ({desc}) => {
   const dispatch = useDispatch();
 
+  const {sampleId} = useParams();
+
   useEffect(() => {
-    dispatch(setDataTextSample({
-      title: '',
-      desc: '',
-    }));
+    if (!sampleId) {
+      dispatch(setDataTextSample({
+        title: '',
+        desc: '',
+      }));
+
+      return;
+    }
+
+    axios
+      .get(`lessons/${sampleId}`)
+      .then(({data}) => {
+        dispatch(setDataTextSample({
+          title: data.title,
+          desc: data.desc,
+        }))
+      });
   }, []);
 
   const options = React.useMemo(

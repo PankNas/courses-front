@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Link, useNavigate, useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 
 import styles from "./AddLessons.module.css";
 
 import {Menu, MenuItem, Button, List, ListItem, ListItemIcon, ListItemText, IconButton} from "@mui/material";
-import axios from "../../../axios";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchLessons, fetchRemoveLesson} from "../../../redux/slices/lessons";
 import {setType} from "../../../redux/slices/sampleReducer";
@@ -18,7 +17,7 @@ const AddLessons = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => setAnchorEl(event.currentTarget);
-  const handleClose = (event) => {
+  const handleMove = (event) => {
     setAnchorEl(null);
 
     dispatch(setType(event.target.id));
@@ -32,7 +31,7 @@ const AddLessons = () => {
   const onClickEdit = (event) => {
     const item = items[event.target.id];
 
-    navigate(`${item.type}-sample/${item._id}`);
+    navigate(`sample/${item._id}`);
   };
 
   useEffect(() => {
@@ -41,7 +40,7 @@ const AddLessons = () => {
 
   return (
     <div style={{marginBottom: '20px'}}>
-      <p>Уроки<span style={{color: "red"}}> *</span></p>
+      <p>Уроки</p>
       <Button style={{padding: '0'}} className={styles.moduleAdd} onClick={handleClick}>
         <div className={styles.moduleAddPlus}>+</div>
         <p className={styles.moduleAddText}>Добавить урок</p>
@@ -51,22 +50,15 @@ const AddLessons = () => {
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleClose}
+        onClose={handleMove}
         PaperProps={{sx: {width: '650px'}}}
       >
-        {/*<Link to={`text-sample`}>*/}
-          <MenuItem id={`text`} onClick={handleClose}>Теория</MenuItem>
-        {/*</Link>*/}
-        {/*<Link to={`video-sample`}>*/}
-          <MenuItem id={'video'} onClick={handleClose}>Видео</MenuItem>
-        {/*</Link>*/}
-        {/*<Link to={`sentence-sample`}>*/}
-          <MenuItem id={'sentence'} onClick={handleClose}>Составить текст</MenuItem>
-        {/*</Link>*/}
-        {/*<Link to={`passes-sample`}>*/}
-          <MenuItem id={'passes'} onClick={handleClose}>Пропуски</MenuItem>
-        {/*</Link>*/}
+        <MenuItem id={`text`} onClick={handleMove}>Теория</MenuItem>
+        <MenuItem id={'video'} onClick={handleMove}>Видео</MenuItem>
+        <MenuItem id={'sentence'} onClick={handleMove}>Составить текст</MenuItem>
+        <MenuItem id={'passes'} onClick={handleMove}>Пропуски</MenuItem>
       </Menu>
+
       <List className={styles.lessons}>
         {
           items.map((item, index) =>
