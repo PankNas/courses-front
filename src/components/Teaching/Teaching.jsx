@@ -3,7 +3,7 @@ import {Route, Routes} from "react-router-dom";
 
 import PersonCourses from "./PersonCourses/PersonCourses";
 import CreateCourse from "./CreateCourse/CreateCourse";
-import Samples from "./Samples/Samples";
+import Sample from "./Samples/Sample";
 
 const Teaching = () => {
   return (
@@ -11,8 +11,8 @@ const Teaching = () => {
       <Routes>
         <Route path="/" element={<PersonCourses/>}/>
         <Route path="/:id/edit/*" element={<CreateCourse/>}/>
-        <Route path="/:id/edit/sample/" element={<Samples/>}/>
-        <Route path="/:id/edit/sample/:sampleId" element={<Samples/>}/>
+        <Route path="/:id/edit/sample/" element={<Sample/>}/>
+        <Route path="/:id/edit/sample/:sampleId" element={<Sample/>}/>
       </Routes>
     </div>
   );

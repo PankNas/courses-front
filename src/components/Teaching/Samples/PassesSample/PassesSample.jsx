@@ -3,71 +3,38 @@ import {useNavigate, useParams} from "react-router-dom";
 import axios from "../../../../axios";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import {useDispatch} from "react-redux";
+import {setDataPassesSample, setSentence} from "../../../../redux/slices/sampleLesson";
 
-const PassesSample = () => {
-  const [title, setTitle] = useState('');
-  const [sentence, setSentence] = useState('');
+const PassesSample = ({sentence}) => {
+  const dispatch = useDispatch();
 
-  const {id, sampleId} = useParams();
-  const navigate = useNavigate();
+  const {sampleId} = useParams();
 
   useEffect(() => {
-    if (!sampleId) return;
+    if (!sampleId) {
+      dispatch(setDataPassesSample({
+        title: '',
+        sentence: '',
+      }));
+
+      return;
+    }
 
     axios
       .get(`lessons/${sampleId}`)
       .then(({data}) => {
-        setTitle(data.title);
-        setSentence(data.sentence);
+        dispatch(setDataPassesSample({
+          title: data.title,
+          sentence: data.sentence,
+        }))
       });
-
   }, []);
 
-  const handleChange = (event) => {
-    switch (event.target.id) {
-      case 'name-lesson':
-        return setTitle(event.target.value);
-      case 'sentence':
-        return setSentence(event.target.value);
-      default: break;
-    }
-  };
-
-  const handleSaveBtn = async () => {
-    try {
-      const fields = {
-        type: 'passes',
-        title,
-        sentence,
-        course: id,
-      };
-
-      sampleId ?
-        await axios.patch(`/lessons/passes/${sampleId}`, fields)
-        : await axios.post(`/lessons/passes`, fields);
-
-      navigate(-1);
-    } catch (err) {
-      console.warn(err);
-
-      alert('Ошибка при создании урока');
-    }
-  };
-
-  const handleNavigate = () => navigate(-1);
+  const handleChange = (event) => dispatch(setSentence(event.target.value));
 
   return (
-    <div>
-      <h1>Заполнить пропуски</h1>
-      <TextField
-        id={'name-lesson'}
-        value={title}
-        label="Название урока"
-        onChange={handleChange}
-        variant="outlined"
-        fullWidth
-        style={{marginBottom: '10px'}}
-      />
+    <>
       <p>Правила оформления шаблона</p>
       <ol>
         <li>Место пропуска отмечается квадратными скобками - []</li>
@@ -89,13 +56,7 @@ const PassesSample = () => {
         fullWidth
         style={{marginBottom: '20px'}}
       />
-      <Button variant="outlined" onClick={handleSaveBtn} style={{marginRight: '15px'}}>
-        Сохранить
-      </Button>
-      <Button variant="outlined" onClick={handleNavigate}>
-        Отмена
-      </Button>
-    </div>
+    </>
   );
 }
 

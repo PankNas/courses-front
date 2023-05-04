@@ -9,8 +9,9 @@ import VideoSample from "./VideoSample/VideoSample";
 import TextSample from "./TextSample/TextSample";
 import SentenceSample from "./SentenceSample/SentenceSample";
 import PassesSample from "./PassesSample/PassesSample";
+import TestSample from "./TestSample/TestSample";
 
-const Samples = () => {
+const Sample = () => {
   const dispatch = useDispatch();
   const sampleLesson = useSelector(state => state.sample);
 
@@ -72,10 +73,12 @@ function setSampleComponent(sample) {
     case 'sentence':
       return <SentenceSample sentence={sample.sentence} translate={sample.translate}/>;
     case 'passes':
-      return <PassesSample />;
+      return <PassesSample sentence={sample.sentence} />;
+    case 'test':
+      return <TestSample />;
     default:
       return;
   }
 }
 
-export default Samples;
+export default Sample;

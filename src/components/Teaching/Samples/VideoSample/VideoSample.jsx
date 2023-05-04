@@ -15,6 +15,7 @@ import {
 } from "../../../../redux/slices/sampleLesson";
 import axios from "../../../../axios";
 import {useParams} from "react-router-dom";
+import Editor from "../Editor";
 
 const VideoSample = ({desc, videoUrl}) => {
   const dispatch = useDispatch();
@@ -46,21 +47,8 @@ const VideoSample = ({desc, videoUrl}) => {
       });
   }, []);
 
-  const options = React.useMemo(
-    () => ({
-      spellChecker: false,
-      maxHeight: "200px",
-      placeholder: "Введите короткое описание урока...",
-      status: false,
-      autosave: {
-        enabled: true,
-        delay: 1000,
-      },
-    }), []);
-
   const handleChange = (event) => dispatch(setVideoUrl(event.target.value));
   const handleReady = () => setIsReady(true);
-  const handleChangeEdit = React.useCallback((value) => dispatch(setDesc(value)), []);
   const handleAddBtn = () => {
     setIsUrl(true);
     setIsReady(false);
@@ -110,13 +98,10 @@ const VideoSample = ({desc, videoUrl}) => {
           </div>
         </>
       }
-      <SimpleMDE
-        id={'desc-lesson'}
-        className={styles.editor}
+      <Editor
         value={desc}
-        onChange={handleChangeEdit}
-        options={options}
-        style={{paddingRight: '30px', paddingLeft: '30px'}}
+        height={'200px'}
+        placeholder={"Введите короткое описание урока..."}
       />
     </>
   );
