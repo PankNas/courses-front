@@ -4,7 +4,7 @@ import { coursesReducer } from "./slices/courses";
 import { authReducer } from "./slices/auth";
 import {lessonsReducer} from "./slices/lessons";
 import {getDefaultMiddleware} from '@reduxjs/toolkit';
-import {sampleReducer} from "./slices/sampleReducer";
+import {sampleLesson} from "./slices/sampleLesson";
 
 const customizedMiddleware = getDefaultMiddleware({serializableCheck: false});
 
@@ -13,7 +13,7 @@ const store = configureStore({
     courses: coursesReducer,
     auth: authReducer,
     lessons: lessonsReducer,
-    sample: sampleReducer,
+    sample: sampleLesson,
   },
   middleware: (getDefaultMiddleware) => customizedMiddleware,
 });

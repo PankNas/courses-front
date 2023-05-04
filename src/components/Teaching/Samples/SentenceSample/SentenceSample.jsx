@@ -1,78 +1,49 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate, useParams} from "react-router-dom";
+import React, {useEffect} from 'react';
+import {useParams} from "react-router-dom";
 import axios from "../../../../axios";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import {useDispatch} from "react-redux";
+import {setDataSentenceSample, setSentence, setTranslate} from "../../../../redux/slices/sampleLesson";
 
-const SentenceSample = () => {
-  const [title, setTitle] = useState('');
-  const [sentence, setSentence] = useState('');
-  const [translate, setTranslate] = useState('');
+const SentenceSample = ({sentence, translate}) => {
+  const dispatch = useDispatch();
 
-  const {id, sampleId} = useParams();
-  const navigate = useNavigate();
+  const {sampleId} = useParams();
 
   useEffect(() => {
-    if (!sampleId) return;
+    if (!sampleId) {
+      dispatch(setDataSentenceSample({
+        title: '',
+        sentence: '',
+        translate: '',
+      }));
+
+      return;
+    }
 
     axios
       .get(`lessons/${sampleId}`)
       .then(({data}) => {
-        setTitle(data.title);
-        setSentence(data.sentence);
-        setTranslate(data.translate);
+        dispatch(setDataSentenceSample({
+          title: data.title,
+          sentence: data.sentence,
+          translate: data.translate,
+        }))
       });
-
   }, []);
 
   const handleChange = (event) => {
     switch (event.target.id) {
-      case 'name-lesson':
-        return setTitle(event.target.value);
       case 'sentence':
-        return setSentence(event.target.value);
+        return dispatch(setSentence(event.target.value));
       case 'translate':
-        return setTranslate(event.target.value);
+        return dispatch(setTranslate(event.target.value));
       default: break;
     }
   };
 
-  const handleSaveBtn = async () => {
-    try {
-      const fields = {
-        type: 'sentence',
-        title,
-        sentence,
-        translate,
-        course: id,
-      };
-
-      sampleId ?
-        await axios.patch(`/lessons/sentence/${sampleId}`, fields)
-        : await axios.post(`/lessons/sentence`, fields);
-
-      navigate(-1);
-    } catch (err) {
-      console.warn(err);
-
-      alert('Ошибка при создании урока');
-    }
-  };
-
-  const handleNavigate = () => navigate(-1);
-
   return (
-    <div>
-      <h1>Составить текст</h1>
-      <TextField
-        id={'name-lesson'}
-        value={title}
-        label="Название урока"
-        onChange={handleChange}
-        variant="outlined"
-        fullWidth
-        style={{marginBottom: '10px'}}
-      />
+    <>
       <TextField
         id={'sentence'}
         value={sentence}
@@ -95,13 +66,7 @@ const SentenceSample = () => {
         fullWidth
         style={{marginBottom: '20px'}}
       />
-      <Button variant="outlined" onClick={handleSaveBtn} style={{marginRight: '15px'}}>
-        Сохранить
-      </Button>
-      <Button variant="outlined" onClick={handleNavigate}>
-        Отмена
-      </Button>
-    </div>
+    </>
   );
 }
 

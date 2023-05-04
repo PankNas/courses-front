@@ -4,7 +4,7 @@ import axios from "../../../axios";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {setTitle} from "../../../redux/slices/sampleReducer";
+import {setTitle} from "../../../redux/slices/sampleLesson";
 import VideoSample from "./VideoSample/VideoSample";
 import TextSample from "./TextSample/TextSample";
 import SentenceSample from "./SentenceSample/SentenceSample";
@@ -70,7 +70,7 @@ function setSampleComponent(sample) {
     case 'text':
       return <TextSample desc={sample.desc} />;
     case 'sentence':
-      return <SentenceSample />;
+      return <SentenceSample sentence={sample.sentence} translate={sample.translate}/>;
     case 'passes':
       return <PassesSample />;
     default:

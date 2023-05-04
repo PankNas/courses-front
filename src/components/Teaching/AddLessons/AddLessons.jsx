@@ -6,7 +6,7 @@ import styles from "./AddLessons.module.css";
 import {Menu, MenuItem, Button, List, ListItem, ListItemIcon, ListItemText, IconButton} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchLessons, fetchRemoveLesson} from "../../../redux/slices/lessons";
-import {setType} from "../../../redux/slices/sampleReducer";
+import {setType} from "../../../redux/slices/sampleLesson";
 
 const AddLessons = () => {
   const {id} = useParams();
@@ -31,6 +31,7 @@ const AddLessons = () => {
   const onClickEdit = (event) => {
     const item = items[event.target.id];
 
+    dispatch(setType(item.type));
     navigate(`sample/${item._id}`);
   };
 

@@ -12,7 +12,7 @@ import {
   setDataVideoSample,
   setDesc,
   setVideoUrl,
-} from "../../../../redux/slices/sampleReducer";
+} from "../../../../redux/slices/sampleLesson";
 import axios from "../../../../axios";
 import {useParams} from "react-router-dom";
 

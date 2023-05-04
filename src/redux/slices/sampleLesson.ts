@@ -1,4 +1,4 @@
-import {createSlice, createNextState} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
   type: '',
@@ -6,6 +6,8 @@ const initialState = {
   title: '',
   desc: '',
   videoUrl: '',
+  sentence: '',
+  translate: '',
 };
 
 const sampleSlice = createSlice({
@@ -23,6 +25,17 @@ const sampleSlice = createSlice({
       state.title = action.payload.title;
       state.desc = action.payload.desc;
     },
+    setDataSentenceSample: (state, action) => {
+      state.welcomeText = 'Составить текст';
+      state.title = action.payload.title;
+      state.sentence = action.payload.sentence;
+      state.translate = action.payload.translate;
+    },
+    setDataPassesSample: (state, action) => {
+      state.welcomeText = 'Заполнить пропуски';
+      state.title = action.payload.title;
+      state.sentence = action.payload.sentence;
+    },
 
     setType: (state, action) => {
       state.type = action.payload
@@ -39,17 +52,27 @@ const sampleSlice = createSlice({
     setVideoUrl: (state, action) => {
       state.videoUrl = action.payload
     },
+    setSentence: (state, action) => {
+      state.sentence = action.payload
+    },
+    setTranslate: (state, action) => {
+      state.translate = action.payload
+    },
   },
 });
 
-export const sampleReducer = sampleSlice.reducer;
+export const sampleLesson = sampleSlice.reducer;
 export const {
   setDataVideoSample,
   setDataTextSample,
+  setDataSentenceSample,
+  setDataPassesSample,
 
   setType,
   setWelcomeText,
   setTitle,
   setDesc,
   setVideoUrl,
+  setSentence,
+  setTranslate,
 } = sampleSlice.actions;

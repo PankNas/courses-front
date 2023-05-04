@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import axios from "../../../../axios";
 import styles from "../VideoSample/VideoSample.module.scss";
 import SimpleMDE from "react-simplemde-editor";
-import {setDataTextSample, setDesc} from "../../../../redux/slices/sampleReducer";
+import {setDataTextSample, setDesc} from "../../../../redux/slices/sampleLesson";
 import {useDispatch} from "react-redux";
 
 const TextSample = ({desc}) => {
