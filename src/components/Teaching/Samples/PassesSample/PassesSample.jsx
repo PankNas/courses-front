@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import axios from "../../../axios";
+import axios from "../../../../axios";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-const SentenceSample = () => {
+const PassesSample = () => {
   const [title, setTitle] = useState('');
   const [sentence, setSentence] = useState('');
-  const [translate, setTranslate] = useState('');
 
   const {id, sampleId} = useParams();
   const navigate = useNavigate();
@@ -20,7 +19,6 @@ const SentenceSample = () => {
       .then(({data}) => {
         setTitle(data.title);
         setSentence(data.sentence);
-        setTranslate(data.translate);
       });
 
   }, []);
@@ -31,8 +29,6 @@ const SentenceSample = () => {
         return setTitle(event.target.value);
       case 'sentence':
         return setSentence(event.target.value);
-      case 'translate':
-        return setTranslate(event.target.value);
       default: break;
     }
   };
@@ -40,16 +36,15 @@ const SentenceSample = () => {
   const handleSaveBtn = async () => {
     try {
       const fields = {
-        type: 'sentence',
+        type: 'passes',
         title,
         sentence,
-        translate,
         course: id,
       };
 
       sampleId ?
-        await axios.patch(`/lessons/sentence/${sampleId}`, fields)
-        : await axios.post(`/lessons/sentence`, fields);
+        await axios.patch(`/lessons/passes/${sampleId}`, fields)
+        : await axios.post(`/lessons/passes`, fields);
 
       navigate(-1);
     } catch (err) {
@@ -63,7 +58,7 @@ const SentenceSample = () => {
 
   return (
     <div>
-      <h1>Составить текст</h1>
+      <h1>Заполнить пропуски</h1>
       <TextField
         id={'name-lesson'}
         value={title}
@@ -73,21 +68,20 @@ const SentenceSample = () => {
         fullWidth
         style={{marginBottom: '10px'}}
       />
+      <p>Правила оформления шаблона</p>
+      <ol>
+        <li>Место пропуска отмечается квадратными скобками - []</li>
+        <li>В [] скобках <i>первым</i> пунктом указывается верный ответ</li>
+        <li>Варианты ответа нужно писать через запятую</li>
+      </ol>
+      <p>
+        Пример: Мистер и миссис Дурсль проживали в доме номер четыре по
+        [<span style={{color: 'green'}}>Тисовой</span>, Тихой, Мирной] улице...
+      </p>
       <TextField
         id={'sentence'}
         value={sentence}
         label="Введите текст на иностранном языке"
-        multiline
-        rows={4}
-        onChange={handleChange}
-        variant="outlined"
-        fullWidth
-      />
-      <p>Примечание: число блоков для составления текста будет равняться числу слов.</p>
-      <TextField
-        id={'translate'}
-        value={translate}
-        label="Введите перевод"
         multiline
         rows={4}
         onChange={handleChange}
@@ -105,4 +99,4 @@ const SentenceSample = () => {
   );
 }
 
-export default SentenceSample;
+export default PassesSample;

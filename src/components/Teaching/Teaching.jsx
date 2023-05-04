@@ -3,9 +3,10 @@ import {Route, Routes} from "react-router-dom";
 
 import PersonCourses from "./PersonCourses/PersonCourses";
 import CreateCourse from "./CreateCourse/CreateCourse";
-import VideoSample from "./VideoSample/VideoSample.jsx";
-import TextSample from "./TextSample/TextSample";
-import SentenceSample from "./SentenceSample/SentenceSample";
+import VideoSample from "./Samples/VideoSample/VideoSample.jsx";
+import TextSample from "./Samples/TextSample/TextSample";
+import SentenceSample from "./Samples/SentenceSample/SentenceSample";
+import PassesSample from "./Samples/PassesSample/PassesSample";
 
 const Teaching = () => {
   return (
@@ -22,6 +23,9 @@ const Teaching = () => {
 
         <Route path="/:id/edit/sentence-sample" element={<SentenceSample />}/>
         <Route path="/:id/edit/sentence-sample/:sampleId" element={<SentenceSample />}/>
+
+        <Route path="/:id/edit/passes-sample" element={<PassesSample />}/>
+        <Route path="/:id/edit/passes-sample/:sampleId" element={<PassesSample />}/>
       </Routes>
     </div>
   )

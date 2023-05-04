@@ -26,15 +26,7 @@ const AddLessons = () => {
   const onClickEdit = (event) => {
     const item = items[event.target.id];
 
-    switch (item.type) {
-      case 'video':
-        return navigate(`video-sample/${item._id}`);
-      case 'text':
-        return navigate(`text-sample/${item._id}`);
-      case 'sentence':
-        return navigate(`sentence-sample/${item._id}`);
-      default: return;
-    }
+    navigate(`${item.type}-sample/${item._id}`);
   };
 
   useEffect(() => {
@@ -64,6 +56,9 @@ const AddLessons = () => {
         </Link>
         <Link to={`sentence-sample`}>
           <MenuItem onClick={handleClose}>Составить текст</MenuItem>
+        </Link>
+        <Link to={`passes-sample`}>
+          <MenuItem onClick={handleClose}>Пропуски</MenuItem>
         </Link>
       </Menu>
       <List className={styles.lessons}>

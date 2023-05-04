@@ -8,7 +8,7 @@ import styles from './VideoSample.module.scss';
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import {useNavigate, useParams} from "react-router-dom";
-import axios from "../../../axios";
+import axios from "../../../../axios";
 
 const VideoSample = () => {
   const [title, setTitle] = useState('');
@@ -31,6 +31,7 @@ const VideoSample = () => {
         setTitle(data.title);
         setDesc(data.desc);
         setVideoUrl(data.videoUrl);
+
         setIsUrl(true);
       })
 

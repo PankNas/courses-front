@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import axios from "../../../axios";
+import axios from "../../../../axios";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import styles from "../VideoSample/VideoSample.module.scss";
