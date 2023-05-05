@@ -102,6 +102,7 @@ const VideoSample = ({desc, videoUrl}) => {
         value={desc}
         height={'200px'}
         placeholder={"Введите короткое описание урока..."}
+        fnDispatch={setDesc}
       />
     </>
   );

@@ -61,7 +61,7 @@ const sampleSlice = createSlice({
   },
 });
 
-export const sampleLesson = sampleSlice.reducer;
+export const sampleLessonReducer = sampleSlice.reducer;
 export const {
   setDataVideoSample,
   setDataTextSample,

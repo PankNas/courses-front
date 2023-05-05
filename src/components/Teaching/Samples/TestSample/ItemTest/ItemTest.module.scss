@@ -1,0 +1,21 @@
+.itemTest {
+  height: 500px;
+  border: 2px solid var(--purple);
+  border-radius: 10px;
+
+  margin-bottom: 20px;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.numberQuestionBlock {
+  margin-bottom: 15px;
+
+  display: flex;
+  align-items: center;
+}
+
+.optionItem {
+  border-style: none;
+  outline:none;
+}

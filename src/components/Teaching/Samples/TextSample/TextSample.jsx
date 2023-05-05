@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useParams} from "react-router-dom";
 import axios from "../../../../axios";
-import {setDataTextSample} from "../../../../redux/slices/sampleLesson";
+import {setDataTextSample, setDesc} from "../../../../redux/slices/sampleLesson";
 import {useDispatch} from "react-redux";
 import Editor from "../Editor";
 
@@ -35,6 +35,7 @@ const TextSample = ({desc}) => {
       value={desc}
       placeholder={'Введите описание урока...'}
       height={'400px'}
+      fnDispatch={setDesc}
     />
   );
 };
