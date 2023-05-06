@@ -67,6 +67,9 @@ const sampleSlice = createSlice({
     setItemsTest: (state, action) => {
       state.itemsTest = action.payload
     },
+    setItemTest: (state, action) => {
+      state.itemsTest = action.payload
+    },
   },
 });
 

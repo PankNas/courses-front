@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import React, {useState} from 'react';
 
 import styles from './ItemTest.module.scss';
 import {useDispatch} from "react-redux";
@@ -9,17 +8,10 @@ import {Checkbox, FormControlLabel, FormGroup} from "@mui/material";
 import {setItemsTest} from "../../../../../redux/slices/sampleLesson";
 import Button from "@mui/material/Button";
 
-const ItemTest = ({items}) => {
+const ItemTest = ({items, curItem}) => {
   const dispatch = useDispatch();
-  const {itemId} = useParams();
 
-  const [item, setItem] = useState(items[0]);
-
-  useEffect(() => {
-    const curItem = items.find(elem => elem.id === itemId);
-
-    setItem(curItem);
-  }, [itemId]);
+  const [item, setItem] = useState(curItem);
 
   const handleInputScore = (event) => setItem({...item, score: +event.target.value});
   const handleChangeOption = (event) => {
@@ -29,7 +21,7 @@ const ItemTest = ({items}) => {
     setItem({...item, options: options});
   };
   const handleDelItem = () => {
-    const newArr = items.filter((item => item.id !== itemId));
+    const newArr = items.filter((elem => elem.id !== curItem.id));
 
     dispatch(setItemsTest(newArr));
   };
@@ -39,6 +31,8 @@ const ItemTest = ({items}) => {
 
     copyItems[index] = item;
     dispatch(setItemsTest(copyItems));
+
+    alert('Пункт теста сохранен');
   };
   const handleChangeCheckBox = (event, index) => {
     setItem({...item, answer: index});
@@ -78,9 +72,8 @@ const ItemTest = ({items}) => {
               control={
                 <Checkbox
                   id={index}
-                  // defaultChecked={index === 0}
                   checked={isChecked(index)}
-                  onChange={(event) => handleChangeCheckBox(event, index)} />
+                  onChange={(event) => handleChangeCheckBox(event, index)}/>
               }
               label={
                 <input
