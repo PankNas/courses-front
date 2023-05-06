@@ -8,6 +8,7 @@ const initialState = {
   videoUrl: '',
   sentence: '',
   translate: '',
+  itemsTest: [],
 };
 
 const sampleSlice = createSlice({
@@ -36,6 +37,11 @@ const sampleSlice = createSlice({
       state.title = action.payload.title;
       state.sentence = action.payload.sentence;
     },
+    setDataTestSample: (state, action) => {
+      state.welcomeText = 'Тест';
+      state.title = action.payload.title;
+      state.itemsTest = action.payload.itemsTest;
+    },
 
     setType: (state, action) => {
       state.type = action.payload
@@ -58,6 +64,9 @@ const sampleSlice = createSlice({
     setTranslate: (state, action) => {
       state.translate = action.payload
     },
+    setItemsTest: (state, action) => {
+      state.itemsTest = action.payload
+    },
   },
 });
 
@@ -67,6 +76,7 @@ export const {
   setDataTextSample,
   setDataSentenceSample,
   setDataPassesSample,
+  setDataTestSample,
 
   setType,
   setWelcomeText,
@@ -75,4 +85,5 @@ export const {
   setVideoUrl,
   setSentence,
   setTranslate,
+  setItemsTest,
 } = sampleSlice.actions;

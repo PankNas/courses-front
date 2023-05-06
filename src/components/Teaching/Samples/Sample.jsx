@@ -18,7 +18,7 @@ const Sample = () => {
   const {id, sampleId} = useParams();
   const navigate = useNavigate();
 
-  const handleNavigate = () => navigate(-1);
+  const handleNavigate = () => navigate(`/teach/${id}/edit`);
   const handleInput = (event) => dispatch(setTitle(event.target.value));
   const handleSaveBtn = async () => {
     try {
@@ -75,7 +75,7 @@ function setSampleComponent(sample) {
     case 'passes':
       return <PassesSample sentence={sample.sentence} />;
     case 'test':
-      return <TestSample />;
+      return <TestSample itemsTest={sample.itemsTest}/>;
     default:
       return;
   }

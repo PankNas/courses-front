@@ -22,11 +22,15 @@ const initialState = {
 };
 
 const itemTestSlice = createSlice({
-  name: 'lessons',
+  name: 'itemTest',
   initialState,
   reducers: {
     setScore: (state, action) => {
       state.item.score = action.payload;
+    },
+    setOption: (state, action) => {
+      const temp = [...state.item.options].splice(action.payload.index, 1, action.payload.value)
+      state.item.options[action.payload.index] = temp;
     },
   },
   extraReducers: {
@@ -53,4 +57,5 @@ const itemTestSlice = createSlice({
 export const itemTestReducer = itemTestSlice.reducer;
 export const {
   setScore,
+  setOption,
 } = itemTestSlice.actions;
