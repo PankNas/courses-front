@@ -31,7 +31,7 @@ const Sample = () => {
         await axios.patch(`/lessons/${sampleLesson.type}/${sampleId}`, fields)
         : await axios.post(`/lessons/${sampleLesson.type}`, fields);
 
-      navigate(-1);
+      navigate(`/teach/${id}/edit`);
     } catch (err) {
       console.warn(err);
 

@@ -7,29 +7,33 @@ import Grid from "@mui/material/Grid";
 import axios from "../../../../axios";
 import {NavLink, Route, Routes, useNavigate, useParams} from "react-router-dom";
 import ItemTest from "./ItemTest/ItemTest";
-import {setDataTestSample, setItemsTest} from "../../../../redux/slices/sampleLesson";
+import {setDataTestSample, setDataTextSample, setItemsTest} from "../../../../redux/slices/sampleLesson";
 import {useDispatch} from "react-redux";
 
 const TestSample = ({itemsTest}) => {
+  const {sampleId} = useParams();
   const dispatch = useDispatch();
-  // const {sampleId} = useParams();
 
   const navigate = useNavigate();
 
-  // const [item, setItem] = useState({
-  //   id: '',
-  //   question: '',
-  //   answer: '',
-  //   score: 1,
-  //   options: [],
-  // });
-  // const [item, setItem] = useState(null);
-
   useEffect(() => {
-    dispatch(setDataTestSample({
-      title: '',
-      itemsTest: [],
-    }))
+    if (!sampleId) {
+      dispatch(setDataTestSample({
+        title: '',
+        itemsTest: [],
+      }));
+
+      return;
+    }
+
+    axios
+      .get(`lessons/${sampleId}`)
+      .then(({data}) => {
+        dispatch(setDataTestSample({
+          title: data.title,
+          itemsTest: data.itemsTest,
+        }))
+      });
   }, []);
 
   const handleAddItem = async () => {
@@ -40,8 +44,6 @@ const TestSample = ({itemsTest}) => {
         options: new Array(4).fill(''),
         answer: '',
         score: 1,
-
-        status: 0,
       };
 
       await dispatch(setItemsTest([...itemsTest, newItem]));
@@ -74,20 +76,14 @@ const TestSample = ({itemsTest}) => {
                 <div
                   id={item.id}
                   className={styles.moduleAddPlus}
-                  style={{borderColor: item.status ? 'green' : 'red'}}
                 >
                   {index}
                 </div>
               </Button>
-              {/*<Button style={{padding: '0'}} onClick={handleMoveItem}>*/}
-              {/*  <div id={item.id} className={styles.moduleAddPlus}>{index}</div>*/}
-              {/*</Button>*/}
             </Grid>
           )
         }
       </Grid>
-
-      {/*{ item && <ItemTest item={item}/>}*/}
 
       <Routes>
         <Route path={'testItem/:itemId'} element={<ItemTest items={itemsTest}/>} />

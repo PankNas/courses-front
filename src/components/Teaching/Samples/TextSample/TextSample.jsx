@@ -30,12 +30,14 @@ const TextSample = ({desc}) => {
       });
   }, []);
 
+  const updateDesc = (value) => dispatch(setDesc(value));
+
   return (
     <Editor
       value={desc}
       placeholder={'Введите описание урока...'}
       height={'400px'}
-      fnDispatch={setDesc}
+      fn={updateDesc}
     />
   );
 };

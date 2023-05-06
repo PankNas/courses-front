@@ -4,10 +4,10 @@ import SimpleMDE from "react-simplemde-editor";
 import {setDesc} from "../../../redux/slices/sampleLesson";
 import {useDispatch} from "react-redux";
 
-const Editor = ({value, height, placeholder, fnDispatch}) => {
+const Editor = ({value, height, placeholder, fn}) => {
   const dispatch = useDispatch();
 
-  const handleChangeEdit = React.useCallback((value) => dispatch(fnDispatch(value)), []);
+  const handleChangeEdit = React.useCallback((value) => fn(value), []);
 
   const options = React.useMemo(
     () => ({

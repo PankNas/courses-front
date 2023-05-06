@@ -58,6 +58,8 @@ const VideoSample = ({desc, videoUrl}) => {
     dispatch(setVideoUrl('', ''));
   };
 
+  const updateDesc = (value) => dispatch(setDesc(value));
+
   return (
     <>
       <TextField
@@ -102,7 +104,7 @@ const VideoSample = ({desc, videoUrl}) => {
         value={desc}
         height={'200px'}
         placeholder={"Введите короткое описание урока..."}
-        fnDispatch={setDesc}
+        fn={updateDesc}
       />
     </>
   );

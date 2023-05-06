@@ -1,9 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 
 import styles from './ItemTest.module.scss';
-import {useDispatch, useSelector} from "react-redux";
-import {fetchItemTest, setOption, setScore} from "../../../../../redux/slices/itemTest";
+import {useDispatch} from "react-redux";
 import TextField from "@mui/material/TextField";
 import Editor from "../../Editor";
 import {Checkbox, FormControlLabel, FormGroup} from "@mui/material";
@@ -28,52 +27,71 @@ const ItemTest = ({items}) => {
     options[event.target.id] = event.target.value;
 
     setItem({...item, options: options});
-  }
+  };
   const handleDelItem = () => {
     const newArr = items.filter((item => item.id !== itemId));
 
     dispatch(setItemsTest(newArr));
-  }
+  };
   const handleSaveItem = () => {
-    setItem({...item, status: 1});
-    console.log(item);
-
     const index = items.findIndex(elem => elem.id === item.id);
     const copyItems = items.slice();
 
     copyItems[index] = item;
     dispatch(setItemsTest(copyItems));
-  }
+  };
+  const handleChangeCheckBox = (event, index) => {
+    setItem({...item, answer: index});
+  };
+  const isChecked = (index) => index === item.answer;
+  const updateQuestion = (value) => setItem({...item, question: value});
 
   return (
     <div className={styles.itemTest}>
       <TextField
-        type={'number'}
         value={item.score}
         label="Балл"
         onChange={handleInputScore}
         variant="outlined"
+        style={{marginRight: '20px'}}
+        pattern={/^[1-9]\d*$/}
       />
-      <Button variant="outlined" onClick={handleSaveItem}>С</Button>
+      <Button
+        variant="outlined"
+        onClick={handleSaveItem}
+        style={{marginRight: '20px'}}
+      >
+        С
+      </Button>
       <Button variant="outlined" onClick={handleDelItem}>У</Button>
       <Editor
         value={item.question}
         height={'100px'}
         placeholder={'Напишите вопрос'}
+        fn={updateQuestion}
       />
       <FormGroup>
         {
           item.options?.map((option, index) =>
-            <FormControlLabel key={index} control={<Checkbox defaultChecked={index === 0}/>} label={
-              <input
-                id={index}
-                className={styles.optionItem}
-                type="text"
-                placeholder={`Ответ ${index + 1}`}
-                value={option}
-                onChange={handleChangeOption}
-              />
-            }/>
+            <FormControlLabel
+              key={index}
+              control={
+                <Checkbox
+                  id={index}
+                  // defaultChecked={index === 0}
+                  checked={isChecked(index)}
+                  onChange={(event) => handleChangeCheckBox(event, index)} />
+              }
+              label={
+                <input
+                  id={index}
+                  className={styles.optionItem}
+                  type="text"
+                  placeholder={`Ответ ${index + 1}`}
+                  value={option}
+                  onChange={handleChangeOption}
+                />
+              }/>
           )
         }
       </FormGroup>
