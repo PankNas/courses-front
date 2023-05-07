@@ -34,18 +34,38 @@ const PersonCourses = () => {
     dispatch(fetchRemoveCourse(event.target.id));
     dispatch(fetchTeachCourses());
   }
+  const handleEditCourse = (event) => {
+    navigate(`${event.target.id}/edit`)
+  }
 
   return (
     <>
       <h1>Мои курсы</h1>
       <Button variant="outlined" onClick={handleClickAddCourse}>+ Новый курс</Button>
-      <div>
+      <div className={styles.courses}>
         {
           teachCourses?.map(course =>
             <div key={course._id} className={styles.courseCard}>
+              {
+                course.imageUrl &&
+                <img className={styles.courseImg} src={`http://localhost:8000${course.imageUrl}`} alt="img"/>
+              }
               <h3>{course.title}</h3>
-              <img src={course.imageUrl} alt="img"/>
-              <Button id={course._id} variant="outlined" onClick={handleDelCourse}>Удалить</Button>
+              <Button
+                id={course._id}
+                style={{color: "red"}}
+                variant="outlined"
+                onClick={handleDelCourse}
+              >
+                X
+              </Button>
+              <Button
+                id={course._id}
+                variant="outlined"
+                onClick={handleEditCourse}
+              >
+                P
+              </Button>
             </div>
           )
         }

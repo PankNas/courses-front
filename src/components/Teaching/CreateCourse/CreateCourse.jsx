@@ -14,6 +14,7 @@ import {fetchCourses} from "../../../redux/slices/courses";
 
 const CreateCourse = () => {
   const {id} = useParams();
+  const dispatch = useDispatch();
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
@@ -26,9 +27,20 @@ const CreateCourse = () => {
   const inputFileRef = useRef(null);
 
   useEffect(() => {
-    return () => {
-      setImageUrl('');
-    }
+    const getCourse = async () => (await axios.get(`/courses/${id}`)).data;
+
+    getCourse()
+      .then(res => {
+        setTitle(res.title);
+        setDesc(res.desc);
+        setLevelLanguage(res.levelLanguage);
+        setLanguage(res.language);
+        setImageUrl(res.imageUrl);
+      })
+
+    // return () => {
+    //   setImageUrl('');
+    // }
   }, []);
 
   const handleChangeFile = async (event) => {
@@ -73,7 +85,7 @@ const CreateCourse = () => {
 
       await axios.patch(`/courses/${id}`, fields);
 
-      // navigate(`/teach`);
+      navigate('/teach');
     } catch (err) {
       console.warn(err);
 
