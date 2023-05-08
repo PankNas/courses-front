@@ -25,7 +25,7 @@ const PersonalArea = () => {
       <div style={{width: '1000px'}}>
         <Routes>
           <Route path="/" element={<Home />}/>
-          <Route path="/courses" element={<Courses />}/>
+          <Route path="/courses/*" element={<Courses />}/>
           <Route path="/teach/*" element={<Teaching />}/>
         </Routes>
       </div>

@@ -13,7 +13,6 @@ const PersonCourses = () => {
   const dispatch = useDispatch();
 
   const teachCourses = useSelector(state => state.auth.teachCourses);
-  console.log(teachCourses);
 
   useEffect(() => {
     dispatch(fetchTeachCourses());
@@ -50,22 +49,27 @@ const PersonCourses = () => {
                 course.imageUrl &&
                 <img className={styles.courseImg} src={`http://localhost:8000${course.imageUrl}`} alt="img"/>
               }
-              <h3>{course.title}</h3>
-              <Button
-                id={course._id}
-                style={{color: "red"}}
-                variant="outlined"
-                onClick={handleDelCourse}
-              >
-                X
-              </Button>
-              <Button
-                id={course._id}
-                variant="outlined"
-                onClick={handleEditCourse}
-              >
-                P
-              </Button>
+              <div className={styles.courseContent}>
+                <h3 style={{textAlign: "center"}}>{course.title}</h3>
+                <div className={styles.courseButtons}>
+                  <Button
+                    id={course._id}
+                    variant="outlined"
+                    onClick={handleEditCourse}
+                    style={{marginRight: "15px"}}
+                  >
+                    P
+                  </Button>
+                  <Button
+                    id={course._id}
+                    style={{color: "red"}}
+                    variant="outlined"
+                    onClick={handleDelCourse}
+                  >
+                    X
+                  </Button>
+                </div>
+              </div>
             </div>
           )
         }

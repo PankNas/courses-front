@@ -12,10 +12,8 @@ export const fetchRemoveCourse = createAsyncThunk(
 );
 
 const initialState = {
-  courses: {
-    items: [],
-    status: "loading",
-  }
+  items: [],
+  status: "loading",
 };
 
 const coursesSlice = createSlice({
@@ -25,21 +23,21 @@ const coursesSlice = createSlice({
   extraReducers: {
     // курсы
     [fetchCourses.pending]: (state) => {
-      state.courses.items = [];
-      state.courses.status = "loading";
+      state.items = [];
+      state.status = "loading";
     },
     [fetchCourses.fulfilled]: (state, action) => {
-      state.courses.items = action.payload;
-      state.courses.status = "loaded";
+      state.items = action.payload;
+      state.status = "loaded";
     },
     [fetchCourses.rejected]: (state) => {
-      state.courses.items = [];
-      state.courses.status = "error";
+      state.items = [];
+      state.status = "error";
     },
 
     // удаление курса
     [fetchRemoveCourse.pending]: (state, action) => {
-      state.courses.items = state.courses.items.filter(obj => obj._id !== action.meta.arg);
+      state.items = state.items.filter(obj => obj._id !== action.meta.arg);
     },
   },
 });

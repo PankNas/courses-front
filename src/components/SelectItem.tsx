@@ -7,6 +7,7 @@ type SelectItemType = {
     value: string,
     text: string,
   }[],
+  value: string,
   style?: any,
   onChange(event: any): void,
 }
@@ -16,6 +17,7 @@ const SelectItem = (props:SelectItemType):JSX.Element => {
     <FormControl variant="outlined" style={props.style}>
       <Select
         native
+        value={props.value}
         onChange={props.onChange}
         defaultValue={`${props.options[0].value}`}
         inputProps={{

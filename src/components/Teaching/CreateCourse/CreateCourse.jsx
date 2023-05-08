@@ -147,12 +147,14 @@ const CreateCourse = () => {
       <div className={styles.block}>
         <p style={{marginTop: '0'}}>Языковая группа</p>
         <SelectItem
+          value={language}
           id={'languages'}
           options={languages}
           onChange={handleChange}
           style={{marginRight: '25px', width: '48%'}}
         />
         <SelectItem
+          value={levelLanguage}
           id={'levelLanguages'}
           options={levelLanguages}
           onChange={handleChange}
