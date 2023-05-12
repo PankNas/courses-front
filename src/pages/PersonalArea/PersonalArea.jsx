@@ -10,14 +10,9 @@ import Courses from "../../components/Courses/Courses";
 import Teaching from "../../components/Teaching/Teaching";
 import {fetchCourses} from "../../redux/slices/courses";
 import {fetchAuthMe} from '../../redux/slices/auth';
+import Study from "../../components/Study/Study";
 
 const PersonalArea = () => {
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    dispatch(fetchAuthMe());
-  }, []);
-
   return (
     <div className={styles.root}>
       <Menu />
@@ -26,6 +21,7 @@ const PersonalArea = () => {
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/courses/*" element={<Courses />}/>
+          <Route path="/study/*" element={<Study />}/>
           <Route path="/teach/*" element={<Teaching />}/>
         </Routes>
       </div>

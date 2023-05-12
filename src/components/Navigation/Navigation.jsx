@@ -19,7 +19,7 @@ const Navigation = () => {
     {
       name: 'Моё обучение',
       icon: '',
-      navigate: '/courses',
+      navigate: '/study',
     },
     {
       name: 'Преподавание',

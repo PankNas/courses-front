@@ -1,13 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Route, Routes} from "react-router-dom";
-import Catalog from "./Catalog/Catalog";
+import Catalog from "../Catalog/Catalog";
 import Course from "./Course/Course";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchCourses} from "../../redux/slices/courses";
 
 const Courses = () => {
+  const dispatch = useDispatch();
+  const {items} = useSelector(state => state.courses);
+
+  useEffect(() => {
+    dispatch(fetchCourses());
+  }, []);
 
   return (
     <Routes>
-      <Route path={'/'} element={<Catalog/>}/>
+      <Route path={'/'} element={<Catalog title={'Каталог курсов'} items={items}/>}/>
       <Route path={'/:courseId'} element={<Course />}/>
     </Routes>
   )

@@ -7,12 +7,18 @@ export const fetchCourses = createAsyncThunk(
 );
 
 export const fetchRemoveCourse = createAsyncThunk(
-  "courses/fetchRemovePosts",
+  "courses/fetchRemoveCourse",
   async (id) => await axios.delete(`/courses/${id}`)
+);
+
+export const fetchGetCourse = createAsyncThunk(
+  "courses/fetchGetCourse",
+  async (id) => (await axios.get(`/courses/${id}`)).data
 );
 
 const initialState = {
   items: [],
+  course: null,
   status: "loading",
 };
 
@@ -33,6 +39,20 @@ const coursesSlice = createSlice({
     [fetchCourses.rejected]: (state) => {
       state.items = [];
       state.status = "error";
+    },
+
+    //course
+    [fetchGetCourse.pending]: (state) => {
+      state.course = null;
+      // state.status = "loading";
+    },
+    [fetchGetCourse.fulfilled]: (state, action) => {
+      state.course = action.payload;
+      // state.status = "loaded";
+    },
+    [fetchGetCourse.rejected]: (state) => {
+      state.course = null;
+      // state.status = "error";
     },
 
     // удаление курса

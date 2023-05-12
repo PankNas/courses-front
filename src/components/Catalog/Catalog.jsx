@@ -1,20 +1,20 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {fetchCourses} from "../../../redux/slices/courses";
+import {fetchCourses} from "../../redux/slices/courses";
 import styles from "./Catalog.module.scss";
 import {Link} from "react-router-dom";
 
-const Catalog = () => {
-  const dispatch = useDispatch();
-  const {items} = useSelector(state => state.courses);
-
-  useEffect(() => {
-    dispatch(fetchCourses());
-  }, []);
+const Catalog = ({title, items}) => {
+  // const dispatch = useDispatch();
+  // const {items} = useSelector(state => state.courses);
+  //
+  // useEffect(() => {
+  //   dispatch(fetchCourses());
+  // }, []);
 
   return (
     <div style={{margin: '30px'}}>
-      <h1>Каталог</h1>
+      <h1>{title}</h1>
       <div className={styles.courses}>
         {
           items?.map(course =>

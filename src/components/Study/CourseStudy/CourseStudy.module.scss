@@ -1,0 +1,17 @@
+.courseStudy {
+  display: flex;
+  justify-content: space-between;
+}
+
+.lessons {
+  padding: 15px;
+  box-sizing: border-box;
+  width: 200px;
+  height: 100vh;
+
+  border-right: 2px solid black;
+}
+
+.lessonItem {
+  margin-bottom: 10px;
+}

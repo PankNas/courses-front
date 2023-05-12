@@ -18,8 +18,8 @@ const CreateCourse = () => {
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
-  const [language, setLanguage] = useState(languages[0].value);
-  const [levelLanguage, setLevelLanguage] = useState(levelLanguages[0].value);
+  const [language, setLanguage] = useState('');
+  const [levelLanguage, setLevelLanguage] = useState('');
   const [imageUrl, setImageUrl] = useState('');
 
   const navigate = useNavigate();

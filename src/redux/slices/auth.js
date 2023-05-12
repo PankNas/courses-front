@@ -19,6 +19,15 @@ export const fetchTeachCourses = createAsyncThunk(
   }
 );
 
+export const fetchStudentCourses = createAsyncThunk(
+  "auth/fetchStudentCourses",
+  async () => {
+    const {data} = await axios.get("/auth/me");
+
+    return data.studentCourses;
+  }
+);
+
 export const fetchRegister = createAsyncThunk(
   "auth/fetchRegister",
   async (params) => await axios.post("/auth/register", params)
@@ -27,6 +36,7 @@ export const fetchRegister = createAsyncThunk(
 const initialState = {
   data: null,
   teachCourses: null,
+  studentCourses: null,
   status: "loading",
 };
 
@@ -89,6 +99,19 @@ const authSlice = createSlice({
     [fetchTeachCourses.rejected]: (state) => {
       // state.status = "error";
       state.teachCourses = null;
+    },
+
+    [fetchStudentCourses.pending]: (state) => {
+      // state.status = "loading";
+      state.studentCourses = null;
+    },
+    [fetchStudentCourses.fulfilled]: (state, action) => {
+      // state.status = "loaded";
+      state.studentCourses = action.payload;
+    },
+    [fetchStudentCourses.rejected]: (state) => {
+      // state.status = "error";
+      state.studentCourses = null;
     },
   },
 });

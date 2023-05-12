@@ -3,10 +3,7 @@ import {FormControl, Select} from "@mui/material";
 
 type SelectItemType = {
   id: string,
-  options: {
-    value: string,
-    text: string,
-  }[],
+  options: string[],
   value: string,
   style?: any,
   onChange(event: any): void,
@@ -19,7 +16,7 @@ const SelectItem = (props:SelectItemType):JSX.Element => {
         native
         value={props.value}
         onChange={props.onChange}
-        defaultValue={`${props.options[0].value}`}
+        // defaultValue={`${props.options[0].value}`}
         inputProps={{
           id: `${props.id}`,
         }}
@@ -27,7 +24,7 @@ const SelectItem = (props:SelectItemType):JSX.Element => {
         <option key={0} aria-label="None" value=""/>
         {
           props.options.map((option, index) =>
-            <option key={index + 1} value={option.value}>{option.text}</option>
+            <option key={index + 1} value={option}>{option}</option>
           )
         }
       </Select>
