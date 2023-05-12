@@ -42,7 +42,6 @@ const Course = () => {
     try {
       const {data} = await axios.post('/courses/subscript', {id: courseId});
 
-      console.log(data);
       alert('Вы записаны на курс');
     } catch (err) {
       console.log(err);

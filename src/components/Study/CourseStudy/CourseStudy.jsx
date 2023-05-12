@@ -30,11 +30,10 @@ const CourseStudy = () => {
             course?.lessons.map((lesson, index) =>
               <Link
                 key={lesson._id}
-                id={`${index}`}
                 to=''
                 onClick={handleClickLesson}
               >
-                <li className={styles.lessonItem}>{lesson.title}</li>
+                <li id={`${index}`} className={styles.lessonItem}>{lesson.title}</li>
               </Link>
             )
           }

@@ -38,9 +38,11 @@ const CreateCourse = () => {
         setImageUrl(res.imageUrl);
       })
 
-    // return () => {
-    //   setImageUrl('');
-    // }
+    return () => {
+      setImageUrl('');
+      setLanguage('');
+      setLevelLanguage('');
+    }
   }, []);
 
   const handleChangeFile = async (event) => {

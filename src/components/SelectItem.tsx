@@ -16,7 +16,7 @@ const SelectItem = (props:SelectItemType):JSX.Element => {
         native
         value={props.value}
         onChange={props.onChange}
-        // defaultValue={`${props.options[0].value}`}
+        defaultValue={`${props.value}`}
         inputProps={{
           id: `${props.id}`,
         }}

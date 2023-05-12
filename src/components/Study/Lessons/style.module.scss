@@ -1,0 +1,45 @@
+.textBox {
+  min-height: 150px;
+}
+
+.wordsBox {
+  flex-wrap: wrap;
+  //display: flex;
+  gap: 8px;
+  //width: 100%;
+  list-style-type: none;
+  margin-left: -35px;
+  box-sizing: border-box;
+}
+
+.wordItem {
+  //padding: 20px;
+  //box-sizing: border-box;
+  //background-color: var(--purple);
+  //color: white;
+  //border-radius: 15px;
+  //min-width: 50px;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.text {
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: var(--purple);
+  color: white;
+  border-radius: 15px;
+  min-width: 50px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border-style: none;
+}
+
+.textRes {
+  background-color: darkgray;
+}
+
+.gray {
+  background-color: gray;
+}
