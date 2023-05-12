@@ -8,8 +8,16 @@
   gap: 8px;
   //width: 100%;
   list-style-type: none;
-  margin-left: -35px;
+  margin-left: -38px;
   box-sizing: border-box;
+
+  align-content: center;
+  display: flex;
+  justify-content: center;
+}
+
+.textBox {
+  min-height: 100px;
 }
 
 .wordItem {

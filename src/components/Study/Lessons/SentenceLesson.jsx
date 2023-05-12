@@ -9,14 +9,18 @@ const SentenceLesson = ({sentence, translate}) => {
 
   useEffect(() => {
     const arr = sentence.split(' ').sort(() => Math.random() - 0.5);
-    setWords(arr.map(value => ({value: value, active: true})));
+    setWords(arr.map(value => ({value: value, active: false})));
   }, []);
 
-  const handleClickWord = (event) => {
-    console.log('hi');
-    setText([...text, {value: event.target.value, active: false}]);
-    // event.target.classList.add(styles.gray);
-    console.log(event.target);
+  const handleClickWord = async (event) => {
+    await setText([...text, event.target.name]);
+
+    const arr = words.slice();
+    const elem = arr.find(elem => elem.value === event.target.name);
+    const index = arr.indexOf(elem);
+
+    arr.splice(index, 1, {value: elem.value, active: true});
+    setWords(arr);
   };
   const handleClickText = (event) => {
     let arr = text.slice();
@@ -25,28 +29,29 @@ const SentenceLesson = ({sentence, translate}) => {
     setText(arr);
 
     arr = words.slice();
-    const elem = arr.find(elem => elem === event.target.value);
+    const elem = arr.find(elem => elem.value === event.target.name);
     const index = arr.indexOf(elem);
 
-    arr.splice(index, 1, {value: elem.value, active: true});
+    arr.splice(index, 1, {value: elem.value, active: false});
+    setWords(arr);
   }
 
   return (
     <>
       <p>Составьте текст их слов</p>
       <p>{translate}</p>
-      <ul className={styles.wordsBox}>
+      <ul className={cn(styles.wordsBox, styles.textBox)}>
         {
           text.map((word, index) =>
             <li
               key={index}
               id={`${index}`}
               className={styles.wordItem}
-              // onClick={handleClickText}
             >
               <button
                 id={`${index}`}
                 onClick={handleClickText}
+                name={word}
                 className={cn(styles.text, styles.textRes)}
               >
                 {word}
@@ -62,11 +67,11 @@ const SentenceLesson = ({sentence, translate}) => {
               key={index}
               id={`${index}`}
               className={styles.wordItem}
-              // onClick={handleClickWord}
             >
               <Button
                 id={`${index}`}
                 variant={'contained'}
+                name={word.value}
                 className={styles.text}
                 onClick={handleClickWord}
                 disabled={word.active}
