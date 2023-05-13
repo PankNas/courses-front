@@ -9,6 +9,7 @@ import axios from "../../../axios";
 import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProgressCourses} from "../../../redux/slices/auth";
+import TranslateLesson from "../Lessons/TranslateLesson";
 
 const ContentStudy = () => {
   const {courseId, lessonId} = useParams();
@@ -79,6 +80,8 @@ function typeContent(lesson) {
       return <VideoLesson desc={lesson.desc} videoUrl={lesson.videoUrl}/>;
     case 'sentence':
       return <SentenceLesson sentence={lesson.sentence} translate={lesson.translate}/>
+    case 'translate':
+      return <TranslateLesson question={lesson.question} options={lesson.options} answer={lesson.answer}/>
     default:
       return;
   }

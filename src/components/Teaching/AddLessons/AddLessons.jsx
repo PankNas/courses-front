@@ -59,6 +59,7 @@ const AddLessons = () => {
         <MenuItem id={'sentence'} onClick={handleMove}>Составить текст</MenuItem>
         <MenuItem id={'passes'} onClick={handleMove}>Пропуски</MenuItem>
         <MenuItem id={'test'} onClick={handleMove}>Тест</MenuItem>
+        <MenuItem id={'translate'} onClick={handleMove}>Перевод</MenuItem>
       </Menu>
 
       <List className={styles.lessons}>

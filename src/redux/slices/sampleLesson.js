@@ -9,6 +9,9 @@ const initialState = {
   sentence: '',
   translate: '',
   itemsTest: [],
+  options: new Array(4).fill(''),
+  answer: -1,
+  question: ''
 };
 
 const sampleSlice = createSlice({
@@ -42,6 +45,13 @@ const sampleSlice = createSlice({
       state.title = action.payload.title;
       state.itemsTest = action.payload.itemsTest;
     },
+    setDataTranslateSample: (state, action) => {
+      state.welcomeText = 'Перевод';
+      state.title = action.payload.title;
+      state.options = action.payload.options;
+      state.answer = action.payload.answer;
+      state.question = action.payload.question;
+    },
 
     setType: (state, action) => {
       state.type = action.payload
@@ -67,8 +77,17 @@ const sampleSlice = createSlice({
     setItemsTest: (state, action) => {
       state.itemsTest = action.payload
     },
-    setItemTest: (state, action) => {
-      state.itemsTest = action.payload
+    // setItemTest: (state, action) => {
+    //   state.itemsTest = action.payload
+    // },
+    setOptions: (state, action) => {
+      state.options = action.payload
+    },
+    setAnswer: (state, action) => {
+      state.answer = action.payload
+    },
+    setQuestion: (state, action) => {
+      state.question = action.payload
     },
   },
 });
@@ -80,6 +99,7 @@ export const {
   setDataSentenceSample,
   setDataPassesSample,
   setDataTestSample,
+  setDataTranslateSample,
 
   setType,
   setWelcomeText,
@@ -89,4 +109,7 @@ export const {
   setSentence,
   setTranslate,
   setItemsTest,
+  setAnswer,
+  setOptions,
+  setQuestion
 } = sampleSlice.actions;

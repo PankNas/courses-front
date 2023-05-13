@@ -10,6 +10,7 @@ import TextSample from "./TextSample/TextSample";
 import SentenceSample from "./SentenceSample/SentenceSample";
 import PassesSample from "./PassesSample/PassesSample";
 import TestSample from "./TestSample/TestSample";
+import TranslateSample from "./TranslateSample/TranslateSample";
 
 const Sample = () => {
   const dispatch = useDispatch();
@@ -76,6 +77,8 @@ function setSampleComponent(sample) {
       return <PassesSample sentence={sample.sentence} />;
     case 'test':
       return <TestSample itemsTest={sample.itemsTest}/>;
+    case 'translate':
+      return <TranslateSample question={sample.question} answer={sample.answer} options={sample.options}/>
     default:
       return;
   }
