@@ -34,7 +34,7 @@ const Course = () => {
       .then(res => {
         setDataCourse(res);
 
-        findCourse() ? setIsSubscript(false) : setIsSubscript(true);
+        findCourse() ? setIsSubscript(true) : setIsSubscript(false);
       });
   }, []);
 
@@ -42,7 +42,7 @@ const Course = () => {
     try {
       const {data} = await axios.post('/courses/subscript', {id: courseId});
 
-      alert('Вы записаны на курс');
+      setIsSubscript(true);
     } catch (err) {
       console.log(err);
       alert('Не удалось записаться на курс');

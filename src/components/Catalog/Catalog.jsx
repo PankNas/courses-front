@@ -5,13 +5,6 @@ import styles from "./Catalog.module.scss";
 import {Link} from "react-router-dom";
 
 const Catalog = ({title, items}) => {
-  // const dispatch = useDispatch();
-  // const {items} = useSelector(state => state.courses);
-  //
-  // useEffect(() => {
-  //   dispatch(fetchCourses());
-  // }, []);
-
   return (
     <div style={{margin: '30px'}}>
       <h1>{title}</h1>

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactPlayer from "react-player";
 
 const VideoLesson = ({desc, videoUrl}) => {
-  console.log(desc);
+
   return (
     <>
       <p>{desc}</p>

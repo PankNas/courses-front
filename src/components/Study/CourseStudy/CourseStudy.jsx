@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import styles from './CourseStudy.module.scss';
 
 import {useDispatch, useSelector} from "react-redux";
-import {Link, Outlet, Route, Routes, useParams} from "react-router-dom";
+import {Link, NavLink, Outlet, Route, Routes, useParams} from "react-router-dom";
 import {fetchGetCourse} from "../../../redux/slices/courses";
 import ContentStudy from "../ContentStudy/ContentStudy";
 
@@ -12,15 +12,10 @@ const CourseStudy = () => {
   const dispatch = useDispatch();
 
   const {course} = useSelector(state => state.courses);
-  const [lesson, setLesson] = useState();
 
   useEffect(() => {
     dispatch(fetchGetCourse(courseId));
   }, []);
-
-  const handleClickLesson = (event) => {
-    setLesson(course.lessons[+event.target.id]);
-  }
 
   return (
     <div className={styles.courseStudy}>
@@ -28,19 +23,20 @@ const CourseStudy = () => {
         <ol>
           {
             course?.lessons.map((lesson, index) =>
-              <Link
+              <NavLink
                 key={lesson._id}
-                to=''
-                onClick={handleClickLesson}
+                to={`lesson/${lesson._id}`}
               >
                 <li id={`${index}`} className={styles.lessonItem}>{lesson.title}</li>
-              </Link>
+              </NavLink>
             )
           }
         </ol>
       </div>
 
-      <ContentStudy lesson={lesson}/>
+      <Routes>
+        <Route path={'lesson/:lessonId'} element={<ContentStudy/>}/>
+      </Routes>
     </div>
   );
 };

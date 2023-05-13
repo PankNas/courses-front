@@ -34,11 +34,17 @@ const SentenceLesson = ({sentence, translate}) => {
 
     arr.splice(index, 1, {value: elem.value, active: false});
     setWords(arr);
+  };
+  const handleClickCheck = () => {
+    if (text.join(' ') !== sentence) {
+      alert('Увы. Ответ неверный. Попробуйте снова');
+      return;
+    }
   }
 
   return (
     <>
-      <p>Составьте текст их слов</p>
+      <p>Составьте текст из слов</p>
       <p>{translate}</p>
       <ul className={cn(styles.wordsBox, styles.textBox)}>
         {
@@ -60,7 +66,7 @@ const SentenceLesson = ({sentence, translate}) => {
           )
         }
       </ul>
-      <ul className={styles.wordsBox}>
+      <ul className={styles.wordsBox} style={{marginBottom: "20px"}}>
         {
           words.map((word, index) =>
             <li
@@ -82,6 +88,7 @@ const SentenceLesson = ({sentence, translate}) => {
           )
         }
       </ul>
+      <Button variant={'outlined'} onClick={handleClickCheck}>Проверить</Button>
     </>
   );
 };

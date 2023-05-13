@@ -1,12 +1,23 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import styles from './ContentStudy.module.scss';
 import TextLesson from "../Lessons/TextLesson";
 import VideoLesson from "../Lessons/VideoLesson";
 import SentenceLesson from "../Lessons/SentenceLesson";
+import {useParams} from "react-router-dom";
+import axios from "../../../axios";
 
-const ContentStudy = ({lesson}) => {
+const ContentStudy = () => {
+  const {lessonId} = useParams();
 
+  const [lesson, setLesson] = useState({});
+
+  useEffect(() => {
+    const getLesson = async () => (await axios.get(`lessons/${lessonId}`)).data
+
+    getLesson()
+      .then(res => setLesson(res));
+  }, [lessonId]);
 
   return (
     <div className={styles.content}>
