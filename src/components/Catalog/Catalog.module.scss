@@ -13,7 +13,9 @@
   border-radius: 15px;
   padding: 15px;
   box-sizing: border-box;
+}
 
+.cardDesc {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -32,4 +34,13 @@
 .courseButtons {
   display: flex;
   justify-content: center;
+}
+
+.progress {
+  margin-top: 20px;
+}
+
+.progressBar {
+  background-color: var(--purple);
+  height: 10px;
 }

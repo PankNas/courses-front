@@ -1,7 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ReactPlayer from "react-player";
+import {useParams} from "react-router-dom";
+import axios from "../../../axios";
+import {setFinishLesson} from "./finishLesson";
 
 const VideoLesson = ({desc, videoUrl}) => {
+  const {courseId, lessonId} = useParams();
+
+  useEffect(() => {
+    try {
+      setFinishLesson(courseId, lessonId).then();
+    } catch (err) {
+      alert('Ошибка прохождения курса!')
+    }
+  }, []);
 
   return (
     <>

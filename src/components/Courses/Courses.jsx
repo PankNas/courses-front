@@ -15,7 +15,9 @@ const Courses = () => {
 
   return (
     <Routes>
-      <Route path={'/'} element={<Catalog title={'Каталог курсов'} items={items}/>}/>
+      <Route path={'/'} element={
+        <Catalog title={'Каталог курсов'} items={items}/>}
+      />
       <Route path={'/:courseId'} element={<Course />}/>
     </Routes>
   )

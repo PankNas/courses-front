@@ -2,8 +2,12 @@ import React, {useEffect, useState} from 'react';
 import styles from './style.module.scss';
 import cn from 'classnames';
 import Button from "@mui/material/Button";
+import {setFinishLesson} from "./finishLesson";
+import {useParams} from "react-router-dom";
 
 const SentenceLesson = ({sentence, translate}) => {
+  const {courseId, lessonId} = useParams();
+
   const [text, setText] = useState([]);
   const [words, setWords] = useState([]);
 
@@ -40,6 +44,8 @@ const SentenceLesson = ({sentence, translate}) => {
       alert('Увы. Ответ неверный. Попробуйте снова');
       return;
     }
+
+    setFinishLesson(courseId, lessonId).then();
   }
 
   return (
