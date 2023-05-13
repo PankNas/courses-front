@@ -15,6 +15,15 @@
   box-sizing: border-box;
 }
 
+.linkCourse {
+  text-decoration: none;
+  color: black;
+}
+
+.linkCourse:hover {
+  color: black;
+}
+
 .cardDesc {
   display: flex;
   justify-content: space-between;

@@ -4,15 +4,25 @@ import {fetchCourses} from "../../redux/slices/courses";
 import styles from "./Catalog.module.scss";
 import {Link} from "react-router-dom";
 import Button from "@mui/material/Button";
+import {fetchProgressCourses, fetchStudentCourses} from "../../redux/slices/auth";
 
-const Catalog = ({title, items, progress}) => {
+const Catalog = ({title, items, isProgress}) => {
+  const dispatch = useDispatch();
+  const progress = useSelector(state => state.auth.progressCourses);
+
+  useEffect(() => {
+    if (isProgress) {
+      dispatch(fetchProgressCourses());
+    }
+  }, []);
+
   return (
     <div style={{margin: '30px'}}>
       <h1>{title}</h1>
       <div className={styles.courses}>
         {
           items?.map((course, index) =>
-            <Link to={`${course._id}`} style={{textDecoration: "none"}}>
+            <Link to={`${course._id}`} className={styles.linkCourse}>
               <div key={course._id} className={styles.courseCard}>
                 <div className={styles.cardDesc}>
                   {
@@ -24,12 +34,12 @@ const Catalog = ({title, items, progress}) => {
                   </div>
                 </div>
                 {
-                  progress !== undefined && progress !== null &&
+                  progress !== null && progress !== undefined && isProgress &&
                   <div className={styles.progress}>
                     <p>Пройдено {progress[index]?.lessonsEnd.length} из {course.lessons.length}</p>
                     <div
                       className={styles.progressBar}
-                      style={{width: `${progress[+index]?.lessonsEnd.length * 100 / course.lessons.length}%`}}
+                      style={{width: `${progress[index]?.lessonsEnd.length * 100 / course.lessons.length}%`}}
                     ></div>
                   </div>
                 }

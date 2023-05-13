@@ -41,10 +41,11 @@ const SentenceLesson = ({sentence, translate}) => {
   };
   const handleClickCheck = () => {
     if (text.join(' ') !== sentence) {
-      alert('Увы. Ответ неверный. Попробуйте снова');
+      alert('Увы, ответ неверный. Попробуйте снова');
       return;
     }
 
+    alert('Успех!');
     setFinishLesson(courseId, lessonId).then();
   }
 
