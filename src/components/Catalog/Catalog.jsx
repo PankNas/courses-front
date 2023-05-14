@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import Button from "@mui/material/Button";
 import {fetchProgressCourses, fetchStudentCourses} from "../../redux/slices/auth";
 
-const Catalog = ({title, items, isProgress}) => {
+const Catalog = ({title, items, isProgress, fnUnsubscribe}) => {
   const dispatch = useDispatch();
   const progress = useSelector(state => state.auth.progressCourses);
 
@@ -15,6 +15,12 @@ const Catalog = ({title, items, isProgress}) => {
       dispatch(fetchProgressCourses());
     }
   }, []);
+
+  const handleClickDel = (event) => {
+    if (!window.confirm('Вы уверены, что хотите отписаться от курса?')) return;
+
+    fnUnsubscribe(event.target.id);
+  }
 
   return (
     <div style={{margin: '30px'}}>
@@ -42,6 +48,18 @@ const Catalog = ({title, items, isProgress}) => {
                       style={{width: `${progress[index]?.lessonsEnd.length * 100 / course.lessons.length}%`}}
                     ></div>
                   </div>
+                }
+                {
+                  isProgress &&
+                  <Button
+                    id={course._id}
+                    variant={'outlined'}
+                    style={{marginTop: "15px"}}
+                    onClick={handleClickDel}
+                    color={'error'}
+                  >
+                    Отписаться
+                  </Button>
                 }
               </div>
             </Link>

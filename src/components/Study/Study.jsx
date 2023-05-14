@@ -4,6 +4,7 @@ import {fetchStudentCourses} from "../../redux/slices/auth";
 import Catalog from "../Catalog/Catalog";
 import {Route, Routes} from "react-router-dom";
 import CourseStudy from "./CourseStudy/CourseStudy";
+import axios from "../../axios";
 
 const Study = () => {
   const dispatch = useDispatch();
@@ -13,11 +14,25 @@ const Study = () => {
     dispatch(fetchStudentCourses());
   }, []);
 
+  const handleUnsubscribe = async (id) => {
+    try {
+      await axios.delete(`/courses/subscript/${id}`)
+    } catch (err) {
+      console.log(err);
+      console.warn('Не удалось отписаться от курса');
+    }
+  }
+
   return (
     <>
       <Routes>
         <Route path={'/'} element={
-          <Catalog title={'Обучение'} items={studentCourses} isProgress={true}/>
+          <Catalog
+            title={'Обучение'}
+            items={studentCourses}
+            isProgress={true}
+            fnUnsubscribe={handleUnsubscribe}
+          />
         }/>
         <Route path={':courseId/*'} element={<CourseStudy />} />
       </Routes>
