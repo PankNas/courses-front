@@ -28,11 +28,16 @@ const Sample = () => {
         course: id,
       };
 
+      if (sampleLesson.type === 'test') {
+        fields.totalScore = sampleLesson.itemsTest.reduce((sum, elem) => sum + elem.score, 0);
+      }
+
       sampleId ?
         await axios.patch(`/lessons/${sampleLesson.type}/${sampleId}`, fields)
         : await axios.post(`/lessons/${sampleLesson.type}`, fields);
 
       navigate(`/teach/${id}/edit`);
+      console.log(sampleLesson);
     } catch (err) {
       console.warn(err);
 

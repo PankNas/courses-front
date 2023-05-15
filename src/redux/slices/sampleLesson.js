@@ -11,7 +11,7 @@ const initialState = {
   itemsTest: [],
   options: new Array(4).fill(''),
   answer: -1,
-  question: ''
+  question: '',
 };
 
 const sampleSlice = createSlice({
@@ -77,9 +77,6 @@ const sampleSlice = createSlice({
     setItemsTest: (state, action) => {
       state.itemsTest = action.payload
     },
-    // setItemTest: (state, action) => {
-    //   state.itemsTest = action.payload
-    // },
     setOptions: (state, action) => {
       state.options = action.payload
     },

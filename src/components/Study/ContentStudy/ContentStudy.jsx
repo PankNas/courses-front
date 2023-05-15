@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProgressCourses} from "../../../redux/slices/auth";
 import TranslateLesson from "../Lessons/TranslateLesson";
+import TestLesson from "../Lessons/TestLesson";
 
 const ContentStudy = () => {
   const {courseId, lessonId} = useParams();
@@ -82,6 +83,8 @@ function typeContent(lesson) {
       return <SentenceLesson sentence={lesson.sentence} translate={lesson.translate}/>
     case 'translate':
       return <TranslateLesson question={lesson.question} options={lesson.options} answer={lesson.answer}/>
+    case 'test':
+      return <TestLesson items={lesson.itemsTest} totalScore={lesson.totalScore}/>
     default:
       return;
   }

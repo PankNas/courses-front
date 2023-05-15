@@ -18,6 +18,7 @@ const TestSample = ({itemsTest}) => {
       dispatch(setDataTestSample({
         title: '',
         itemsTest: [],
+        totalScore: 0,
       }));
 
       return;
@@ -29,6 +30,7 @@ const TestSample = ({itemsTest}) => {
         dispatch(setDataTestSample({
           title: data.title,
           itemsTest: data.itemsTest,
+          totalScore: data.totalScore,
         }))
       });
   }, []);

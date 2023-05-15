@@ -3,14 +3,15 @@ import {useParams} from "react-router-dom";
 import {setFinishLesson} from "./finishLesson";
 import Button from "@mui/material/Button";
 import {Checkbox, FormControlLabel, FormGroup} from "@mui/material";
+import CheckboxItem from "../../CheckboxItem";
 
 const TranslateLesson = ({question, options, answer}) => {
   const {courseId, lessonId} = useParams();
   const [curAnswer, setCurAnswer] = useState(-1);
 
-  const isChecked = (index) => index === curAnswer;
+  // const isChecked = (index) => index === curAnswer;
 
-  const handleChangeCheckBox = (event, index) => {
+  const handleChangeCheckBox = (event, index, _numItem) => {
     setCurAnswer(+index);
   };
   const handleClickCheck = () => {
@@ -27,21 +28,26 @@ const TranslateLesson = ({question, options, answer}) => {
     <>
       <p>Переведите текст</p>
       <p style={{textAlign: "center"}}>{question}</p>
-      <FormGroup>
-        {
-          options.map((option, index) =>
-            <FormControlLabel
-              key={index}
-              control={
-                <Checkbox
-                  id={index}
-                  checked={isChecked(index)}
-                  onChange={(event) => handleChangeCheckBox(event, index)}/>
-              }
-              label={option}/>
-          )
-        }
-      </FormGroup>
+      <CheckboxItem
+        options={options}
+        answer={curAnswer}
+        fnChange={handleChangeCheckBox}
+      />
+      {/*<FormGroup>*/}
+      {/*  {*/}
+      {/*    options.map((option, index) =>*/}
+      {/*      <FormControlLabel*/}
+      {/*        key={index}*/}
+      {/*        control={*/}
+      {/*          <Checkbox*/}
+      {/*            id={index}*/}
+      {/*            checked={isChecked(index)}*/}
+      {/*            onChange={(event) => handleChangeCheckBox(event, index)}/>*/}
+      {/*        }*/}
+      {/*        label={option}/>*/}
+      {/*    )*/}
+      {/*  }*/}
+      {/*</FormGroup>*/}
       <Button
         style={{marginTop: "20px"}}
         variant={'outlined'}

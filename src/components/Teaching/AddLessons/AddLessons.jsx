@@ -25,8 +25,11 @@ const AddLessons = () => {
   };
   const onClickRemove = (event) => {
     if (!window.confirm("Вы действительно хотите удалить урок?")) return;
-
-    dispatch(fetchRemoveLesson(items[event.target.id]._id));
+    try {
+      dispatch(fetchRemoveLesson(items[event.target.id]._id));
+    } catch (err) {
+      
+    }
   };
   const onClickEdit = (event) => {
     const item = items[event.target.id];

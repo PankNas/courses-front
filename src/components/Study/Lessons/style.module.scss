@@ -4,9 +4,7 @@
 
 .wordsBox {
   flex-wrap: wrap;
-  //display: flex;
   gap: 8px;
-  //width: 100%;
   list-style-type: none;
   margin-left: -38px;
   box-sizing: border-box;
@@ -21,12 +19,6 @@
 }
 
 .wordItem {
-  //padding: 20px;
-  //box-sizing: border-box;
-  //background-color: var(--purple);
-  //color: white;
-  //border-radius: 15px;
-  //min-width: 50px;
   display: inline-block;
   margin-right: 10px;
 }
@@ -50,4 +42,11 @@
 
 .gray {
   background-color: gray;
+}
+
+.testItem {
+  border: 2px solid var(--purple);
+  border-radius: 15px;
+  margin-bottom: 15px;
+  padding: 10px;
 }

@@ -16,7 +16,8 @@ const Study = () => {
 
   const handleUnsubscribe = async (id) => {
     try {
-      await axios.delete(`/courses/subscript/${id}`)
+      await axios.delete(`/courses/subscript/${id}`);
+      dispatch(fetchStudentCourses());
     } catch (err) {
       console.log(err);
       console.warn('Не удалось отписаться от курса');
