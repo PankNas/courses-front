@@ -8,28 +8,28 @@ import CheckboxItem from "../../CheckboxItem";
 
 const TestLesson = ({items, totalScore}) => {
   const {courseId, lessonId} = useParams();
-  const [answers, setAnswers] = useState(new Array(items?.length).fill(0));
+  const [answers, setAnswers] = useState(new Array(items?.length).fill(-1));
+  const [score, setScore] = useState('');
 
   const handleChangeCheckBox = (event, index, numItem) => {
     const copyAnswers = answers.slice();
     copyAnswers.splice(numItem, 1, index);
 
-    setAnswers(copyAnswers)
-    // setCurAnswer(+index);
+    setAnswers(copyAnswers);
   };
   const handleClickCheck = () => {
-    // if (curAnswer !== answer) {
-    //   alert('Увы, ответ неверный. Попробуйте снова');
-    //   return;
-    // }
-    //
-    // alert('Успех!');
-    // setFinishLesson(courseId, lessonId).then();
+    const sumScore = items.reduce((acc, item, index) => {
+      if (item.answer === answers[index]) return acc + item.score;
+
+      return acc;
+    }, 0);
+
+    setScore(sumScore);
+    setFinishLesson(courseId, lessonId).then();
   };
 
   return (
     <>
-      <p>Набрано ? из {totalScore}</p>
       {
         items.map((item, index) =>
           <div key={item.id} className={styles.testItem}>
@@ -38,18 +38,23 @@ const TestLesson = ({items, totalScore}) => {
               options={item?.options}
               answer={answers[index]}
               fnChange={handleChangeCheckBox}
-              numberItem={index}
+              numItem={index}
             />
           </div>
         )
       }
-      <Button
-        style={{marginTop: "20px"}}
-        variant={'outlined'}
-        onClick={handleClickCheck}
-      >
-        Проверить
-      </Button>
+      {
+        score === '' ?
+          <Button
+            style={{marginTop: "20px"}}
+            variant={'outlined'}
+            onClick={handleClickCheck}
+          >
+            Проверить
+          </Button>
+          :
+          <p>Набрано {score} из {totalScore}</p>
+      }
     </>
   );
 };

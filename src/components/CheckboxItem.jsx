@@ -12,7 +12,7 @@ const CheckboxItem = ({options, answer, fnChange, numItem}) => {
             key={index}
             control={
               <Checkbox
-                id={index}
+                id={`${index}`}
                 checked={isChecked(index)}
                 onChange={(event) => fnChange(event, index, numItem)}/>
             }
