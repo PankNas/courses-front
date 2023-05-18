@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchProgressCourses} from "../../../redux/slices/auth";
 import TranslateLesson from "../Lessons/TranslateLesson";
 import TestLesson from "../Lessons/TestLesson";
+import PassesLesson from "../Lessons/PassesLesson";
 
 const ContentStudy = () => {
   const {courseId, lessonId} = useParams();
@@ -85,6 +86,8 @@ function typeContent(lesson) {
       return <TranslateLesson question={lesson.question} options={lesson.options} answer={lesson.answer}/>
     case 'test':
       return <TestLesson items={lesson.itemsTest} totalScore={lesson.totalScore}/>
+    case 'passes':
+      return <PassesLesson sentence={lesson.sentence}/>;
     default:
       return;
   }
