@@ -12,7 +12,6 @@ import {fetchProgressCourses} from "../../../redux/slices/auth";
 import TranslateLesson from "../Lessons/TranslateLesson";
 import TestLesson from "../Lessons/TestLesson";
 import PassesLesson from "../Lessons/PassesLesson";
-import SelectItem from "../../SelectItem";
 
 const ContentStudy = () => {
   const {courseId, lessonId} = useParams();
