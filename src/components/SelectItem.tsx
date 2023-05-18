@@ -2,9 +2,9 @@ import React from 'react';
 import {FormControl, Select} from "@mui/material";
 
 type SelectItemType = {
-  id?: string,
+  id: string,
   options: string[],
-  value?: string,
+  value: string,
   style?: any,
   height?: any,
   onChange(event: any): void,
@@ -14,6 +14,7 @@ const SelectItem = (props:SelectItemType):JSX.Element => {
   return (
     <FormControl variant="outlined" style={props.style}>
       <Select
+        key={props.id}
         native
         value={props.value}
         onChange={props.onChange}

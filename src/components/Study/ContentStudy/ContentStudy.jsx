@@ -12,6 +12,7 @@ import {fetchProgressCourses} from "../../../redux/slices/auth";
 import TranslateLesson from "../Lessons/TranslateLesson";
 import TestLesson from "../Lessons/TestLesson";
 import PassesLesson from "../Lessons/PassesLesson";
+import SelectItem from "../../SelectItem";
 
 const ContentStudy = () => {
   const {courseId, lessonId} = useParams();
@@ -87,10 +88,31 @@ function typeContent(lesson) {
     case 'test':
       return <TestLesson items={lesson.itemsTest} totalScore={lesson.totalScore}/>
     case 'passes':
-      return <PassesLesson sentence={lesson.sentence}/>;
+      const parts = lesson.sentence.split(/\[(.*?)\]/g);
+      const size = Math.trunc(parts.length / 2);
+
+      const [options, answers] = setParamsPasses(lesson.sentence);
+
+      return <PassesLesson sentence={lesson.sentence} size={size} options={options} answers={answers}/>;
     default:
       return;
   }
+}
+
+function setParamsPasses(sentence) {
+  const parts = sentence.match(/\[(.*?)\]/g);
+
+  let options = [];
+  let answers = [];
+
+  parts.forEach((elem) => {
+    const values = elem.split(',').map(item => item.trim().replace(/\[|]/g, ''));
+
+    answers.push(values[0]);
+    options.push(values.sort(() => Math.random() - 0.5));
+  })
+
+  return [options, answers];
 }
 
 export default ContentStudy;
