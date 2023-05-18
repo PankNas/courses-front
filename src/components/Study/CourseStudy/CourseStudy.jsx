@@ -34,16 +34,6 @@ const CourseStudy = () => {
     if (progress.lessonsEnd.length - 1 - indexLesson < -1) return;
 
     navigate(`lesson/${event.target.id}`);
-
-    // if (course.lessons[0]._id === event.target.id)
-    //   navigate(`lesson/${event.target.id}`);
-    //
-    // const indexCourse = progressCourses.findIndex(course => course.course === courseId);
-    // const indexLesson = progressCourses[indexCourse].lessonsEnd.findIndex(lesson => lesson === event.target.id);
-    //
-    // if (indexLesson === -1) return;
-    //
-    // navigate(`lesson/${event.target.id}`);
   }
 
   return (
@@ -52,16 +42,6 @@ const CourseStudy = () => {
         <ol>
           {
             course?.lessons.map((lesson, index) =>
-              // <NavLink
-              //   key={lesson._id}
-              //   to={`lesson/${lesson._id}`}
-              // >
-              //   <li id={`${index}`} className={styles.lessonItem}>
-              //     <button id={lesson._id} onClick={}>
-              //       {lesson.title}
-              //     </button>
-              //   </li>
-              // </NavLink>
               <li
                 key={lesson._id}
                 className={styles.lessonItem}

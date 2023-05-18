@@ -22,7 +22,7 @@ const ContentStudy = () => {
   const {progressCourses} = useSelector(state => state.auth);
 
   useEffect(() => {
-    dispatch(fetchProgressCourses());
+    // dispatch(fetchProgressCourses());
 
     const getLesson = async () => (await axios.get(`lessons/${lessonId}`)).data
 
@@ -30,26 +30,44 @@ const ContentStudy = () => {
       .then(res => setLesson(res));
   }, [lessonId]);
 
-  const handleClickBack = () => {
-    const indexCourse = progressCourses.findIndex(course => course.course === courseId);
-    const indexLesson = progressCourses[indexCourse].lessonsEnd.findIndex(lesson => lesson === lessonId);
+  const handleClickBack = async () => {
+    const course = (await axios.get(`courses/${courseId}`)).data;
+    const indexLesson = course.lessons.findIndex(lesson => lesson._id === lessonId);
 
-    if (indexLesson - 1 !== -1) return;
+    if (indexLesson === 0) return;
 
-    const backCourse = progressCourses[indexCourse].lessonsEnd[indexLesson - 1];
-
-    navigate(`/study/${courseId}/lesson/${backCourse}`);
-
+    navigate(`/study/${courseId}/lesson/${course.lessons[indexLesson - 1]._id}`);
   };
-  const handleClickNext = () => {
-    const indexCourse = progressCourses.findIndex(course => course.course === courseId);
-    const indexLesson = progressCourses[indexCourse].lessonsEnd.findIndex(lesson => lesson === lessonId);
+  const handleClickNext = async () => {
+    // const indexCourse = progressCourses.findIndex(course => course.course === courseId);
+    // const indexLesson = progressCourses[indexCourse].lessonsEnd.findIndex(lesson => lesson === lessonId);
+    //
+    // if (indexLesson + 1 !== progressCourses.length) return;
+    //
+    // const nextIndex = progressCourses[indexCourse].lessonsEnd[indexLesson + 1];
+    //
+    // navigate(`/study/${courseId}/lesson/${nextIndex}`);
 
-    if (indexLesson + 1 !== progressCourses.length) return;
+    dispatch(fetchProgressCourses());
 
-    const nextIndex = progressCourses[indexCourse].lessonsEnd[indexLesson + 1];
+    const course = (await axios.get(`courses/${courseId}`)).data;
+    const indexLesson = course.lessons.findIndex(lesson => lesson._id === lessonId);
 
-    navigate(`/study/${courseId}/lesson/${nextIndex}`);
+    if (indexLesson === course.lessons.length - 1) return;
+
+    const progress = progressCourses.find(course => course.course === courseId);
+    let nextLesson = progress.lessonsEnd.find(lesson => lesson === course.lessons[indexLesson + 1]._id);
+
+    if (!nextLesson) {
+      const lastLessonId = progress.lessonsEnd[progress.lessonsEnd.length - 1];
+      const lastLessonIndex = course.lessons.findIndex(lesson => lesson._id === lastLessonId);
+
+      if (indexLesson + 1 - lastLessonIndex !== 1) return;
+
+      nextLesson = course.lessons[indexLesson + 1]._id;
+    }
+
+    navigate(`/study/${courseId}/lesson/${nextLesson}`);
   }
 
   return (
