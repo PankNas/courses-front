@@ -16,7 +16,7 @@ const Sample = () => {
   const dispatch = useDispatch();
   const sampleLesson = useSelector(state => state.sample);
 
-  const {id, sampleId} = useParams();
+  const {id, sampleId, moduleId} = useParams();
   const navigate = useNavigate();
 
   const handleNavigate = () => navigate(`/teach/${id}/edit`);
@@ -26,6 +26,7 @@ const Sample = () => {
       const fields = {
         ...sampleLesson,
         course: id,
+        module: moduleId,
       };
 
       if (sampleLesson.type === 'test') {
@@ -37,7 +38,6 @@ const Sample = () => {
         : await axios.post(`/lessons/${sampleLesson.type}`, fields);
 
       navigate(`/teach/${id}/edit`);
-      console.log(sampleLesson);
     } catch (err) {
       console.warn(err);
 

@@ -11,8 +11,8 @@ const Teaching = () => {
       <Routes>
         <Route path="/" element={<PersonCourses/>}/>
         <Route path="/:id/edit/" element={<CreateCourse/>}/>
-        <Route path="/:id/edit/sample/*" element={<Sample/>} />
-        <Route path="/:id/edit/sample/:sampleId" element={<Sample/>}/>
+        <Route path="/:id/edit/module/:moduleId/sample/*" element={<Sample/>} />
+        <Route path="/:id/edit/module/:moduleId/sample/:sampleId" element={<Sample/>}/>
       </Routes>
     </div>
   );

@@ -29,3 +29,8 @@
   margin-top: 20px;
   border: 2px solid var(--purple);
 }
+
+.module {
+  padding: 15px;
+  border: 2px solid var(--purple);
+}
