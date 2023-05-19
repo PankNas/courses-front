@@ -5,7 +5,7 @@ import styles from "./AddLessons.module.css";
 
 import {Menu, MenuItem, Button, List, ListItem, ListItemIcon, ListItemText, IconButton} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchLessons, fetchRemoveLesson} from "../../../redux/slices/lessons";
+import {fetchLessons, fetchRemoveLesson, setTitle} from "../../../redux/slices/lessons";
 import {setType} from "../../../redux/slices/sampleLesson";
 import TextField from "@mui/material/TextField";
 
@@ -16,17 +16,25 @@ const AddLessons = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  // const {items} = useSelector(state => state.lessons);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const {modules} = useSelector(state => state.lessons);
+  const [anchorEls, setAnchorEls] = useState(Array(modules.length).fill(null));
 
-  const [modules, setModules] = useState([]);
+  const handleClick = (index, event) => {
+    const newAnchorEls = [...anchorEls];             // создаем новый массив якорей
+    newAnchorEls[index] = event.currentTarget;      // устанавливаем соответствующий якорь для элемента меню
+    setAnchorEls(newAnchorEls);                      // обновляем состояние якорей
+  };
 
-  const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleMove = (event) => {
-    setAnchorEl(null);
-
     dispatch(setType(event.target.id));
-    navigate(`module/${event.target.data-id}/sample`);
+
+    const dataIndex = event.currentTarget.getAttribute('data-index');
+    console.log(dataIndex, modules[dataIndex]._id);
+    const newAnchorEls = [...anchorEls];
+    newAnchorEls[dataIndex] = null; // сброс якоря после закрытия списка меню
+    setAnchorEls(newAnchorEls);
+
+    navigate(`module/${modules[dataIndex]._id}/sample`);
   };
   const onClickRemove = (event) => {
     if (!window.confirm("Вы действительно хотите удалить урок?")) return;
@@ -47,14 +55,16 @@ const AddLessons = () => {
   const handleAddModel = async () => {
     const {data} = await axios.post("/modules", {course: id});
 
-    setModules(prev => [...prev, data]);
-  }
+    // setModules(prev => [...prev, data]);
+    dispatch(fetchLessons(id));
+  };
 
   const handleChangeTitle = (event) => {
-    modules[+event.target.id].title = event.target.value;
+    // modules[+event.target.id].title = event.target.value;
 
-    setModules(modules);
-  }
+    // setModules(modules);
+    dispatch(setTitle({id: +event.target.id, value: event.target.value}));
+  };
 
   useEffect(() => {
     dispatch(fetchLessons(id));
@@ -67,7 +77,7 @@ const AddLessons = () => {
         + Новый модуль
       </Button>
 
-      <div>
+      <div style={{marginTop: "15px"}}>
         {
           modules?.map((block, index) =>
             <div key={index} className={styles.module}>
@@ -100,18 +110,24 @@ const AddLessons = () => {
               </List>
 
               <div style={{marginTop: "15px"}}>
-                <Button style={{padding: '0'}} className={styles.moduleAdd} onClick={handleClick}>
+                <Button
+                  style={{padding: '0'}}
+                  className={styles.moduleAdd}
+                  onClick={(e) => handleClick(index, e)}
+                  aria-controls={`simple-menu-${index}`}
+                  aria-haspopup="true"
+                >
                   + Добавить урок
                 </Button>
                 <Menu
-                  id="simple-menu"
-                  anchorEl={anchorEl}
+                  id={`simple-menu-${index}`}
+                  anchorEl={anchorEls[index]} // используем соответствующий якорь для элемента меню
                   keepMounted
-                  open={Boolean(anchorEl)}
+                  open={Boolean(anchorEls[index])}
                   onClose={handleMove}
-                  PaperProps={{sx: {width: '650px'}}}
+                  PaperProps={{ sx: { width: '650px' } }}
                 >
-                  <MenuItem id={`text`} data-id={block._id} onClick={handleMove}>Теория</MenuItem>
+                  <MenuItem id={`text`} data-index={index} onClick={handleMove}>Теория</MenuItem>
                   <MenuItem id={'video'} data-id={block._id} onClick={handleMove}>Видео</MenuItem>
                   <MenuItem id={'sentence'} data-id={block._id} onClick={handleMove}>Составить текст</MenuItem>
                   <MenuItem id={'passes'} data-id={block._id} onClick={handleMove}>Пропуски</MenuItem>
@@ -123,43 +139,6 @@ const AddLessons = () => {
           )
         }
       </div>
-
-      {/*<Button style={{padding: '0'}} className={styles.moduleAdd} onClick={handleClick}>*/}
-      {/*  <div className={styles.moduleAddPlus}>+</div>*/}
-      {/*  <p className={styles.moduleAddText}>Добавить урок</p>*/}
-      {/*</Button>*/}
-      {/*<Menu*/}
-      {/*  id="simple-menu"*/}
-      {/*  anchorEl={anchorEl}*/}
-      {/*  keepMounted*/}
-      {/*  open={Boolean(anchorEl)}*/}
-      {/*  onClose={handleMove}*/}
-      {/*  PaperProps={{sx: {width: '650px'}}}*/}
-      {/*>*/}
-      {/*  <MenuItem id={`text`} onClick={handleMove}>Теория</MenuItem>*/}
-      {/*  <MenuItem id={'video'} onClick={handleMove}>Видео</MenuItem>*/}
-      {/*  <MenuItem id={'sentence'} onClick={handleMove}>Составить текст</MenuItem>*/}
-      {/*  <MenuItem id={'passes'} onClick={handleMove}>Пропуски</MenuItem>*/}
-      {/*  <MenuItem id={'test'} onClick={handleMove}>Тест</MenuItem>*/}
-      {/*  <MenuItem id={'translate'} onClick={handleMove}>Перевод</MenuItem>*/}
-      {/*</Menu>*/}
-
-      {/*<List className={styles.lessons}>*/}
-      {/*  {*/}
-      {/*    items.map((item, index) =>*/}
-      {/*      <ListItem key={index} className={styles.lessonsItem}>*/}
-      {/*        <ListItemIcon/>*/}
-      {/*        <ListItemText primary={item.title}/>*/}
-      {/*        <IconButton id={index} onClick={onClickEdit} color="secondary">*/}
-      {/*          E*/}
-      {/*        </IconButton>*/}
-      {/*        <IconButton id={index} onClick={onClickRemove} color="secondary">*/}
-      {/*          X*/}
-      {/*        </IconButton>*/}
-      {/*      </ListItem>*/}
-      {/*    )*/}
-      {/*  }*/}
-      {/*</List>*/}
     </div>
   );
 };

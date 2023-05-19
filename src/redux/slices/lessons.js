@@ -4,9 +4,9 @@ import axios from "../../axios";
 export const fetchLessons = createAsyncThunk(
   "lessons/fetchLessons",
   async (id) => {
-    const {lessons} = (await axios.get(`/courses/${id}`)).data;
+    const {modules} = (await axios.get(`/courses/${id}`)).data;
 
-    return lessons;
+    return modules;
   }
 );
 
@@ -16,33 +16,40 @@ export const fetchRemoveLesson = createAsyncThunk(
 );
 
 const initialState = {
-  items: [],
+  modules: [],
   status: "loading",
 };
 
 const lessonsSlice = createSlice({
   name: 'lessons',
   initialState,
-  reducers: {},
+  reducers: {
+    setTitle: (state, action) => {
+      state.modules[+action.payload.id].title = +action.payload.value;
+    }
+  },
   extraReducers: {
     [fetchLessons.pending]: (state) => {
-      state.items = [];
+      state.modules = [];
       state.status = "loading";
     },
     [fetchLessons.fulfilled]: (state, action) => {
-      state.items = action.payload;
+      state.modules = action.payload;
       state.status = "loaded";
     },
     [fetchLessons.rejected]: (state) => {
-      state.items = [];
+      state.modules = [];
       state.status = "error";
     },
 
     // удаление урока
     [fetchRemoveLesson.pending]: (state, action) => {
-      state.items = state.items.filter(obj => obj._id !== action.meta.arg);
+      // state.items = state.items.filter(obj => obj._id !== action.meta.arg);
     },
   }
 });
 
+export const {
+  setTitle,
+} = lessonsSlice.actions;
 export const lessonsReducer = lessonsSlice.reducer;
