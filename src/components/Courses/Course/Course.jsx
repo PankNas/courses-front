@@ -17,7 +17,7 @@ const Course = () => {
     language: '',
     levelLanguage: '',
     imageUrl: '',
-    lessons: [],
+    modules: [],
   });
   const [isSubscript, setIsSubscript] = useState(false);
 
@@ -47,7 +47,7 @@ const Course = () => {
       console.log(err);
       alert('Не удалось записаться на курс');
     }
-  }
+  };
 
   return (
     <div className={styles.course}>
@@ -63,13 +63,19 @@ const Course = () => {
       <p>Программа курса</p>
       <ol style={{marginBottom: '15px'}}>
         {
-          dataCourse.lessons.map((lesson) =>
-            <li>{lesson.title}</li>
+          dataCourse.modules.map(module =>
+            <li key={module._id} style={{marginBottom: "8px"}}>
+              {module.title}
+              <ol>
+                {module.lessons.map(lesson => <li key={lesson._id}>{lesson.title}</li>)}
+              </ol>
+            </li>
           )
         }
       </ol>
       {
-        isSubscript ? <p>Вы записаны на курс</p> : <Button variant="outlined" onClick={handleClickRecord}>Записаться</Button>
+        isSubscript ? <p>Вы записаны на курс</p> :
+          <Button variant="outlined" onClick={handleClickRecord}>Записаться</Button>
       }
     </div>
   );

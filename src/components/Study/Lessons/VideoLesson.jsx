@@ -13,7 +13,7 @@ const VideoLesson = ({desc, videoUrl}) => {
     } catch (err) {
       alert('Ошибка прохождения курса!')
     }
-  }, []);
+  }, [lessonId]);
 
   return (
     <>

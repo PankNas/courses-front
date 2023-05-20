@@ -11,7 +11,7 @@ const TextLesson = ({desc}) => {
     } catch (err) {
       alert('Ошибка прохождения курса!');
     }
-  }, []);
+  }, [lessonId]);
 
   return (
     <p>{desc}</p>

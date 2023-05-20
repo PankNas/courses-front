@@ -27,8 +27,10 @@ const Catalog = ({title, items, isProgress, fnUnsubscribe}) => {
       <h1>{title}</h1>
       <div className={styles.courses}>
         {
-          items?.map((course, index) =>
-            <div key={course._id} className={styles.courseCard}>
+          items?.map((course, index) => {
+            const countLessons = isProgress ? course?.modules.reduce((acc, elem) => acc + elem?.lessons.length, 0) : 0;
+
+            return <div key={course._id} className={styles.courseCard}>
               <div className={styles.cardDesc}>
                 {
                   course.imageUrl &&
@@ -41,10 +43,10 @@ const Catalog = ({title, items, isProgress, fnUnsubscribe}) => {
               {
                 progress !== null && progress !== undefined && isProgress &&
                 <div className={styles.progress}>
-                  <p>Пройдено {progress[index]?.lessonsEnd.length} из {course.lessons.length}</p>
+                  <p>Пройдено {progress[index]?.lessonsEnd.length} из {countLessons}</p>
                   <div
                     className={styles.progressBar}
-                    style={{width: `${progress[index]?.lessonsEnd.length * 100 / course.lessons.length}%`}}
+                    style={{width: `${progress[index]?.lessonsEnd.length * 100 / countLessons}%`}}
                   ></div>
                 </div>
               }
@@ -71,8 +73,8 @@ const Catalog = ({title, items, isProgress, fnUnsubscribe}) => {
                   </Button>
                 }
               </div>
-            </div>
-          )
+            </div>;
+          })
         }
       </div>
     </div>
