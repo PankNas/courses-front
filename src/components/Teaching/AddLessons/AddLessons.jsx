@@ -94,7 +94,7 @@ const AddLessons = () => {
       <div style={{marginTop: "15px"}}>
         {
           modules?.map((block, index) =>
-            <div key={index} className={styles.module}>
+            <div key={block._id} className={styles.module}>
               <div className={styles.moduleHeader}>
                 <span style={{marginLeft: "10px"}}>{index + 1}</span>
                 <TextField

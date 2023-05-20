@@ -31,7 +31,8 @@ const lessonsSlice = createSlice({
   reducers: {
     setTitle: (state, action) => {
       const modules = state.modules.slice();
-      modules[+action.payload.id].title = +action.payload.value;
+      modules[+action.payload.id].title = action.payload.value;
+      console.log(action, module);
 
       state.modules = modules;
     }

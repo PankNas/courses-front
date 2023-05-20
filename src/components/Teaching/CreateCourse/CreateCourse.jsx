@@ -15,6 +15,7 @@ import {fetchCourses} from "../../../redux/slices/courses";
 const CreateCourse = () => {
   const {id} = useParams();
   const dispatch = useDispatch();
+  const {modules} = useSelector(state => state.lessons);
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
@@ -84,6 +85,8 @@ const CreateCourse = () => {
         language,
         levelLanguage,
       };
+
+      modules.forEach(async module => await axios.patch(`/modules/${module._id}`, module))
 
       await axios.patch(`/courses/${id}`, fields);
 
