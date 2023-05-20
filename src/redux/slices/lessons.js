@@ -2,7 +2,7 @@ import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "../../axios";
 
 export const fetchLessons = createAsyncThunk(
-  "lessons/fetchLessons",
+  "lessons/fetchModules",
   async (id) => {
     const {modules} = (await axios.get(`/courses/${id}`)).data;
 
@@ -15,6 +15,11 @@ export const fetchRemoveLesson = createAsyncThunk(
   async (id) => (await axios.delete(`/lessons/${id}`)).data
 );
 
+export const fetchRemoveModule = createAsyncThunk(
+  "lessons/fetchRemoveModule",
+  async (id) => (await axios.delete(`/modules/${id}`)).data
+);
+
 const initialState = {
   modules: [],
   status: "loading",
@@ -25,7 +30,10 @@ const lessonsSlice = createSlice({
   initialState,
   reducers: {
     setTitle: (state, action) => {
-      state.modules[+action.payload.id].title = +action.payload.value;
+      const modules = state.modules.slice();
+      modules[+action.payload.id].title = +action.payload.value;
+
+      state.modules = modules;
     }
   },
   extraReducers: {
@@ -44,7 +52,13 @@ const lessonsSlice = createSlice({
 
     // удаление урока
     [fetchRemoveLesson.pending]: (state, action) => {
-      // state.items = state.items.filter(obj => obj._id !== action.meta.arg);
+      state.modules = state.modules.map(obj => obj.lessons.filter(lesson => lesson._id !== action.meta.arg));
+      // state.modules = state.modules.filter(obj => obj.lessons._id !== action.meta.arg);
+    },
+
+    // удаление модуля
+    [fetchRemoveModule.pending]: (state, action) => {
+      state.modules = state.modules.filter(obj => obj._id !== action.meta.arg);
     },
   }
 });

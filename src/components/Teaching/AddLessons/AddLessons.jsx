@@ -5,7 +5,7 @@ import styles from "./AddLessons.module.css";
 
 import {Menu, MenuItem, Button, List, ListItem, ListItemIcon, ListItemText, IconButton} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchLessons, fetchRemoveLesson, setTitle} from "../../../redux/slices/lessons";
+import {fetchLessons, fetchRemoveLesson, fetchRemoveModule, setTitle} from "../../../redux/slices/lessons";
 import {setType} from "../../../redux/slices/sampleLesson";
 import TextField from "@mui/material/TextField";
 
@@ -29,7 +29,6 @@ const AddLessons = () => {
     dispatch(setType(event.target.id));
 
     const dataIndex = event.currentTarget.getAttribute('data-index');
-    console.log(dataIndex, modules[dataIndex]._id);
     const newAnchorEls = [...anchorEls];
     newAnchorEls[dataIndex] = null; // сброс якоря после закрытия списка меню
     setAnchorEls(newAnchorEls);
@@ -39,16 +38,31 @@ const AddLessons = () => {
   const onClickRemove = (event) => {
     if (!window.confirm("Вы действительно хотите удалить урок?")) return;
 
-    // try {
-    //   dispatch(fetchRemoveLesson(items[event.target.id]._id));
-    // } catch (err) {
-    //
-    // }
+    try {
+      const dataIndex = event.currentTarget.getAttribute('data-index');
+
+      dispatch(fetchRemoveLesson(modules[dataIndex].lessons[event.target.id]._id));
+      dispatch(fetchLessons(id));
+    } catch (err) {}
   };
+  const onClickRemoveModule = (event) => {
+    if (!window.confirm("Вы действительно хотите удалить модуль?")) return;
+
+    try {
+      dispatch(fetchRemoveModule(modules[event.target.id]._id));
+      dispatch(fetchLessons(id));
+    } catch (err) {}
+  }
+
   const onClickEdit = (event) => {
     // const item = items[event.target.id];
-    //
-    // dispatch(setType(item.type));
+
+    const dataIndex = event.currentTarget.getAttribute('data-index');
+
+    dispatch(setType(modules[dataIndex].lessons[event.target.id].type));
+
+    navigate(`module/${modules[dataIndex]._id}/sample/${modules[dataIndex].lessons[event.target.id]._id}`);
+
     // navigate(`sample/${item._id}`);
   };
 
@@ -81,27 +95,32 @@ const AddLessons = () => {
         {
           modules?.map((block, index) =>
             <div key={index} className={styles.module}>
-              <span style={{marginLeft: "10px"}}>{index + 1}</span>
-              <TextField
-                id={`${index}`}
-                value={block.title}
-                label="Название модуля"
-                onChange={handleChangeTitle}
-                variant="outlined"
-                fullWidth
-                style={{marginBottom: '20px', marginTop: '20px'}}
-              />
+              <div className={styles.moduleHeader}>
+                <span style={{marginLeft: "10px"}}>{index + 1}</span>
+                <TextField
+                  id={`${index}`}
+                  value={block.title}
+                  label="Название модуля"
+                  onChange={handleChangeTitle}
+                  variant="outlined"
+                  // fullWidth
+                  style={{marginBottom: '20px', marginTop: '20px', width: "90%"}}
+                />
+                <IconButton id={index} onClick={onClickRemoveModule} color="secondary">
+                  X
+                </IconButton>
+              </div>
 
               <List className={styles.lessons}>
                 {
-                  block.lessons?.map((item, index) =>
+                  block.lessons?.map((item, indexLesson) =>
                     <ListItem key={index} className={styles.lessonsItem}>
                       <ListItemIcon/>
                       <ListItemText primary={item.title}/>
-                      <IconButton id={index} onClick={onClickEdit} color="secondary">
+                      <IconButton id={index} data-index={index} onClick={onClickEdit} color="secondary">
                         E
                       </IconButton>
-                      <IconButton id={index} onClick={onClickRemove} color="secondary">
+                      <IconButton id={index} data-index={index} onClick={onClickRemove} color="secondary">
                         X
                       </IconButton>
                     </ListItem>
@@ -128,11 +147,11 @@ const AddLessons = () => {
                   PaperProps={{ sx: { width: '650px' } }}
                 >
                   <MenuItem id={`text`} data-index={index} onClick={handleMove}>Теория</MenuItem>
-                  <MenuItem id={'video'} data-id={block._id} onClick={handleMove}>Видео</MenuItem>
-                  <MenuItem id={'sentence'} data-id={block._id} onClick={handleMove}>Составить текст</MenuItem>
-                  <MenuItem id={'passes'} data-id={block._id} onClick={handleMove}>Пропуски</MenuItem>
-                  <MenuItem id={'test'} data-id={block._id} onClick={handleMove}>Тест</MenuItem>
-                  <MenuItem id={'translate'} data-id={block._id} onClick={handleMove}>Перевод</MenuItem>
+                  <MenuItem id={'video'} data-index={index} onClick={handleMove}>Видео</MenuItem>
+                  <MenuItem id={'sentence'} data-index={index} onClick={handleMove}>Составить текст</MenuItem>
+                  <MenuItem id={'passes'} data-index={index} onClick={handleMove}>Пропуски</MenuItem>
+                  <MenuItem id={'test'} data-index={index} onClick={handleMove}>Тест</MenuItem>
+                  <MenuItem id={'translate'} data-index={index} onClick={handleMove}>Перевод</MenuItem>
                 </Menu>
               </div>
             </div>
