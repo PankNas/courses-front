@@ -7,22 +7,26 @@
 }
 
 .courseCard {
-  min-height: 150px;
-  width: 300px;
+  min-height: 170px;
+  width: 400px;
   border: 2px solid var(--purple);
   border-radius: 15px;
   padding: 15px;
   box-sizing: border-box;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  //display: flex;
+  //justify-content: space-between;
+  //align-items: center;
 }
 
 .courseContent {
-  width: 170px;
+  //width: 170px;
   //display: flex;
   //flex-direction: column;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .courseImg {

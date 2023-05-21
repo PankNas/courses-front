@@ -37,6 +37,26 @@ const PersonCourses = () => {
     navigate(`${event.target.id}/edit`)
   }
 
+  const setStatus = (status) => {
+    let res;
+
+    if (status === 'passive')
+      res = 'черновик';
+    else if (status === 'check')
+      res = 'на проверке';
+    else
+      res = 'одобрен';
+
+    return res;
+  };
+
+  const handleClickCheck = async (event) => {
+    const course = teachCourses.find(item => item._id === event.target.id);
+    course.status = 'check';
+
+    await axios.patch(`/courses/${event.target.id}`, course);
+  }
+
   return (
     <>
       <h1>Мои курсы</h1>
@@ -45,29 +65,43 @@ const PersonCourses = () => {
         {
           teachCourses?.map(course =>
             <div key={course._id} className={styles.courseCard}>
-              {
-                course.imageUrl &&
-                <img className={styles.courseImg} src={`http://localhost:8000${course.imageUrl}`} alt="img"/>
-              }
+              <p>Статус: {setStatus(course.status)}</p>
+
               <div className={styles.courseContent}>
-                <h3 style={{textAlign: "center"}}>{course.title}</h3>
-                <div className={styles.courseButtons}>
-                  <Button
-                    id={course._id}
-                    variant="outlined"
-                    onClick={handleEditCourse}
-                    style={{marginRight: "15px"}}
-                  >
-                    P
-                  </Button>
-                  <Button
-                    id={course._id}
-                    style={{color: "red"}}
-                    variant="outlined"
-                    onClick={handleDelCourse}
-                  >
-                    X
-                  </Button>
+                {
+                  course.imageUrl &&
+                  <img className={styles.courseImg} src={`http://localhost:8000${course.imageUrl}`} alt="img"/>
+                }
+                <div >
+                  <h3 style={{textAlign: "center"}}>{course.title}</h3>
+                  <div className={styles.courseButtons}>
+                    <Button
+                      id={course._id}
+                      size={'large'}
+                      variant="outlined"
+                      onClick={handleEditCourse}
+                      style={{marginRight: "15px"}}
+                    >
+                      Pедактировать
+                    </Button>
+                    <Button
+                      id={course._id}
+                      size={'large'}
+                      variant="outlined"
+                      onClick={handleClickCheck}
+                      style={{marginRight: "15px"}}
+                    >
+                      Опубликовать
+                    </Button>
+                    <Button
+                      id={course._id}
+                      style={{color: "red"}}
+                      variant="outlined"
+                      onClick={handleDelCourse}
+                    >
+                      Удалить
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>

@@ -25,12 +25,17 @@ const Register = () => {
       fullName: "Vasya Pypkin",
       email: "vasya@test.ru",
       password: "12345",
+      codeAccess: '',
     },
     mode: "onChange",
   });
 
   const onSubmit = async (values) => {
-    const data = await dispatch(fetchRegister(values));
+    let fields = {
+      ...values
+    }
+
+    const data = await dispatch(fetchRegister(fields));
 
     if (!data.payload) {
       return alert("Не удалось зарегистрироваться!");
@@ -61,6 +66,7 @@ const Register = () => {
           className={styles.field}
           label="Полное имя"
           fullWidth
+          required
         />
         <TextField
           error={Boolean(errors.email?.message)}
@@ -70,6 +76,7 @@ const Register = () => {
           className={styles.field}
           label="E-Mail"
           fullWidth
+          required
         />
         <TextField
           error={Boolean(errors.password?.message)}
@@ -78,6 +85,16 @@ const Register = () => {
           {...register("password", { required: "Укажите пароль" })}
           className={styles.field}
           label="Пароль"
+          fullWidth
+          required
+        />
+        <TextField
+          error={Boolean(errors.codeAccess?.message)}
+          helperText={errors.codeAccess?.message}
+          type="text"
+          {...register("codeAccess")}
+          className={styles.field}
+          label="Код сотрудника"
           fullWidth
         />
         <Button

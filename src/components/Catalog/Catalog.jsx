@@ -5,6 +5,7 @@ import styles from "./Catalog.module.scss";
 import {Link} from "react-router-dom";
 import Button from "@mui/material/Button";
 import {fetchProgressCourses, fetchStudentCourses} from "../../redux/slices/auth";
+import axios from "../../axios";
 
 const Catalog = ({title, items, isProgress, fnUnsubscribe}) => {
   const dispatch = useDispatch();
