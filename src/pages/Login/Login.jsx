@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -14,8 +14,9 @@ import { fetchAuth, selectIsAuth } from "../../redux/slices/auth";
 import {Link} from "react-router-dom";
 
 const Login = () => {
-  const isAuth = useSelector(selectIsAuth);
+  const user = useSelector(state => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -40,11 +41,16 @@ const Login = () => {
     if ("token" in data.payload.data) {
       localStorage.setItem("token", data.payload.data.token);
     }
+
+    const path = data?.role === 'member' ? 'study' : 'check';
+
+    navigate(`/${path}`)
   };
 
-  if (isAuth) {
-    return <Navigate to="/" />;
-  }
+  // if (user.status === 'loaded') {
+  //   if (user.data?.role === 'member') return <Navigate to="/study" />;
+  //   if (user.data?.role === 'moderator') return <Navigate to="/check" />;
+  // }
 
   return (
     <Paper classes={{ root: styles.root }}>

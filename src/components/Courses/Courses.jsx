@@ -23,7 +23,7 @@ const Courses = () => {
       <Route path={'/'} element={
         <Catalog title={'Каталог курсов'} items={activeCourses} isProgress={false}/>}
       />
-      <Route path={'/:courseId'} element={<Course />}/>
+      <Route path={'/:courseId'} element={<Course isModerator={false}/>}/>
     </Routes>
   )
 };

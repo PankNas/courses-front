@@ -9,11 +9,13 @@ import styles from "./Register.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRegister, selectIsAuth } from "../../redux/slices/auth";
 import { useForm } from "react-hook-form";
-import {Link, Navigate} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 
 const Register = () => {
-  const isAuth = useSelector(selectIsAuth);
+  // const isAuth = useSelector(selectIsAuth);
+  const user = useSelector(state => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -44,11 +46,19 @@ const Register = () => {
     if ("token" in data.payload) {
       localStorage.setItem("token", data.payload.token);
     }
+
+    const path = data?.role === 'member' ? 'study' : 'check';
+
+    navigate(`/${path}`)
   };
 
-  if (isAuth) {
-    return <Navigate to="/" />;
-  }
+  // if (isAuth) {
+  //   return <Navigate to="/study" />;
+  // }
+  // if (user.status === 'loaded') {
+  //   if (user.data?.role === 'member') return <Navigate to="/study" />;
+  //   if (user.data?.role === 'moderator') return <Navigate to="/check" />;
+  // }
 
   return (
     <Paper classes={{ root: styles.root }}>

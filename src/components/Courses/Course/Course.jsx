@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "../../../axios";
 import styles from './Course.module.scss';
 import AddLessons from "../../Teaching/AddLessons/AddLessons";
@@ -7,8 +7,9 @@ import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchStudentCourses, fetchTeachCourses} from "../../../redux/slices/auth";
 
-const Course = () => {
+const Course = ({isModerator}) => {
   const {courseId} = useParams();
+  const navigate = useNavigate();
 
   const [dataCourse, setDataCourse] = useState({
     _id: '',
@@ -20,6 +21,7 @@ const Course = () => {
     modules: [],
   });
   const [isSubscript, setIsSubscript] = useState(false);
+  const [curCourse, setCurCourse] = useState(null);
 
   const dispatch = useDispatch();
   const {studentCourses} = useSelector(state => state.auth);
@@ -33,14 +35,19 @@ const Course = () => {
     getCourse()
       .then(res => {
         setDataCourse(res);
+        setCurCourse(res);
 
-        findCourse() ? setIsSubscript(true) : setIsSubscript(false);
+        isModerator || findCourse() ? setIsSubscript(true) : setIsSubscript(false);
       });
   }, []);
 
+  const handleMove = async () => {
+    navigate(`lessons/${curCourse?.modules[0].lessons[0]._id}`);
+  }
+
   const handleClickRecord = async () => {
     try {
-      const {data} = await axios.post('/courses/subscript', {id: courseId});
+      await axios.post('/courses/subscript', {id: courseId});
 
       setIsSubscript(true);
     } catch (err) {
@@ -74,7 +81,8 @@ const Course = () => {
         }
       </ol>
       {
-        isSubscript ? <p>Вы записаны на курс</p> :
+        isSubscript ?
+          <Button variant="outlined" onClick={handleMove}>К урокам</Button> :
           <Button variant="outlined" onClick={handleClickRecord}>Записаться</Button>
       }
     </div>

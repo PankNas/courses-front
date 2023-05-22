@@ -9,7 +9,7 @@ import ContentStudy from "../ContentStudy/ContentStudy";
 import {fetchProgressCourses} from "../../../redux/slices/auth";
 import axios from "../../../axios";
 
-const CourseStudy = () => {
+const CourseStudy = ({isModerate}) => {
   const {courseId} = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,6 +22,11 @@ const CourseStudy = () => {
   }, []);
 
   const handleClickNav = async (event) => {
+    if (isModerate) {
+      navigate(`lesson/${event.target.id}`);
+      return;
+    }
+
     await dispatch(fetchProgressCourses());
 
     const course = (await axios.get(`courses/${courseId}`)).data;
@@ -36,16 +41,6 @@ const CourseStudy = () => {
     if (progress.lessonsEnd.length - 1 - indexLesson < -1) return;
 
     navigate(`lesson/${event.target.id}`);
-
-    // const indexLesson = course.lessons.findIndex(lesson => lesson._id === event.target.id);
-    //
-    // if (indexLesson === 0) navigate(`lesson/${event.target.id}`);
-    //
-    // const progress = progressCourses.find(course => course.course === courseId);
-    //
-    // if (progress.lessonsEnd.length - 1 - indexLesson < -1) return;
-    //
-    // navigate(`lesson/${event.target.id}`);
   };
 
   return (
