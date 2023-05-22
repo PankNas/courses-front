@@ -84,6 +84,7 @@ const CreateCourse = () => {
         desc,
         language,
         levelLanguage,
+        status: 'passive'
       };
 
       modules.forEach(async module => await axios.patch(`/modules/${module._id}`, module))

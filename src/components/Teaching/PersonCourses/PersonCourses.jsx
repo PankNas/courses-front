@@ -51,10 +51,21 @@ const PersonCourses = () => {
   };
 
   const handleClickCheck = async (event) => {
-    const course = teachCourses.find(item => item._id === event.target.id);
-    course.status = 'check';
+    try {
+      // const course = teachCourses.find(item => item._id === event.target.id);
+      //
+      // const fields = {
+      //   id: cours._id
+      // }
+      // console.log(course);
+      // course.status = 'check';
 
-    await axios.patch(`/courses/${event.target.id}`, course);
+      await axios.patch(`/courses/${event.target.id}`, {status: 'check'});
+      dispatch(fetchTeachCourses());
+    } catch (err) {
+      console.log(err);
+      alert('Не удалось отправить курс на модерацию');
+    }
   }
 
   return (
@@ -84,15 +95,18 @@ const PersonCourses = () => {
                     >
                       Pедактировать
                     </Button>
-                    <Button
-                      id={course._id}
-                      size={'large'}
-                      variant="outlined"
-                      onClick={handleClickCheck}
-                      style={{marginRight: "15px"}}
-                    >
-                      Опубликовать
-                    </Button>
+                    {
+                      course.status === 'passive' &&
+                      <Button
+                        id={course._id}
+                        size={'large'}
+                        variant="outlined"
+                        onClick={handleClickCheck}
+                        style={{marginRight: "15px"}}
+                      >
+                        Опубликовать
+                      </Button>
+                    }
                     <Button
                       id={course._id}
                       style={{color: "red"}}
