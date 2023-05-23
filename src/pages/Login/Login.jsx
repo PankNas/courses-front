@@ -44,8 +44,6 @@ const Login = () => {
 
     const path = data.payload.data.role === 'member' ? 'study' : 'check';
 
-    console.log(path);
-
     navigate(`/${path}`)
   };
 
@@ -83,14 +81,12 @@ const Login = () => {
           type="submit"
           size="large"
           variant="contained"
+          style={{backgroundColor: "rgb(98, 116, 255)"}}
           fullWidth
         >
           Войти
         </Button>
       </form>
-      <Link to='/register'>
-        <p>Нет аккаунта? Зарегистрироваться</p>
-      </Link>
     </Paper>
   );
 };

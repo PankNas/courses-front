@@ -98,28 +98,26 @@ const Register = () => {
           fullWidth
           required
         />
-        <TextField
-          error={Boolean(errors.codeAccess?.message)}
-          helperText={errors.codeAccess?.message}
-          type="text"
-          {...register("codeAccess")}
-          className={styles.field}
-          label="Код сотрудника"
-          fullWidth
-        />
+        {/*<TextField*/}
+        {/*  error={Boolean(errors.codeAccess?.message)}*/}
+        {/*  helperText={errors.codeAccess?.message}*/}
+        {/*  type="text"*/}
+        {/*  {...register("codeAccess")}*/}
+        {/*  className={styles.field}*/}
+        {/*  label="Код сотрудника"*/}
+        {/*  fullWidth*/}
+        {/*/>*/}
         <Button
           disabled={!isValid}
           type="submit"
           size="large"
           variant="contained"
+          style={{backgroundColor: "rgb(98, 116, 255)"}}
           fullWidth
         >
           Зарегистрироваться
         </Button>
       </form>
-      <Link to='/login'>
-        <p>Есть аккаунт? Войти</p>
-      </Link>
     </Paper>
   );
 };
