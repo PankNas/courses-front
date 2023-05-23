@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import {Link, Navigate, useNavigate} from "react-router-dom";
 
 const Register = () => {
-  // const isAuth = useSelector(selectIsAuth);
+  const isAuth = useSelector(selectIsAuth);
   const user = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();

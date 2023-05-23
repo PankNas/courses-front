@@ -9,6 +9,7 @@ import Header from "./components/Header/Header";
 import {useDispatch} from "react-redux";
 import {fetchAuthMe} from "./redux/slices/auth";
 import styles from './App.module.css'
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function App() {
 
         {/*<Route path="/*" element={<PersonalArea/>}/>*/}
       </Routes>
+      <Footer />
     </div>
   );
 }

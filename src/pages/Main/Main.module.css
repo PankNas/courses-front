@@ -1,0 +1,109 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Josefin Sans",sans-serif;
+  /*color: #4255A4;*/
+  margin-top: 0;
+  font-style: normal;
+}
+
+.main {
+  width: 100%;
+  height: 40vmax;
+
+  background-image: url("../../img/background/back_main.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  display: flex;
+  align-items: center;
+
+  /*align-content: flex-end;*/
+}
+
+.welcomeText {
+  max-width: 37vw;
+  color: white;
+
+  /*margin-top: 10%;*/
+}
+
+.welcomeText .title {
+  color: #FFFF;
+  font-size: 6vh;
+}
+
+.textHeader {
+  max-width: 38vw;
+  font-size: 18px;
+}
+
+.buttonJoin {
+  color: white;
+  background-color: #FF9F67;
+
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.space {
+  margin-bottom: 100px;
+}
+
+.mainContent {
+  /*height: 400px;*/
+  /*position: absolute;*/
+  /*top: 40%;*/
+  /*margin: 0 auto;*/
+  width: 100%;
+}
+
+.advantages {
+  margin-top: -50px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.blockAdvantage {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 15px;
+  padding: 29px 24px;
+  width: 268px;
+  min-height: 70px;
+
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.07), 0 10px 10px rgba(0,0,0,0.05);
+}
+
+.featureIcon, .featureCaption {
+  display: inline-block;
+}
+
+.featureCaption {
+  margin-left: 20px;
+
+  color: #4255A4;
+}
+
+.headerAdvantage {
+  font-size: 20px;
+  margin-top: 0;
+}
+
+.button-join {
+  color: white;
+  background-color: #FF9F67;
+
+  font-size: 18px;
+  font-weight: normal;
+}
