@@ -47,7 +47,7 @@ const Register = () => {
       localStorage.setItem("token", data.payload.token);
     }
 
-    const path = data?.role === 'member' ? 'study' : 'check';
+    const path = data.payload.data.role === 'member' ? 'study' : 'check';
 
     navigate(`/${path}`)
   };

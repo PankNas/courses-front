@@ -52,15 +52,7 @@ const PersonCourses = () => {
 
   const handleClickCheck = async (event) => {
     try {
-      // const course = teachCourses.find(item => item._id === event.target.id);
-      //
-      // const fields = {
-      //   id: cours._id
-      // }
-      // console.log(course);
-      // course.status = 'check';
-
-      await axios.patch(`/courses/${event.target.id}`, {status: 'check'});
+      await axios.patch(`/courses/${event.target.id}`, {status: 'check', countCheck: 0});
       dispatch(fetchTeachCourses());
     } catch (err) {
       console.log(err);
@@ -77,6 +69,7 @@ const PersonCourses = () => {
           teachCourses?.map(course =>
             <div key={course._id} className={styles.courseCard}>
               <p>Статус: {setStatus(course.status)}</p>
+              {course.status === 'check' && <p>Пройдено проверок: {course.countCheck} из 2</p>}
 
               <div className={styles.courseContent}>
                 {

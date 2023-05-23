@@ -9,7 +9,7 @@ import ContentStudy from "../ContentStudy/ContentStudy";
 import {fetchProgressCourses} from "../../../redux/slices/auth";
 import axios from "../../../axios";
 
-const CourseStudy = ({isModerate}) => {
+const CourseStudy = ({isActive}) => {
   const {courseId} = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const CourseStudy = ({isModerate}) => {
   }, []);
 
   const handleClickNav = async (event) => {
-    if (isModerate) {
+    if (isActive) {
       navigate(`lesson/${event.target.id}`);
       return;
     }
@@ -73,7 +73,7 @@ const CourseStudy = ({isModerate}) => {
       </div>
 
       <Routes>
-        <Route path={'lesson/:lessonId'} element={<ContentStudy/>}/>
+        <Route path={'lesson/:lessonId'} element={<ContentStudy isActive={isActive}/>}/>
       </Routes>
     </div>
   );

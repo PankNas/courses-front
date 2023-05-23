@@ -10,26 +10,25 @@ import CourseStudy from "../Study/CourseStudy/CourseStudy";
 const Check = () => {
   const dispatch = useDispatch();
   const {items} = useSelector(state => state.courses);
-  const [checkCourses, setCheckCourses] = useState([]);
 
   useEffect(() => {
     dispatch(fetchCourses());
   }, []);
 
-  const getCheck = () => {
-    return items.filter(item => item.status === 'check');
-    // console.log(check);
-    //
-    // setCheckCourses(check);
-  }
+  const getCheck = () => items.filter(item => item.status === 'check');
+
+  const getActive = () => items.filter(item => item.status === 'active');
 
   return (
     <Routes>
       <Route path={'/'} element={
         <Catalog title={'Курсы на проверку'} items={getCheck()} isProgress={false}/>}
       />
+      <Route path={'/'} element={
+        <Catalog title={'Каталог курсов'} items={getActive()} isProgress={false}/>}
+      />
       <Route path={'/:courseId'} element={<Course isModerator={true}/>}/>
-      <Route path={'/:courseId/*'} element={<CourseStudy isModerate={true}/>}/>
+      <Route path={'/:courseId/*'} element={<CourseStudy isActive={true}/>}/>
     </Routes>
   )
 }

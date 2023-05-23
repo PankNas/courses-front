@@ -42,7 +42,9 @@ const Login = () => {
       localStorage.setItem("token", data.payload.data.token);
     }
 
-    const path = data?.role === 'member' ? 'study' : 'check';
+    const path = data.payload.data.role === 'member' ? 'study' : 'check';
+
+    console.log(path);
 
     navigate(`/${path}`)
   };

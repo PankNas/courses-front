@@ -17,21 +17,31 @@ const Navigation = () => {
     {
       name: 'Каталог',
       icon: '',
+      flag: 'all',
       navigate: '/courses',
     },
     {
       name: 'Обучение',
       icon: '',
+      flag: 'member',
       navigate: '/study',
     },
     {
       name: 'Преподавание',
       icon: '',
+      flag: 'member',
       navigate: '/teach',
     },
     {
-      name: 'Проверка',
+      name: 'Модерация',
       icon: '',
+      flag: 'moderator',
+      navigate: '/check',
+    },
+    {
+      name: 'Мои проверки',
+      icon: '',
+      flag: 'moderator',
       navigate: '/check',
     }
   ];
@@ -49,11 +59,11 @@ function createList(items, data) {
   let res = []
 
   items.forEach((item, index) => {
-      if (data?.role === 'member' && item.name !== 'Проверка')
+      if (data?.role === item.flag || item.flag === 'all')
         res.push(createListItem(item, index));
 
-      if (data?.role === 'moderator' && item.name === 'Проверка')
-        res.push(createListItem(item, index));
+      // if (data?.role === 'moderator' && (item.name === 'Модерация' || item.name === 'Мои проверки' || item.name === 'Каталог'))
+      //   res.push(createListItem(item, index));
     }
   )
 

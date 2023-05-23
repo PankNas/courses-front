@@ -13,7 +13,7 @@ import TranslateLesson from "../Lessons/TranslateLesson";
 import TestLesson from "../Lessons/TestLesson";
 import PassesLesson from "../Lessons/PassesLesson";
 
-const ContentStudy = () => {
+const ContentStudy = ({isActive}) => {
   const {courseId, lessonId} = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,17 +38,27 @@ const ContentStudy = () => {
 
     if (indexLesson === 0) return;
 
+    if (isActive) {
+      navigate(`/check/${courseId}/lesson/${lessons[indexLesson - 1]._id}`);
+      return;
+    }
+
     navigate(`/study/${courseId}/lesson/${lessons[indexLesson - 1]._id}`);
   };
   const handleClickNext = async () => {
-    dispatch(fetchProgressCourses());
-
     const course = (await axios.get(`courses/${courseId}`)).data;
     const lessons = course.modules.flatMap(module => module.lessons);
 
     const indexLesson = lessons.findIndex(lesson => lesson._id === lessonId);
 
     if (indexLesson === lessons.length - 1) return;
+
+    if (isActive) {
+      navigate(`/check/${courseId}/lesson/${lessons[indexLesson + 1]._id}`);
+      return;
+    }
+
+    dispatch(fetchProgressCourses());
 
     const progress = progressCourses.find(course => course.course === courseId);
     let nextLesson = progress.lessonsEnd.find(lesson => lesson === lessons[indexLesson + 1]._id);
