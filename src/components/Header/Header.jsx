@@ -17,13 +17,11 @@ const Header = () => {
   return (
     <div className={styles.container}>
       <div className={styles.menu}>
-        <Link to={'/'}><img src={`http://localhost:8000/uploads/logo.png`} alt="logo"/></Link>
+        <Link to={'/'}><img src={`http://localhost:8000/uploads/my/logo.png`} alt="logo"/></Link>
         <nav>
           <ul className={styles.navMenu}>
-            <li><a className={styles.navLink} href="#">Главная</a></li>
-            <li><a className={styles.navLink} href="#">Курсы</a></li>
+            <li><Link className={styles.navLink} to={isAuth ? '' : '/login'}>Каталог</Link></li>
             <li><a className={styles.navLink} href="#">О нас</a></li>
-            <li><a className={styles.navLink} href="#">Контакты</a></li>
             {
               isAuth ?
                 <>

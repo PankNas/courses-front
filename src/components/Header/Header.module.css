@@ -5,13 +5,14 @@
   background-size: cover;
   position: sticky;
   top: 0;
+  z-index: 1;
 }
 
 .menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
 
   height: 60px;
@@ -61,7 +62,7 @@ a {
   text-decoration: none;
 }
 
-.style-nav-link {
+.styleNavLink {
   text-decoration: none;
 }
 

@@ -44,7 +44,7 @@ const MySlider = ({slides}) => {
                 <div className={styles.block}>
                   <img src={item.src} alt="flag" className={styles.flag}/>
                   <div className={styles.languageName}>
-                    <p style={{textAlign: 'center'}}>{item.title}</p>
+                    <p className={styles.languageText}>{item.title}</p>
                   </div>
                 </div>
               </li>
