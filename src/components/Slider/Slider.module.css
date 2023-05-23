@@ -1,0 +1,155 @@
+.blocksLanguages {
+  /*display: flex;*/
+  /*flex-wrap: wrap;*/
+  /*justify-content: space-between;*/
+  /*align-items: center;*/
+  /*max-width: 540px;*/
+
+  font-family: sans-serif;
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.blocksLanguages .block {
+  width: 230px;
+  height: 150px;
+  margin-bottom: 15px;
+
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /*font-size: 2rem;*/
+  flex-shrink: 0;
+}
+
+.flag {
+  position: relative;
+
+  object-fit: cover;
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+}
+
+.languageName {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+
+  position: absolute;
+}
+
+/*------------------------------*/
+
+.scrollableContainer {
+  position: relative;
+}
+
+.list {
+  display: flex;
+  overflow-x: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/*.item {*/
+/*  display: flex;*/
+/*  width: 12.5rem;*/
+/*  height: 12.5rem;*/
+/*  background-color: aquamarine;*/
+/*  border-radius: 8px;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  font-size: 2rem;*/
+/*  flex-shrink: 0;*/
+/*}*/
+
+.block:not(:last-child) {
+  margin-right: 1em;
+}
+
+/*.App {*/
+/*  font-family: sans-serif;*/
+/*  text-align: center;*/
+/*  max-width: 540px;*/
+/*  margin: 0 auto;*/
+/*}*/
+
+.list::-webkit-scrollbar {
+  width: 0;
+}
+
+.button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.buttonLeft {
+  left: -20px;
+}
+
+.buttonRight {
+  right: -20px;
+}
+
+.button--hidden {
+  display: none;
+}
+
+.shadowWrapper {
+  width: 30px;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+}
+
+.leftShadowWrapper {
+  left: 0;
+}
+
+.rightShadowWrapper {
+  right: 0;
+}
+
+.shadow {
+  position: absolute;
+  box-shadow: 0 0 30px -8px #232628;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: -25px;
+  width: 24px;
+  height: 80%;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.leftShadow {
+  box-shadow: 0 0 30px -8px #232628;
+  left: -25px;
+}
+
+.rightShadow {
+  box-shadow: 0 0 30px -8px #232628;
+  right: -25px;
+}

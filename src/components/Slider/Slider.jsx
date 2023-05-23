@@ -1,34 +1,86 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styles from './Slider.module.css';
+import debounce from "lodash.debounce";
+import cn from "classnames";
 
 const MySlider = ({slides}) => {
-  const containerRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const listRef = useRef(null);
+
+  const checkForScrollPosition = () => {
+    const {current} = listRef;
+    if (current) {
+      const {scrollLeft, scrollWidth, clientWidth} = current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft !== scrollWidth - clientWidth);
+    }
+  };
+
+  const debounceCheckForScrollPosition = debounce(checkForScrollPosition, 200);
+
+  const scrollContainerBy = (distance) =>
+    listRef.current?.scrollBy({left: distance, behavior: "smooth"});
 
   useEffect(() => {
-    let intervalId;
-    const container = containerRef.current;
+    const {current} = listRef;
+    checkForScrollPosition();
+    current?.addEventListener("scroll", debounceCheckForScrollPosition);
 
-    // Автоматическая прокрутка каждые 5 секунд
-    intervalId = setInterval(() => {
-      const nextScrollLeft = container.scrollLeft + container.offsetWidth;
-      if (nextScrollLeft >= container.scrollWidth) {
-        container.scrollTo({ left: 0, behavior: 'smooth' });
-      } else {
-        container.scrollTo({ left: nextScrollLeft, behavior: 'smooth' });
-      }
-    }, 5000);
-
-    return () => clearInterval(intervalId);
+    return () => {
+      current?.removeEventListener("scroll", debounceCheckForScrollPosition);
+      debounceCheckForScrollPosition.cancel();
+    };
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      style={{ display: 'flex', overflowX: 'scroll', scrollBehavior: 'smooth' }}
-    >
-      <div style={{ width: 200, height: 200, backgroundColor: 'red', margin: 10 }} />
-      <div style={{ width: 200, height: 200, backgroundColor: 'green', margin: 10 }} />
-      <div style={{ width: 200, height: 200, backgroundColor: 'blue', margin: 10 }} />
+    <div className={styles.blocksLanguages}>
+      <div className={styles.scrollableContainer}>
+        <ul className={styles.list} ref={listRef}>
+          {
+            slides.map((item, index) =>
+              <li style={{marginRight: "1.5em"}} key={index}>
+                <div className={styles.block}>
+                  <img src={item.src} alt="flag" className={styles.flag}/>
+                  <p className={styles.languageName}>{item.title}</p>
+                </div>
+              </li>
+            )
+          }
+        </ul>
+
+        <button
+          type="button"
+          disabled={!canScrollLeft}
+          onClick={() => scrollContainerBy(-400)}
+          className={cn(styles.button, styles.buttonLeft, {
+            "button--hidden": !canScrollLeft
+          })}
+        >
+          ←
+        </button>
+        <button
+          type="button"
+          disabled={!canScrollRight}
+          onClick={() => scrollContainerBy(400)}
+          className={cn(styles.button, styles.buttonRight, {
+            "button--hidden": !canScrollRight
+          })}
+        >
+          →
+        </button>
+        {canScrollLeft ? (
+          <div className={cn(styles.shadowWrapper, styles.leftShadowWrapper)}>
+            <div className={cn(styles.shadow, styles.leftShadow)}/>
+          </div>
+        ) : null}
+        {canScrollRight ? (
+          <div className={cn(styles.shadowWrapper, styles.rightShadowWrapper)}>
+            <div className={cn(styles.shadow, styles.rightShadow)}/>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 };

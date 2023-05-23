@@ -14,8 +14,8 @@ const adventures = [
   },
   {
     img: `http://localhost:8000/uploads/man.svg`,
-    title: 'Конструктора курсов',
-    text: 'Создавай свои образовательные программы',
+    title: 'Удобный конструктор',
+    text: 'Создавай свои курсы',
   },
   {
     img: `http://localhost:8000/uploads/clock.svg`,
@@ -26,20 +26,33 @@ const adventures = [
 
 const slides = [
   {
-    src: '/path/to/image1.jpg',
-    title: 'Slide 1 Title',
-    description: 'Slide 1 Description',
+    src: 'http://localhost:8000/uploads/england-flag.png',
+    title: 'English',
   },
   {
-    src: '/path/to/image2.jpg',
-    title: 'Slide 2 Title',
-    description: 'Slide 2 Description',
+    src: 'http://localhost:8000/uploads/england-flag.png',
+    title: 'English',
   },
   {
-    src: '/path/to/image3.jpg',
-    title: 'Slide 3 Title',
-    description: 'Slide 3 Description',
+    src: 'http://localhost:8000/uploads/england-flag.png',
+    title: 'English',
   },
+  {
+    src: 'http://localhost:8000/uploads/england-flag.png',
+    title: 'English',
+  },
+  {
+    src: 'http://localhost:8000/uploads/england-flag.png',
+    title: 'English',
+  },
+  {
+    src: 'http://localhost:8000/uploads/england-flag.png',
+    title: 'English',
+  },
+  {
+    src: 'http://localhost:8000/uploads/england-flag.png',
+    title: 'English',
+  }
 ];
 
 const Main = () => {
@@ -51,7 +64,8 @@ const Main = () => {
         <div className={cn(styles.container, styles.mainContent)}>
           <div className={styles.welcomeText}>
             <h1 className={styles.title}>Сервис для изучения иностранных языков.</h1>
-            <p className={styles.textHeader}>Вступай в команду лингвистов-любителей. Проходи и создавай онлайн-курсы по любимым
+            <p className={styles.textHeader}>Вступай в команду лингвистов-любителей. Проходи и создавай онлайн-курсы по
+              любимым
               языкам.</p>
             <Link to={isAuth ? '' : '/register'}>
               <button className={styles.buttonJoin}>{isAuth ? "Обучаться" : 'Присоединиться'}</button>
@@ -64,7 +78,7 @@ const Main = () => {
         {
           adventures.map((elem, index) =>
             <div key={index} className={styles.blockAdvantage}>
-              <img className={styles.featureIcon} src={elem.img} alt='' />
+              <img className={styles.featureIcon} src={elem.img} alt=""/>
               <div className={styles.featureCaption}>
                 <h2 className={styles.headerAdvantage}>{elem.title}</h2>
                 <p>{elem.text}</p>
@@ -74,9 +88,12 @@ const Main = () => {
         }
       </div>
 
-      <MySlider slides={slides}/>
+      <section className={cn(styles.container, styles.space)}>
+        <h2 className={styles.headerLanguages}>Языковые направления</h2>
+        <MySlider slides={slides}/>
+      </section>
     </>
-  )
-}
+  );
+};
 
 export default Main;
