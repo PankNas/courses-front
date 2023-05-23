@@ -26,33 +26,33 @@ const adventures = [
 
 const slides = [
   {
-    src: 'http://localhost:8000/uploads/england-flag.png',
-    title: 'English',
+    src: 'http://localhost:8000/uploads/flags/england-flag.png',
+    title: 'Английский',
   },
   {
-    src: 'http://localhost:8000/uploads/england-flag.png',
-    title: 'English',
+    src: 'http://localhost:8000/uploads/flags/gernamy-flag.png',
+    title: 'Немецкий',
   },
   {
-    src: 'http://localhost:8000/uploads/england-flag.png',
-    title: 'English',
+    src: 'http://localhost:8000/uploads/flags/spain-flag.jpg',
+    title: 'Испанский',
   },
   {
-    src: 'http://localhost:8000/uploads/england-flag.png',
-    title: 'English',
+    src: 'http://localhost:8000/uploads/flags/france-flag.jpg',
+    title: 'Французский',
   },
   {
-    src: 'http://localhost:8000/uploads/england-flag.png',
-    title: 'English',
+    src: 'http://localhost:8000/uploads/flags/chexia.png',
+    title: 'Чешский',
   },
   {
-    src: 'http://localhost:8000/uploads/england-flag.png',
-    title: 'English',
+    src: 'http://localhost:8000/uploads/flags/england-flag.png',
+    title: 'Английский',
   },
-  {
-    src: 'http://localhost:8000/uploads/england-flag.png',
-    title: 'English',
-  }
+  // {
+  //   src: 'http://localhost:8000/uploads/flags/england-flag.png',
+  //   title: 'English',
+  // }
 ];
 
 const Main = () => {

@@ -4,6 +4,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   position: sticky;
+  top: 0;
 }
 
 .menu {
