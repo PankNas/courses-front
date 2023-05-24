@@ -1,17 +1,21 @@
 import React from 'react';
 import styles from './Header.module.css';
 import {useDispatch, useSelector} from "react-redux";
-import {logout, selectIsAuth} from "../../redux/slices/auth";
+import {logout, selectIsAuth, selectRoleUser} from "../../redux/slices/auth";
 import cn from "classnames";
 import {Link} from "react-router-dom";
 
 const Header = () => {
   const isAuth = useSelector(selectIsAuth);
+  const roleUser = useSelector(selectRoleUser);
+
   const {data} = useSelector(state => state.auth);
+
   const dispatch = useDispatch();
 
   const handleLogOut = () => {
     dispatch(logout());
+    localStorage.removeItem("token");
   };
 
   return (
@@ -20,20 +24,44 @@ const Header = () => {
         <Link to={'/'}><img src={`http://localhost:8000/uploads/my/logo.png`} alt="logo"/></Link>
         <nav>
           <ul className={styles.navMenu}>
-            <li><Link className={styles.navLink} to={isAuth ? '' : '/login'}>Каталог</Link></li>
-            <li><a className={styles.navLink} href="#">О нас</a></li>
+            {
+              isAuth &&
+              <>
+                <li><Link className={styles.navLink} to={'/catalog'}>Каталог</Link></li>
+                <li><Link className={styles.navLink} to={'/study'}>Обучение</Link></li>
+                <li><Link className={styles.navLink} to={'/teach'}>Преподавание</Link></li>
+              </>
+            }
+            {
+              roleUser === 'moderator' &&
+              <>
+                <li><Link className={styles.navLink} to={'moderate'}>Модерация</Link></li>
+                <li><Link className={styles.navLink} to={'check'}>Проверки</Link></li>
+              </>
+            }
+            {
+              roleUser === 'adm' &&
+              <li><Link className={styles.navLink} to={'moderate'}>Админ</Link></li>
+            }
+
+            {/*<li><Link className={styles.navLink} to={isAuth ? '' : '/login'}>Каталог</Link></li>*/}
+            {/*<li><a className={styles.navLink} href="#">О нас</a></li>*/}
             {
               isAuth ?
                 <>
-                  <Link to={''}>
-                    <div className={styles.imgUser}>
-                      {
-                        data.avatarUrl === '' ?
-                          <p className={styles.imgUserName}>data.fullName[0].toUpperCase()</p> :
-                          <img src={`http://localhost:8000${data.avatarUrl}`} alt="U"/>
-                      }
-                    </div>
-                  </Link>
+                  {/*<Link to={''}>*/}
+                  {/*  <div className={styles.imgUser}>*/}
+                  {/*    {*/}
+                  {/*      !data?.avatarUrl ?*/}
+                  {/*        <p className={styles.imgUserName}>{data?.fullName[0].toUpperCase()}</p> :*/}
+                  {/*        <img*/}
+                  {/*          className={styles.avatar}*/}
+                  {/*          src={`http://localhost:8000${data?.avatarUrl}`}*/}
+                  {/*          alt="ava"*/}
+                  {/*        />*/}
+                  {/*    }*/}
+                  {/*  </div>*/}
+                  {/*</Link>*/}
                   <li>
                     <button
                       className={cn(styles.buttonHeader, styles.signIn)}

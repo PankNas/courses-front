@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {Navigate, useNavigate} from "react-router-dom";
 
@@ -14,9 +14,16 @@ import { fetchAuth, selectIsAuth } from "../../redux/slices/auth";
 import {Link} from "react-router-dom";
 
 const Login = () => {
+  const isAuth = useSelector(selectIsAuth);
   const user = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (isAuth) {
+  //     navigate('/area/catalog')
+  //   }
+  // }, []);
 
   const {
     register,
@@ -42,15 +49,14 @@ const Login = () => {
       localStorage.setItem("token", data.payload.data.token);
     }
 
-    const path = data.payload.data.role === 'member' ? 'study' : 'check';
-
-    navigate(`/${path}`)
+    // const path = data.payload.data.role === 'member' ? 'study' : 'check';
+    //
+    navigate(`/catalog`)
   };
 
-  // if (user.status === 'loaded') {
-  //   if (user.data?.role === 'member') return <Navigate to="/study" />;
-  //   if (user.data?.role === 'moderator') return <Navigate to="/check" />;
-  // }
+  if (isAuth) {
+    return <Navigate to="/catalog" />;
+  }
 
   return (
     <Paper classes={{ root: styles.root }}>

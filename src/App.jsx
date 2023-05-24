@@ -10,6 +10,10 @@ import {useDispatch} from "react-redux";
 import {fetchAuthMe} from "./redux/slices/auth";
 import styles from './App.module.css'
 import Footer from "./components/Footer/Footer";
+import Courses from "./components/Courses/Courses";
+import Study from "./components/Study/Study";
+import Teaching from "./components/Teaching/Teaching";
+import Check from "./components/Check/Check";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,11 +26,16 @@ function App() {
     <div>
       <Header />
       <Routes>
-        <Route path={'/*'} element={<Main />}/>
+        <Route path={'/'} element={<Main />}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
 
-        {/*<Route path="/*" element={<PersonalArea/>}/>*/}
+        <Route path="/catalog/*" element={<Courses/>}/>
+        <Route path="/study/*" element={<Study/>}/>
+        <Route path="/teach/*" element={<Teaching/>}/>
+        <Route path="/check/*" element={<Check/>}/>
+
+        {/*<Route path="/area/*" element={<PersonalArea/>}/>*/}
       </Routes>
       <Footer />
     </div>

@@ -1,0 +1,75 @@
+.content {
+  max-width: 1100px;
+  margin: 0 auto;
+  margin-top: 40px;
+
+  font-size: 20px;
+}
+
+.catalog {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Josefin Sans",sans-serif;
+  color: #4255A4;
+  margin-top: 0;
+  font-style: normal;
+}
+
+.title {
+  font-family: "Josefin Sans",sans-serif;
+  color: #4255A4;
+  margin-top: 0;
+  font-style: normal;
+}
+
+.courseCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 15px;
+  padding: 20px 20px;
+  width: 400px;
+  min-height: 180px;
+  box-sizing: border-box;
+
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.07), 0 10px 10px rgba(0,0,0,0.05);
+}
+
+.cartContent {
+  width: 250px;
+}
+
+.tags {
+  display: flex;
+  /*width: 100px;*/
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.language {
+  box-sizing: border-box;
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 16px;
+  background-color: rgb(189, 184, 252);
+}
+
+.levelLanguage {
+  background-color: #FF9F67;
+}
+
+.img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 15px;
+}

@@ -3,7 +3,7 @@ import styles from './Main.module.css';
 import cn from 'classnames';
 import {useSelector} from "react-redux";
 import {selectIsAuth} from "../../redux/slices/auth";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import MySlider from "../../components/Slider/Slider";
 
 const adventures = [
@@ -49,14 +49,14 @@ const slides = [
     src: 'http://localhost:8000/uploads/flags/england-flag.png',
     title: 'Английский',
   },
-  // {
-  //   src: 'http://localhost:8000/uploads/flags/england-flag.png',
-  //   title: 'English',
-  // }
 ];
 
 const Main = () => {
   const isAuth = useSelector(selectIsAuth);
+
+  if (isAuth) {
+    return <Navigate to={'/catalog'}/>
+  }
 
   return (
     <>
@@ -135,7 +135,9 @@ const Main = () => {
           <div className={styles.courseItem}></div>
           <div className={styles.courseItem}></div>
         </div>
-        <button className={styles.buttonCourses}>Узнать больше</button>
+        <Link to={isAuth ? '' : '/login'}>
+          <button className={styles.buttonCourses}>Узнать больше</button>
+        </Link>
       </section>
 
       <section className={cn(styles.container, styles.invite, styles.space)}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
@@ -16,6 +16,12 @@ const Register = () => {
   const user = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (isAuth) {
+  //     navigate('/area/catalog')
+  //   }
+  // }, []);
 
   const {
     register,
@@ -47,18 +53,14 @@ const Register = () => {
       localStorage.setItem("token", data.payload.token);
     }
 
-    const path = data.payload.data.role === 'member' ? 'study' : 'check';
-
-    navigate(`/${path}`)
+    // const path = data.payload.data.role === 'member' ? 'study' : 'check';
+    //
+    navigate(`/catalog`)
   };
 
-  // if (isAuth) {
-  //   return <Navigate to="/study" />;
-  // }
-  // if (user.status === 'loaded') {
-  //   if (user.data?.role === 'member') return <Navigate to="/study" />;
-  //   if (user.data?.role === 'moderator') return <Navigate to="/check" />;
-  // }
+  if (isAuth) {
+    return <Navigate to="/catalog" />;
+  }
 
   return (
     <Paper classes={{ root: styles.root }}>

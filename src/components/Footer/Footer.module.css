@@ -5,6 +5,9 @@
   background-image: url("../../img/background/footer-back.png");
   background-repeat: no-repeat;
   background-size: cover;
+
+  position: absolute; /* футер будет всегда прикреплен к низу экрана */
+  bottom: 0; /* располагаем футер в нижней части экрана */
 }
 
 .footerBlock {

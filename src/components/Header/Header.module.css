@@ -70,10 +70,29 @@ a {
   width: 45px;
   height: 45px;
   background-color: #FF9F67;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .imgUserName {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 20px;
+  position: absolute;
+  left: 40%;
+  /*top: 25%;*/
+  /*margin: -15% 0 0 -15%;*/
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
