@@ -4,7 +4,7 @@ import Catalog from "../Catalog/Catalog";
 import Course from "./Course/Course";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchCourses} from "../../redux/slices/courses";
-import CatalogAll from "../CatalogAll/CatalogAll";
+import CatalogAll from "../Catalogs/CatalogAll";
 import {fetchAuthMe, selectIsAuth} from "../../redux/slices/auth";
 
 const Courses = () => {
@@ -31,7 +31,7 @@ const Courses = () => {
         <CatalogAll items={getActive()} title={'Онлайн-курсы'} isModerator={true}/>
       }
       />
-      <Route path={'/:courseId'} element={<Course isModerator={false}/>}/>
+      <Route path={'/:courseId/*'} element={<Course isModerator={false}/>}/>
     </Routes>
   );
 };

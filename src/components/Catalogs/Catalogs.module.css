@@ -73,3 +73,13 @@ h1, h2, h3, h4, h5, h6 {
   object-fit: cover;
   border-radius: 15px;
 }
+
+.progress {
+  margin-top: 20px;
+}
+
+.progressBar {
+  background-color: var(--purple);
+  border-radius: 5px;
+  height: 10px;
+}

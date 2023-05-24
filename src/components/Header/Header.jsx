@@ -7,12 +7,15 @@ import {Link} from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import {pathFolder} from "../../App";
 import AvatarUser from "../Avatar/Avatar";
+import ModerateSelector from "../ModerateSelector/ModerateSelector";
 
 const Header = () => {
   const isAuth = useSelector(selectIsAuth);
   const roleUser = useSelector(selectRoleUser);
 
   const {data} = useSelector(state => state.auth);
+  const fullPath = window.location.href;
+  const isStartPage = /^http:\/\/localhost:([1-9]\d{0,4}|\d{5,})\/?$/.test(fullPath);
 
   const dispatch = useDispatch();
 
@@ -37,10 +40,7 @@ const Header = () => {
             }
             {
               roleUser === 'moderator' &&
-              <>
-                <li><Link className={styles.navLink} to={'moderate'}>Модерация</Link></li>
-                {/*<li><Link className={styles.navLink} to={'check'}>Проверки</Link></li>*/}
-              </>
+              <li><ModerateSelector/></li>
             }
             {
               roleUser === 'adm' &&
@@ -53,29 +53,27 @@ const Header = () => {
               isAuth ?
                 <>
                   <li>
-                    <AvatarUser />
+                    <AvatarUser/>
                   </li>
-                  {/*<li>*/}
-                  {/*  <button*/}
-                  {/*    className={cn(styles.buttonHeader, styles.signIn)}*/}
-                  {/*    onClick={handleLogOut}*/}
-                  {/*  >*/}
-                  {/*    Выход*/}
-                  {/*  </button>*/}
-                  {/*</li>*/}
                 </>
                 :
                 <>
-                  <Link to={'/login'} className={styles.styleNavLink}>
-                    <li>
-                      <button className={cn(styles.buttonHeader, styles.signIn)}>Войти</button>
-                    </li>
-                  </Link>
-                  <Link to={'/register'} className={styles.styleNavLink}>
-                    <li>
-                      <button className={cn(styles.buttonHeader, styles.reg)}>Регистрация</button>
-                    </li>
-                  </Link>
+                  {
+                    (fullPath.includes('register') || isStartPage) &&
+                    <Link to={'/login'} className={styles.styleNavLink}>
+                      <li>
+                        <button className={cn(styles.buttonHeader, styles.signIn)}>Войти</button>
+                      </li>
+                    </Link>
+                  }
+                  {
+                    (fullPath.includes('login') || isStartPage) &&
+                    <Link to={'/register'} className={styles.styleNavLink}>
+                      <li>
+                        <button className={cn(styles.buttonHeader, styles.reg)}>Регистрация</button>
+                      </li>
+                    </Link>
+                  }
                 </>
             }
           </ul>

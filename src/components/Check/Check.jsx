@@ -1,34 +1,49 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {selectIsAuth} from "../../redux/slices/auth";
+import {fetchAuthMe, selectIsAuth, selectRoleUser} from "../../redux/slices/auth";
 import {fetchCourses} from "../../redux/slices/courses";
-import {Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import Catalog from "../Catalog/Catalog";
 import Course from "../Courses/Course/Course";
 import CourseStudy from "../Study/CourseStudy/CourseStudy";
+import CatalogAll from "../Catalogs/CatalogAll";
 
 const Check = () => {
+  const isAuth = useSelector(selectIsAuth);
+  const userRole = useSelector(selectRoleUser);
+
   const dispatch = useDispatch();
   const {items} = useSelector(state => state.courses);
 
+  const {data} = useSelector(state => state.auth);
+
   useEffect(() => {
-    dispatch(fetchCourses());
+    // dispatch(fetchCourses());
+    dispatch(fetchAuthMe());
   }, []);
 
-  const getCheck = () => items.filter(item => item.status === 'check');
+  if (!isAuth || userRole !== 'moderator') {
+    return <Navigate to={'/'}/>
+  }
 
-  const getActive = () => items.filter(item => item.status === 'active');
+  // const getCheck = () => items.filter(item => item.status === 'check');
+  //
+  // const getActive = () => items.filter(item => item.status === 'active');
 
   return (
     <Routes>
       <Route path={'/'} element={
-        <Catalog title={'Курсы на проверку'} items={getCheck()} isProgress={false}/>}
-      />
-      <Route path={'/'} element={
-        <Catalog title={'Каталог курсов'} items={getActive()} isProgress={false}/>}
-      />
-      <Route path={'/:courseId'} element={<Course isModerator={true}/>}/>
-      <Route path={'/:courseId/*'} element={<CourseStudy isActive={true}/>}/>
+        <CatalogAll title={'Мои проверки'} items={data?.reviewCourses}/>
+      }/>
+
+      {/*<Route path={'/'} element={*/}
+      {/*  <Catalog title={'Курсы на проверку'} items={getCheck()} isProgress={false}/>}*/}
+      {/*/>*/}
+      {/*<Route path={'/'} element={*/}
+      {/*  <Catalog title={'Каталог курсов'} items={getActive()} isProgress={false}/>}*/}
+      {/*/>*/}
+      {/*<Route path={'/:courseId'} element={<Course isModerator={true}/>}/>*/}
+      {/*<Route path={'/:courseId/*'} element={<CourseStudy isActive={true}/>}/>*/}
     </Routes>
   )
 }

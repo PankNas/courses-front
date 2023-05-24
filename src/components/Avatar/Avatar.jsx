@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import {pathFolder} from "../../App";
@@ -14,10 +14,11 @@ const AvatarUser = ({symbol}) => {
   const dispatch = useDispatch();
   const {data} = useSelector(state => state.auth);
   const inputFileRef = useRef(null);
+  const [isChange, setIsChange] = useState(false);
 
-  // useEffect(() => {
-  //   dispatch(fetchAuthMe());
-  // }, []);
+  useEffect(() => {
+    dispatch(fetchAuthMe());
+  }, [isChange]);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -87,11 +88,8 @@ const AvatarUser = ({symbol}) => {
       // setImageUrl(data.url.slice(4));
 
       handleClose(event.target)
-      // if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      //   return;
-      // }
-      //
-      // setOpen(false);
+
+      setIsChange(prev => !prev);
     } catch (err) {
       console.warn(err);
       alert("Ошибка при загрузке файла!");
@@ -128,7 +126,7 @@ const AvatarUser = ({symbol}) => {
                       variant={'text'}
                       // onClick={() => inputFileRef.current.click()}
                     >
-                      Изменить изображение профиля
+                      {'И' + 'зменить изображение профиля'.toLowerCase()}
                     </Button>
                     <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>
                   </MenuItem>
@@ -138,18 +136,21 @@ const AvatarUser = ({symbol}) => {
                       variant={'text'}
                       // onClick={handleLogOut}
                     >
-                      Выход
+                      {'В' + 'ыход'.toLowerCase()}
                     </Button>
                   </MenuItem>
 
-                  <MenuItem onClick={handleDelUser}>
-                    <Button
-                      variant={'text'}
-                      // onClick={handleDelUser}
-                    >
-                      Удалить аккаунт
-                    </Button>
-                  </MenuItem>
+                  {
+                    data?.role !== 'adm' &&
+                    <MenuItem onClick={handleDelUser}>
+                      <Button
+                        variant={'text'}
+                        // onClick={handleDelUser}
+                      >
+                        {'У' + 'далить аккаунт'.toLowerCase()}
+                      </Button>
+                    </MenuItem>
+                  }
                 </MenuList>
               </ClickAwayListener>
             </Paper>

@@ -36,7 +36,9 @@ function App() {
         <Route path="/catalog/*" element={<Courses/>}/>
         <Route path="/study/*" element={<Study/>}/>
         <Route path="/teach/*" element={<Teaching/>}/>
+
         <Route path="/check/*" element={<Check/>}/>
+        <Route path="/moderate/*" element={<Check/>}/>
 
         <Route path="/adm/*" element={<Adm/>}/>
 
