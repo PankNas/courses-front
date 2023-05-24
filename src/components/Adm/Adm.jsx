@@ -77,17 +77,17 @@ const Adm = () => {
 
   const handleRemoveUser = async (event, id, index) => {
     try {
-      await axios.patch(`/users/${id}`, {role: 'member', reviewCourses: []});
+      await axios.delete(`/users/${id}`);
 
       // users[index].role = 'member';
       // users[index].reviewCourses = 'member';
 
       setUsers(users);
       setIsChange(prev => !prev);
-      alert('Вы удалили модератора');
+      alert('Вы удалили пользователя');
     } catch (e) {
       console.log(e);
-      alert('Не удалось удалить модератора');
+      alert('Не удалось удалить пользователя');
     }
   };
 

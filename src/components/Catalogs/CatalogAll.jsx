@@ -10,7 +10,7 @@ const CatalogAll = ({items, title}) => {
       <div className={styles.catalog}>
         {
           items?.map((item) =>
-            <Link key={item._id} to={`${item._id}`}>
+            <Link key={item._id} to={`${item._id}`} className={styles.link}>
               <div className={styles.courseCard}>
                 <div >
                   <h4>{item.title}</h4>

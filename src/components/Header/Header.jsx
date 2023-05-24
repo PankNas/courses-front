@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './Header.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {logout, selectIsAuth, selectRoleUser} from "../../redux/slices/auth";
 import cn from "classnames";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import {pathFolder} from "../../App";
 import AvatarUser from "../Avatar/Avatar";
@@ -13,16 +13,19 @@ const Header = () => {
   const isAuth = useSelector(selectIsAuth);
   const roleUser = useSelector(selectRoleUser);
 
+  const {login, register} = useParams();
+
   const {data} = useSelector(state => state.auth);
-  const fullPath = window.location.href;
-  const isStartPage = /^http:\/\/localhost:([1-9]\d{0,4}|\d{5,})\/?$/.test(fullPath);
-
-  const dispatch = useDispatch();
-
-  const handleLogOut = () => {
-    dispatch(logout());
-    localStorage.removeItem("token");
-  };
+  // const fullPath = (name) => {
+  //   console.log(window.location.pathname ,  name);
+  //   return window.location.pathname === name;
+  // };
+  //
+  // const checkPath = (name) => {
+  //   const fullPath = window.location.pathname;
+  //
+  //   return fullPath.includes(name);
+  // }
 
   return (
     <div className={styles.container}>
@@ -59,7 +62,7 @@ const Header = () => {
                 :
                 <>
                   {
-                    (fullPath.includes('register') || isStartPage) &&
+                    (login || !(login && register)) &&
                     <Link to={'/login'} className={styles.styleNavLink}>
                       <li>
                         <button className={cn(styles.buttonHeader, styles.signIn)}>Войти</button>
@@ -67,7 +70,7 @@ const Header = () => {
                     </Link>
                   }
                   {
-                    (fullPath.includes('login') || isStartPage) &&
+                    (register || !(login && register)) &&
                     <Link to={'/register'} className={styles.styleNavLink}>
                       <li>
                         <button className={cn(styles.buttonHeader, styles.reg)}>Регистрация</button>

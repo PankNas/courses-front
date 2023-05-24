@@ -19,7 +19,7 @@ const Check = () => {
 
   useEffect(() => {
     // dispatch(fetchCourses());
-    dispatch(fetchAuthMe());
+    // dispatch(fetchAuthMe());
   }, []);
 
   if (!isAuth || userRole !== 'moderator') {

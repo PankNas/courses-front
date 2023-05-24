@@ -26,24 +26,26 @@ function App() {
   }, []);
 
   return (
-    <div className={styles.mainContent}>
+    <div className={styles.wrapper}>
       <Header />
-      <Routes>
-        <Route path={'/'} element={<Main />}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/register" element={<Register/>}/>
+      <div className={styles.content}>
+        <Routes>
+          <Route path={'/'} element={<Main />}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
 
-        <Route path="/catalog/*" element={<Courses/>}/>
-        <Route path="/study/*" element={<Study/>}/>
-        <Route path="/teach/*" element={<Teaching/>}/>
+          <Route path="/catalog/*" element={<Courses/>}/>
+          <Route path="/study/*" element={<Study/>}/>
+          <Route path="/teach/*" element={<Teaching/>}/>
 
-        <Route path="/check/*" element={<Check/>}/>
-        <Route path="/moderate/*" element={<Check/>}/>
+          <Route path="/check/*" element={<Check/>}/>
+          <Route path="/moderate/*" element={<Check/>}/>
 
-        <Route path="/adm/*" element={<Adm/>}/>
+          <Route path="/adm/*" element={<Adm/>}/>
 
-        {/*<Route path="/area/*" element={<PersonalArea/>}/>*/}
-      </Routes>
+          {/*<Route path="/area/*" element={<PersonalArea/>}/>*/}
+        </Routes>
+      </div>
       <Footer />
     </div>
   );

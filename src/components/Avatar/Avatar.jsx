@@ -1,14 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
-import {pathFolder} from "../../App";
 import {ClickAwayListener, Grow, MenuItem, MenuList, Popper} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import {fetchAuthMe, logout} from "../../redux/slices/auth";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "../../axios";
 
-const AvatarUser = ({symbol}) => {
+import styles from './Avatar.module.css';
+
+const AvatarUser = () => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const AvatarUser = ({symbol}) => {
   const [isChange, setIsChange] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchAuthMe());
+    // dispatch(fetchAuthMe());
   }, [isChange]);
 
   const handleToggle = () => {
@@ -121,34 +122,37 @@ const AvatarUser = ({symbol}) => {
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                   <MenuItem onClick={() => inputFileRef.current.click()}>
-                    <Button
+                    <button
                       style={{width: '100%', margin: '0'}}
-                      variant={'text'}
+                      // variant={'text'}
                       // onClick={() => inputFileRef.current.click()}
+                      className={styles.button}
                     >
-                      {'И' + 'зменить изображение профиля'.toLowerCase()}
-                    </Button>
+                      Изменить аватарку
+                    </button>
                     <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>
                   </MenuItem>
 
                   <MenuItem onClick={handleLogOut}>
-                    <Button
-                      variant={'text'}
+                    <button
+                      // variant={'text'}
                       // onClick={handleLogOut}
+                      className={styles.button}
                     >
-                      {'В' + 'ыход'.toLowerCase()}
-                    </Button>
+                      Выход
+                    </button>
                   </MenuItem>
 
                   {
                     data?.role !== 'adm' &&
                     <MenuItem onClick={handleDelUser}>
-                      <Button
-                        variant={'text'}
+                      <button
+                        // variant={'text'}
                         // onClick={handleDelUser}
+                        className={styles.button}
                       >
-                        {'У' + 'далить аккаунт'.toLowerCase()}
-                      </Button>
+                        Удалить аккаунт
+                      </button>
                     </MenuItem>
                   }
                 </MenuList>

@@ -14,6 +14,8 @@ import {
 } from "../../../redux/slices/auth";
 import cn from 'classnames';
 import {pathFolder} from "../../../App";
+import TextField from "@mui/material/TextField";
+import Remark from "../../Remark/Remark";
 
 const Course = ({isModerator}) => {
   const {courseId} = useParams();
@@ -144,6 +146,16 @@ const Course = ({isModerator}) => {
     }
   };
 
+  const handleSave = async (text) => {
+    try {
+      await axios.patch(`/courses/${courseId}`, {id: courseId, text: text});
+
+      alert('Замечание сохранено')
+    } catch (err) {
+
+    }
+  }
+
   return (
     <>
       <div className={styles.promo}>
@@ -223,7 +235,7 @@ const Course = ({isModerator}) => {
                       Принять на модерацию
                     </button>
                     :
-                    <>
+                    <div style={{marginBottom: '20px'}}>
                       <button className={styles.button} onClick={handleOk}>
                         Одобрить
                       </button>
@@ -233,7 +245,8 @@ const Course = ({isModerator}) => {
                       <button className={styles.button} onClick={handleDelMod}>
                         Отказаться
                       </button>
-                    </>
+                      <Remark fnSave={handleSave} />
+                    </div>
                 }
               </>
             }

@@ -1,12 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {fetchAuthMe, logout} from "../../redux/slices/auth";
-import axios from "../../axios";
-import Button from "@mui/material/Button";
-import Avatar from "@mui/material/Avatar";
+import React from 'react';
 import {ClickAwayListener, Grow, MenuItem, MenuList, Popper} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import {Link} from "react-router-dom";
+import styles from './ModerateSelector.module.css';
 
 const ModerateSelector = () => {
   const [open, setOpen] = React.useState(false);
@@ -47,15 +43,16 @@ const ModerateSelector = () => {
 
   return (
     <>
-      <Button
+      <button
         ref={anchorRef}
         aria-controls={open ? 'menu-list-grow' : undefined}
         aria-haspopup="true"
         onClick={handleToggle}
-        variant={'text'}
+        className={styles.moderate}
+        // variant={'text'}
       >
         Модерация
-      </Button>
+      </button>
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
         {({TransitionProps, placement}) => (
           <Grow
@@ -66,7 +63,7 @@ const ModerateSelector = () => {
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                   <MenuItem onClick={handleClose}>
-                    <Link to={'/check'}>
+                    <Link to={'/check'} className={styles.link}>
                       <MenuItem onClick={handleClose}>
                         Мои проверки
                       </MenuItem>
@@ -74,7 +71,7 @@ const ModerateSelector = () => {
                   </MenuItem>
 
                   <MenuItem onClick={handleClose}>
-                    <Link to={'/moderate'}>
+                    <Link to={'/moderate'} className={styles.link}>
                       <MenuItem onClick={handleClose}>
                         Ожидают проверки
                       </MenuItem>

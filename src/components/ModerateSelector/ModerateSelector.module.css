@@ -1,0 +1,20 @@
+.link {
+  text-decoration: none;
+  color: #4255A4;
+  background-color: white;
+}
+
+.link:hover {
+  text-decoration: none;
+  color: #4255A4;
+  background-color: white;
+}
+
+.moderate {
+  border-style: none;
+  background-color: transparent;
+  color: white;
+  font-family: 'Mulish', sans-serif;
+  font-size: 16px;
+  text-align: left;
+}

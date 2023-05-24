@@ -1,43 +1,110 @@
-.courses {
-  margin-top: 30px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.plus {
+  color: #FF9F67;
+  font-size: 20px;
+  border-radius: 50%;
+  border: 2px solid #FF9F67;
+  width: 70px;
+  height: 70px;
+}
+
+.addCourse {
+  border-style: none;
+  background-color: transparent;
 }
 
 .courseCard {
-  min-height: 170px;
-  max-width: 650px;
-  //min-width: 450px;
-  border: 2px solid var(--purple);
-  border-radius: 15px;
-  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 15px;
+  padding: 20px 20px;
+  width: 400px;
+  min-height: 180px;
   box-sizing: border-box;
 
-  //display: flex;
-  //justify-content: space-between;
-  //align-items: center;
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.07), 0 10px 10px rgba(0,0,0,0.05);
 }
+
+.catalog {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+//.courses {
+//  margin-top: 30px;
+//  display: grid;
+//  grid-template-columns: repeat(3, 1fr);
+//  gap: 10px;
+//  grid-auto-rows: minmax(100px, auto);
+//}
+//
+//.courseCard {
+//  min-height: 170px;
+//  max-width: 650px;
+//  //min-width: 450px;
+//  border: 2px solid var(--purple);
+//  border-radius: 15px;
+//  padding: 15px;
+//  box-sizing: border-box;
+//
+//  //display: flex;
+//  //justify-content: space-between;
+//  //align-items: center;
+//}
 
 .courseContent {
   //width: 170px;
   //display: flex;
   //flex-direction: column;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  //display: flex;
+  //justify-content: space-between;
+  //align-items: center;
+  width: 250px;
 }
 
-.courseImg {
+.buttons {
+  display: flex;
+  /*width: 100px;*/
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.button {
+  box-sizing: border-box;
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 16px;
+  background-color: rgb(189, 184, 252);
+}
+
+.delButton {
+  color: red;
+  background-color: #ffffff;
+  border-color: red;
+}
+
+.img {
   width: 100px;
   height: 100px;
-  object-fit: contain;
-  margin-right: 20px;
-}
-
-.courseButtons {
-  display: flex;
-  justify-content: center;
+  object-fit: cover;
+  border-radius: 15px;
 }

@@ -1,22 +1,29 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import styles from './PersonCourses.module.scss';
 import Button from "@mui/material/Button";
-import {useNavigate} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 import axios from "../../../axios";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchAuthMe, fetchTeachCourses} from "../../../redux/slices/auth";
+import {fetchAuthMe, fetchTeachCourses, selectIsAuth} from "../../../redux/slices/auth";
 import {fetchRemoveCourse} from "../../../redux/slices/courses";
+import cn from "classnames";
 
 const PersonCourses = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isAuth = useSelector(selectIsAuth)
 
   const teachCourses = useSelector(state => state.auth.teachCourses);
+  const [isChange, setIsChange] = useState(false);
 
   useEffect(() => {
     dispatch(fetchTeachCourses());
-  }, []);
+  }, [isChange]);
+
+  if (!isAuth) {
+    return <Navigate to={'/'}/>
+  }
 
   const handleClickAddCourse = async () => {
     try {
@@ -28,14 +35,19 @@ const PersonCourses = () => {
 
       alert('Ошибка при создании курса');
     }
-  }
-  const handleDelCourse = (event) => {
-    dispatch(fetchRemoveCourse(event.target.id));
-    dispatch(fetchTeachCourses());
-  }
-  const handleEditCourse = (event) => {
-    navigate(`${event.target.id}/edit`)
-  }
+  };
+  const handleDelCourse = (event, id) => {
+    try {
+      dispatch(fetchRemoveCourse(event.id));
+      setIsChange(prev => !prev);
+    } catch (err) {
+      alert('Не удалось удалить курс')
+      console.log(err);
+    }
+  };
+  const handleEditCourse = (event, id) => {
+    navigate(`${event.target.id}/edit`);
+  };
 
   const setStatus = (status) => {
     let res;
@@ -44,79 +56,128 @@ const PersonCourses = () => {
       res = 'черновик';
     else if (status === 'check')
       res = 'на проверке';
-    else
-      res = 'одобрен';
+    else if (status === 'fail')
+      res = 'отклонен';
+    else  res = 'одобрен';
 
     return res;
   };
 
-  const handleClickCheck = async (event) => {
+  const handleClickCheck = async (event, id) => {
     try {
-      await axios.patch(`/courses/${event.target.id}`, {status: 'check', countCheck: 0});
+      await axios.patch(`/courses/${id}`, {status: 'check'});
       dispatch(fetchTeachCourses());
     } catch (err) {
       console.log(err);
       alert('Не удалось отправить курс на модерацию');
     }
-  }
+  };
 
   return (
-    <>
-      <h1>Мои курсы</h1>
-      <Button variant="outlined" onClick={handleClickAddCourse}>+ Новый курс</Button>
-      <div className={styles.courses}>
-        {
-          teachCourses?.map(course =>
-            <div key={course._id} className={styles.courseCard}>
-              <p>Статус: {setStatus(course.status)}</p>
-              {course.status === 'check' && <p>Пройдено проверок: {course.countCheck} из 2</p>}
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h1 style={{margin: '0'}}>Мои курсы</h1>
+        <button
+          onClick={handleClickAddCourse}
+          className={styles.addCourse}
+        >
+          <p className={styles.plus}>+</p>
+        </button>
+      </div>
 
-              <div className={styles.courseContent}>
-                {
-                  course.imageUrl &&
-                  <img className={styles.courseImg} src={`http://localhost:8000${course.imageUrl}`} alt="img"/>
-                }
-                <div >
-                  <h3 style={{textAlign: "center"}}>{course.title}</h3>
-                  <div className={styles.courseButtons}>
-                    <Button
-                      id={course._id}
-                      size={'large'}
-                      variant="outlined"
-                      onClick={handleEditCourse}
-                      style={{marginRight: "15px"}}
+      <div className={styles.catalog}>
+        {
+          teachCourses?.map((item, index) =>
+            <div key={item._id} className={styles.courseCard}>
+              <div>
+                <h3>{item.title}</h3>
+                <p>Статус: {setStatus(item.status)}</p>
+                <div className={styles.buttons}>
+                  <Link to={`${item._id}/edit`}>
+                    <button
+                      className={styles.button}
                     >
-                      Pедактировать
-                    </Button>
-                    {
-                      course.status === 'passive' &&
-                      <Button
-                        id={course._id}
-                        size={'large'}
-                        variant="outlined"
-                        onClick={handleClickCheck}
-                        style={{marginRight: "15px"}}
-                      >
-                        Опубликовать
-                      </Button>
-                    }
-                    <Button
-                      id={course._id}
-                      style={{color: "red"}}
-                      variant="outlined"
-                      onClick={handleDelCourse}
+                      К курсу
+                    </button>
+                  </Link>
+                  {
+                    (item?.status !== 'active' && item?.status !== 'check') &&
+                    <button
+                      onClick={(event) => handleClickCheck(event, item._id)}
+                      className={styles.button}
                     >
-                      Удалить
-                    </Button>
-                  </div>
+                      <div>Опубликовать</div>
+                    </button>
+                  }
+                  <button
+                    onClick={(event) => handleDelCourse(event, item._id)}
+                    className={cn(styles.button, styles.delButton)}
+                  >
+                    <div>Удалить</div>
+                  </button>
                 </div>
               </div>
+              <img
+                className={styles.img}
+                src={`http://localhost:8000${item.imageUrl}`} alt="img"
+              />
             </div>
           )
         }
+
+
+        {/*{*/}
+        {/*  teachCourses?.map(course =>*/}
+        {/*    <div key={course._id} className={styles.courseCard}>*/}
+        {/*      <p>Статус: {setStatus(course.status)}</p>*/}
+        {/*      {course.status === 'check' && <p>Пройдено проверок: {course.countCheck} из 2</p>}*/}
+
+        {/*      <div className={styles.courseContent}>*/}
+        {/*        {*/}
+        {/*          course.imageUrl &&*/}
+        {/*          <img className={styles.courseImg} src={`http://localhost:8000${course.imageUrl}`} alt="img"/>*/}
+        {/*        }*/}
+        {/*        <div>*/}
+        {/*          <h3 style={{textAlign: "center"}}>{course.title}</h3>*/}
+        {/*          <div className={styles.courseButtons}>*/}
+        {/*            <Button*/}
+        {/*              id={course._id}*/}
+        {/*              size={'large'}*/}
+        {/*              variant="outlined"*/}
+        {/*              onClick={handleEditCourse}*/}
+        {/*              style={{marginRight: "15px"}}*/}
+        {/*            >*/}
+        {/*              Pедактировать*/}
+        {/*            </Button>*/}
+        {/*            {*/}
+        {/*              course.status === 'passive' &&*/}
+        {/*              <Button*/}
+        {/*                id={course._id}*/}
+        {/*                size={'large'}*/}
+        {/*                variant="outlined"*/}
+        {/*                onClick={handleClickCheck}*/}
+        {/*                style={{marginRight: "15px"}}*/}
+        {/*              >*/}
+        {/*                Опубликовать*/}
+        {/*              </Button>*/}
+        {/*            }*/}
+        {/*            <Button*/}
+        {/*              id={course._id}*/}
+        {/*              style={{color: "red"}}*/}
+        {/*              variant="outlined"*/}
+        {/*              onClick={handleDelCourse}*/}
+        {/*            >*/}
+        {/*              Удалить*/}
+        {/*            </Button>*/}
+        {/*          </div>*/}
+        {/*        </div>*/}
+        {/*      </div>*/}
+        {/*    </div>*/}
+        {/*  )*/}
+        {/*}*/}
       </div>
-    </>
-  )
+    </div>
+  );
 };
 
 export default PersonCourses;

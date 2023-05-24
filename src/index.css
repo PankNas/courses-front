@@ -14,15 +14,16 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  /*height: 100%;*/
 }
 
-body.overflow-footer {
-  min-height: 100%; /* устанавливаем минимальную высоту body, чтобы при прокрутке контента футер не остался в нижней части экрана */
-}
+/*body.overflow-footer {*/
+/*  min-height: 100%; !* устанавливаем минимальную высоту body, чтобы при прокрутке контента футер не остался в нижней части экрана *!*/
+/*}*/
 
-body.no-overflow-footer {
-  height: 100%; /* задаем высоту body равной высоте экрана */
-}
+/*body.no-overflow-footer {*/
+/*  height: 100%; !* задаем высоту body равной высоте экрана *!*/
+/*}*/
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
