@@ -4,8 +4,8 @@ import Catalog from "../Catalog/Catalog";
 import Course from "./Course/Course";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchCourses} from "../../redux/slices/courses";
-import CatalogStudy from "../CatalogStudy/CatalogStudy";
-import {selectIsAuth} from "../../redux/slices/auth";
+import CatalogAll from "../CatalogAll/CatalogAll";
+import {fetchAuthMe, selectIsAuth} from "../../redux/slices/auth";
 
 const Courses = () => {
   const dispatch = useDispatch();
@@ -26,9 +26,9 @@ const Courses = () => {
 
   return (
     <Routes>
-      <Route path={'/'} element={
+      <Route path={'/*'} element={
         // <Catalog title={'Каталог курсов'} items={getActive()} isProgress={false}/>
-        <CatalogStudy items={getActive()} title={'Онлайн-курсы'}/>
+        <CatalogAll items={getActive()} title={'Онлайн-курсы'}/>
       }
       />
       <Route path={'/:courseId'} element={<Course isModerator={false}/>}/>

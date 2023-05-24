@@ -7,7 +7,7 @@ import Avatar from "@mui/material/Avatar";
 
 import styles from "./Register.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRegister, selectIsAuth } from "../../redux/slices/auth";
+import {fetchAuthMe, fetchRegister, selectIsAuth} from "../../redux/slices/auth";
 import { useForm } from "react-hook-form";
 import {Link, Navigate, useNavigate} from "react-router-dom";
 
@@ -48,6 +48,8 @@ const Register = () => {
     if (!data.payload) {
       return alert("Не удалось зарегистрироваться!");
     }
+
+    dispatch(fetchAuthMe())
 
     if ("token" in data.payload) {
       localStorage.setItem("token", data.payload.token);

@@ -30,3 +30,10 @@ html {
   position: relative; /* устанавливаем относительную позицию для корневого элемента */
   min-height: 100%; /* устанавливаем минимальную высоту корневого элемента как минимум равную высоте экрана */
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Josefin Sans",sans-serif;
+  color: #4255A4;
+  margin-top: 0;
+  font-style: normal;
+}

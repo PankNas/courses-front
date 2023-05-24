@@ -15,6 +15,8 @@ import Study from "./components/Study/Study";
 import Teaching from "./components/Teaching/Teaching";
 import Check from "./components/Check/Check";
 
+export const pathFolder = `http://localhost:8000/uploads`
+
 function App() {
   const dispatch = useDispatch();
 

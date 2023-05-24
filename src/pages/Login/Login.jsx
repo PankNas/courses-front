@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 
 import styles from "./Login.module.css";
 
-import { fetchAuth, selectIsAuth } from "../../redux/slices/auth";
+import {fetchAuth, fetchAuthMe, selectIsAuth} from "../../redux/slices/auth";
 import {Link} from "react-router-dom";
 
 const Login = () => {
@@ -44,6 +44,8 @@ const Login = () => {
     if (!data.payload) {
       return alert("Не удалось авторизоваться!");
     }
+
+    dispatch(fetchAuthMe())
 
     if ("token" in data.payload.data) {
       localStorage.setItem("token", data.payload.data.token);

@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './CatalogStudy.module.css';
+import styles from './CatalogAll.module.css';
 import cn from 'classnames';
 import {Link} from "react-router-dom";
 
-const CatalogStudy = ({items, title}) => {
+const CatalogAll = ({items, title}) => {
   return (
     <div className={styles.content}>
       <h1 className={styles.title}>{title}</h1>
@@ -32,4 +32,4 @@ const CatalogStudy = ({items, title}) => {
   );
 };
 
-export default CatalogStudy;
+export default CatalogAll;
