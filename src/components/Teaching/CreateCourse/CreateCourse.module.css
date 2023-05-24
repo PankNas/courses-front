@@ -1,3 +1,34 @@
+.container {
+  margin: 0 auto;
+  max-width: 1100px;
+  color: #4255A4;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  /*flex-direction: column;*/
+  justify-content: space-between;
+}
+
+.imgBlock {
+  width: 250px;
+  /*margin-right: 70px;*/
+}
+
+.button {
+  color: white;
+  background-color: #FF9F67;
+
+  font-size: 18px;
+  font-weight: normal;
+  border-style: none;
+  border-radius: 5px;
+
+  padding: 15px 38px;
+  font-family: 'Mulish', sans-serif;
+}
+
 .block {
   margin-bottom: 30px;
 }
@@ -12,5 +43,10 @@
 
   display: block;
   margin-top: 20px;
+}
+
+.selectors {
+  display: flex;
+  justify-content: space-between;
 }
 

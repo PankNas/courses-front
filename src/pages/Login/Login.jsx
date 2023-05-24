@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {Navigate, useNavigate} from "react-router-dom";
 
@@ -11,19 +11,11 @@ import { useForm } from "react-hook-form";
 import styles from "./Login.module.css";
 
 import {fetchAuth, fetchAuthMe, selectIsAuth} from "../../redux/slices/auth";
-import {Link} from "react-router-dom";
 
 const Login = () => {
   const isAuth = useSelector(selectIsAuth);
-  const user = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (isAuth) {
-  //     navigate('/area/catalog')
-  //   }
-  // }, []);
 
   const {
     register,

@@ -12,7 +12,7 @@ type SelectItemType = {
 
 const SelectItem = (props:SelectItemType):JSX.Element => {
   return (
-    <FormControl variant="outlined" style={props.style}>
+    <FormControl variant="outlined" style={props.style} required>
       <Select
         key={props.id}
         native

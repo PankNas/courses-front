@@ -11,6 +11,7 @@ import axios from "../../../axios";
 import AddLessons from "../AddLessons/AddLessons";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchCourses} from "../../../redux/slices/courses";
+import {useForm} from "react-hook-form";
 
 const CreateCourse = () => {
   const {id} = useParams();
@@ -37,13 +38,13 @@ const CreateCourse = () => {
         setLevelLanguage(res.levelLanguage);
         setLanguage(res.language);
         setImageUrl(res.imageUrl);
-      })
+      });
 
     return () => {
       setImageUrl('');
       setLanguage('');
       setLevelLanguage('');
-    }
+    };
   }, []);
 
   const handleChangeFile = async (event) => {
@@ -71,7 +72,8 @@ const CreateCourse = () => {
         return setLanguage(event.target.value);
       case 'levelLanguages':
         return setLevelLanguage(event.target.value);
-      default: break;
+      default:
+        break;
     }
   };
   const handleDelBtn = () => setImageUrl('');
@@ -87,7 +89,7 @@ const CreateCourse = () => {
         status: 'passive'
       };
 
-      modules.forEach(async module => await axios.patch(`/modules/${module._id}`, module))
+      modules.forEach(async module => await axios.patch(`/modules/${module._id}`, module));
 
       await axios.patch(`/courses/${id}`, fields);
 
@@ -101,79 +103,106 @@ const CreateCourse = () => {
 
   const onCancel = () => navigate(-1);
 
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: {errors, isValid},
+  } = useForm({
+    // defaultValues: {
+    //   email: "test@test.ru",
+    //   password: "12345",
+    // },
+    mode: "onChange",
+  });
+
   return (
-    <div>
-      <h1>Создание нового курса</h1>
-      <Button
-        onClick={() => inputFileRef.current.click()}
-        variant="outlined"
-        size="large"
-        style={{marginRight: '15px'}}
-      >
-        Загрузить превью
-      </Button>
-      <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>
-      {imageUrl && (
-        <>
+    <div className={styles.container}>
+      <h1>Мой курс</h1>
+      <div className={styles.content}>
+        <div className={styles.imgBlock}>
           <Button
+            onClick={() => inputFileRef.current.click()}
             variant="outlined"
-            onClick={handleDelBtn}
-            style={{borderColor: 'red', color: 'red'}}
+            size="large"
+            style={{marginRight: '15px'}}
           >
-            Удалить
+            Загрузить превью
           </Button>
-          <img
-            className={styles.image}
-            src={`http://localhost:8000${imageUrl}`}
-            alt="Uploaded"
+          <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>
+          {imageUrl && (
+            <>
+              <Button
+                variant="outlined"
+                onClick={handleDelBtn}
+                style={{borderColor: 'red', color: 'red'}}
+              >
+                Удалить
+              </Button>
+              <img
+                className={styles.image}
+                src={`http://localhost:8000${imageUrl}`}
+                alt="Uploaded"
+              />
+            </>
+          )}
+        </div>
+
+        <div style={{width: '750px'}}>
+          <TextField
+            id={'name-course'}
+            value={title}
+            label="Название курса"
+            onChange={handleChange}
+            variant="outlined"
+            fullWidth
+            style={{marginBottom: '20px', marginTop: '20px'}}
+            required
           />
-        </>
-      )}
+          <TextField
+            id={'desc-course'}
+            value={desc}
+            label="Описание курса"
+            multiline
+            rows={4}
+            onChange={handleChange}
+            variant="outlined"
+            fullWidth
+            style={{marginBottom: '20px'}}
+            required
+          />
+          <div className={styles.block}>
+            <p style={{marginTop: '0'}}>Языковая группа</p>
+            <div className={styles.selectors}>
+              <SelectItem
+                value={language}
+                id={'languages'}
+                options={languages}
+                onChange={handleChange}
+                style={{width: '740px / 2'}}
+              />
+              <SelectItem
+                value={levelLanguage}
+                id={'levelLanguages'}
+                options={levelLanguages}
+                onChange={handleChange}
+                style={{width: '740px / 2'}}
+              />
+            </div>
+          </div>
 
-      <TextField
-        id={'name-course'}
-        value={title}
-        label="Название курса"
-        onChange={handleChange}
-        variant="outlined"
-        fullWidth
-        style={{marginBottom: '20px', marginTop: '20px'}}
-      />
-      <TextField
-        id={'desc-course'}
-        value={desc}
-        label="Описание курса"
-        multiline
-        rows={4}
-        onChange={handleChange}
-        variant="outlined"
-        fullWidth
-        style={{marginBottom: '20px'}}
-      />
-      <div className={styles.block}>
-        <p style={{marginTop: '0'}}>Языковая группа</p>
-        <SelectItem
-          value={language}
-          id={'languages'}
-          options={languages}
-          onChange={handleChange}
-          style={{marginRight: '25px', width: '48%'}}
-        />
-        <SelectItem
-          value={levelLanguage}
-          id={'levelLanguages'}
-          options={levelLanguages}
-          onChange={handleChange}
-          style={{width: '48%'}}
-        />
+          <AddLessons/>
+
+          <button
+            className={styles.button}
+            onClick={onSubmit}
+            style={{marginRight: '15px'}}
+          >
+            Сохранить
+          </button>
+          <button className={styles.button} onClick={onCancel}>Отмена</button>
+        </div>
       </div>
-
-      <AddLessons />
-
-      <Button variant="outlined" onClick={onSubmit} style={{marginRight: '15px'}}>
-        Сохранить
-      </Button>
-      <Button variant="outlined" onClick={onCancel}>Отмена</Button>
     </div>
   );
 };

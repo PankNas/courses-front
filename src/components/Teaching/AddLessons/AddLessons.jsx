@@ -10,6 +10,8 @@ import {setType} from "../../../redux/slices/sampleLesson";
 import TextField from "@mui/material/TextField";
 
 import axios from '../../../axios';
+import Avatar from "@mui/material/Avatar";
+import {pathFolder} from "../../../App";
 
 const AddLessons = () => {
   const {id} = useParams();
@@ -84,79 +86,174 @@ const AddLessons = () => {
     dispatch(fetchLessons(id));
   }, []);
 
+  const selectIcon = (type) => {
+    switch (type) {
+      case 'text':
+        return 'description';
+      case 'video':
+        return 'play';
+      case 'test':
+        return 'description';
+      case 'passes':
+        return 'description';
+      case 'translate':
+        return 'translate';
+      case 'sentence':
+        return 'description';
+    }
+  }
+
   return (
     <div style={{marginBottom: '20px'}}>
-      <p>Программа курса</p>
-      <Button variant="outlined" onClick={handleAddModel} style={{}}>
-        + Новый модуль
-      </Button>
+      <div className={styles.header}>
+        <p style={{margin: '0'}}>Программа курса</p>
+        <button
+          onClick={handleAddModel}
+          className={styles.addCourse}
+        >
+          <p className={styles.plus}>+ Новый модуль</p>
+        </button>
 
-      <div style={{marginTop: "15px"}}>
-        {
-          modules?.map((block, index) =>
-            <div key={block._id} className={styles.module}>
-              <div className={styles.moduleHeader}>
-                <span style={{marginLeft: "10px"}}>{index + 1}</span>
-                <TextField
-                  id={`${index}`}
-                  value={block.title}
-                  label="Название модуля"
-                  onChange={handleChangeTitle}
-                  variant="outlined"
-                  // fullWidth
-                  style={{marginBottom: '20px', marginTop: '20px', width: "90%"}}
-                />
-                <IconButton id={index} onClick={onClickRemoveModule} color="secondary">
-                  X
-                </IconButton>
+        <div style={{marginTop: "15px"}}>
+          {
+            modules?.map((block, index) =>
+              <div key={block._id} className={styles.moduleCard}>
+                <div className={styles.moduleHeader}>
+                  <span style={{marginLeft: "10px"}}>{index + 1}</span>
+                  <TextField
+                    id={`${index}`}
+                    value={block.title}
+                    label="Название модуля"
+                    onChange={handleChangeTitle}
+                    variant="outlined"
+                    style={{marginBottom: '20px', marginTop: '20px', width: "90%"}}
+                  />
+                  <IconButton id={index} onClick={onClickRemoveModule} color="error">
+                    Удалить
+                  </IconButton>
+                </div>
+
+                <List>
+                  {
+                    block.lessons?.map((item, indexLesson) =>
+                      <ListItem key={index} className={styles.lessonsItem}>
+                        <ListItemIcon>
+                          <Avatar src={`${pathFolder}/my/${selectIcon(item.type)}.svg`}/>
+                        </ListItemIcon>
+                        <ListItemText primary={item.title}/>
+                        <IconButton sr id={index} data-index={index} onClick={onClickEdit}>
+                          <Avatar src={`${pathFolder}/my/edit.svg`}/>
+                        </IconButton>
+                        <IconButton id={index} data-index={index} onClick={onClickRemove} color="secondary">
+                          <Avatar src={`${pathFolder}/my/delete.svg`}/>
+                        </IconButton>
+                      </ListItem>
+                    )
+                  }
+                </List>
+
+                {/*<div style={{marginTop: "15px"}}>*/}
+                {/*  <Button*/}
+                {/*    style={{padding: '0'}}*/}
+                {/*    className={styles.moduleAdd}*/}
+                {/*    onClick={(e) => handleClick(index, e)}*/}
+                {/*    aria-controls={`simple-menu-${index}`}*/}
+                {/*    aria-haspopup="true"*/}
+                {/*  >*/}
+                {/*    + Добавить урок*/}
+                {/*  </Button>*/}
+                {/*  <Menu*/}
+                {/*    id={`simple-menu-${index}`}*/}
+                {/*    anchorEl={anchorEls[index]} // используем соответствующий якорь для элемента меню*/}
+                {/*    keepMounted*/}
+                {/*    open={Boolean(anchorEls[index])}*/}
+                {/*    onClose={handleMove}*/}
+                {/*    PaperProps={{ sx: { width: '650px' } }}*/}
+                {/*  >*/}
+                {/*    <MenuItem id={`text`} data-index={index} onClick={handleMove}>Теория</MenuItem>*/}
+                {/*    <MenuItem id={'video'} data-index={index} onClick={handleMove}>Видео</MenuItem>*/}
+                {/*    <MenuItem id={'sentence'} data-index={index} onClick={handleMove}>Составить текст</MenuItem>*/}
+                {/*    <MenuItem id={'passes'} data-index={index} onClick={handleMove}>Пропуски</MenuItem>*/}
+                {/*    <MenuItem id={'test'} data-index={index} onClick={handleMove}>Тест</MenuItem>*/}
+                {/*    <MenuItem id={'translate'} data-index={index} onClick={handleMove}>Перевод</MenuItem>*/}
+                {/*  </Menu>*/}
+                {/*</div>*/}
               </div>
+            )
+          }
+      </div>
 
-              <List className={styles.lessons}>
-                {
-                  block.lessons?.map((item, indexLesson) =>
-                    <ListItem key={index} className={styles.lessonsItem}>
-                      <ListItemIcon/>
-                      <ListItemText primary={item.title}/>
-                      <IconButton id={index} data-index={index} onClick={onClickEdit} color="secondary">
-                        E
-                      </IconButton>
-                      <IconButton id={index} data-index={index} onClick={onClickRemove} color="secondary">
-                        X
-                      </IconButton>
-                    </ListItem>
-                  )
-                }
-              </List>
+      {/*<p>Программа курса</p>*/}
+      {/*<Button variant="outlined" onClick={handleAddModel} style={{}}>*/}
+      {/*  + Новый модуль*/}
+      {/*</Button>*/}
 
-              <div style={{marginTop: "15px"}}>
-                <Button
-                  style={{padding: '0'}}
-                  className={styles.moduleAdd}
-                  onClick={(e) => handleClick(index, e)}
-                  aria-controls={`simple-menu-${index}`}
-                  aria-haspopup="true"
-                >
-                  + Добавить урок
-                </Button>
-                <Menu
-                  id={`simple-menu-${index}`}
-                  anchorEl={anchorEls[index]} // используем соответствующий якорь для элемента меню
-                  keepMounted
-                  open={Boolean(anchorEls[index])}
-                  onClose={handleMove}
-                  PaperProps={{ sx: { width: '650px' } }}
-                >
-                  <MenuItem id={`text`} data-index={index} onClick={handleMove}>Теория</MenuItem>
-                  <MenuItem id={'video'} data-index={index} onClick={handleMove}>Видео</MenuItem>
-                  <MenuItem id={'sentence'} data-index={index} onClick={handleMove}>Составить текст</MenuItem>
-                  <MenuItem id={'passes'} data-index={index} onClick={handleMove}>Пропуски</MenuItem>
-                  <MenuItem id={'test'} data-index={index} onClick={handleMove}>Тест</MenuItem>
-                  <MenuItem id={'translate'} data-index={index} onClick={handleMove}>Перевод</MenuItem>
-                </Menu>
-              </div>
-            </div>
-          )
-        }
+      {/*<div style={{marginTop: "15px"}}>*/}
+      {/*  {*/}
+      {/*    modules?.map((block, index) =>*/}
+      {/*      <div key={block._id} className={styles.module}>*/}
+      {/*        <div className={styles.moduleHeader}>*/}
+      {/*          <span style={{marginLeft: "10px"}}>{index + 1}</span>*/}
+      {/*          <TextField*/}
+      {/*            id={`${index}`}*/}
+      {/*            value={block.title}*/}
+      {/*            label="Название модуля"*/}
+      {/*            onChange={handleChangeTitle}*/}
+      {/*            variant="outlined"*/}
+      {/*            // fullWidth*/}
+      {/*            style={{marginBottom: '20px', marginTop: '20px', width: "90%"}}*/}
+      {/*          />*/}
+      {/*          <IconButton id={index} onClick={onClickRemoveModule} color="secondary">*/}
+      {/*            X*/}
+      {/*          </IconButton>*/}
+      {/*        </div>*/}
+
+      {/*        <List className={styles.lessons}>*/}
+      {/*          {*/}
+      {/*            block.lessons?.map((item, indexLesson) =>*/}
+      {/*              <ListItem key={index} className={styles.lessonsItem}>*/}
+      {/*                <ListItemIcon/>*/}
+      {/*                <ListItemText primary={item.title}/>*/}
+      {/*                <IconButton id={index} data-index={index} onClick={onClickEdit} color="secondary">*/}
+      {/*                  E*/}
+      {/*                </IconButton>*/}
+      {/*                <IconButton id={index} data-index={index} onClick={onClickRemove} color="secondary">*/}
+      {/*                  X*/}
+      {/*                </IconButton>*/}
+      {/*              </ListItem>*/}
+      {/*            )*/}
+      {/*          }*/}
+      {/*        </List>*/}
+
+      {/*        <div style={{marginTop: "15px"}}>*/}
+      {/*          <Button*/}
+      {/*            style={{padding: '0'}}*/}
+      {/*            className={styles.moduleAdd}*/}
+      {/*            onClick={(e) => handleClick(index, e)}*/}
+      {/*            aria-controls={`simple-menu-${index}`}*/}
+      {/*            aria-haspopup="true"*/}
+      {/*          >*/}
+      {/*            + Добавить урок*/}
+      {/*          </Button>*/}
+      {/*          <Menu*/}
+      {/*            id={`simple-menu-${index}`}*/}
+      {/*            anchorEl={anchorEls[index]} // используем соответствующий якорь для элемента меню*/}
+      {/*            keepMounted*/}
+      {/*            open={Boolean(anchorEls[index])}*/}
+      {/*            onClose={handleMove}*/}
+      {/*            PaperProps={{ sx: { width: '650px' } }}*/}
+      {/*          >*/}
+      {/*            <MenuItem id={`text`} data-index={index} onClick={handleMove}>Теория</MenuItem>*/}
+      {/*            <MenuItem id={'video'} data-index={index} onClick={handleMove}>Видео</MenuItem>*/}
+      {/*            <MenuItem id={'sentence'} data-index={index} onClick={handleMove}>Составить текст</MenuItem>*/}
+      {/*            <MenuItem id={'passes'} data-index={index} onClick={handleMove}>Пропуски</MenuItem>*/}
+      {/*            <MenuItem id={'test'} data-index={index} onClick={handleMove}>Тест</MenuItem>*/}
+      {/*            <MenuItem id={'translate'} data-index={index} onClick={handleMove}>Перевод</MenuItem>*/}
+      {/*          </Menu>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    )*/}
+      {/*  }*/}
       </div>
     </div>
   );

@@ -8,6 +8,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchAuthMe, fetchTeachCourses, selectIsAuth} from "../../../redux/slices/auth";
 import {fetchRemoveCourse} from "../../../redux/slices/courses";
 import cn from "classnames";
+import {IconButton} from "@mui/material";
+import {pathFolder} from "../../../App";
+import Avatar from "@mui/material/Avatar";
 
 const PersonCourses = () => {
   const navigate = useNavigate();
@@ -76,13 +79,13 @@ const PersonCourses = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 style={{margin: '0'}}>Мои курсы</h1>
-        <button
+        <h1 style={{margin: '0', marginRight: '10px'}}>Мои курсы</h1>
+        <IconButton
           onClick={handleClickAddCourse}
           className={styles.addCourse}
         >
-          <p className={styles.plus}>+</p>
-        </button>
+          <Avatar src={`${pathFolder}/my/add.svg`}/>
+        </IconButton>
       </div>
 
       <div className={styles.catalog}>
@@ -91,7 +94,7 @@ const PersonCourses = () => {
             <div key={item._id} className={styles.courseCard}>
               <div>
                 <h3>{item.title}</h3>
-                <p>Статус: {setStatus(item.status)}</p>
+                <h4>Статус: {setStatus(item.status)}</h4>
                 <div className={styles.buttons}>
                   <Link to={`${item._id}/edit`}>
                     <button
