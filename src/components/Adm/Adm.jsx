@@ -39,7 +39,22 @@ const Adm = () => {
     }
   }
 
-  const handleDelModerator = async (event, id) => {
+  const handleDelModerator = async (event, id, index) => {
+    try {
+      await axios.patch(`/users/${id}`, {role: 'member', reviewCourses: []})
+
+      users[index].role = 'member';
+      // users[index].reviewCourses = 'member';
+
+      setUsers(users);
+      alert('Вы удалили модератора')
+    } catch (e) {
+      console.log(e);
+      alert('Не удалось удалить модератора')
+    }
+  }
+
+  const handleRemoveUser = async (event, id, index) => {
     try {
       await axios.patch(`/users/${id}`, {role: 'member', reviewCourses: []})
 
@@ -78,12 +93,17 @@ const Adm = () => {
                 elem.status === 'moderator' &&
                 <button
                   className={styles.button}
-                  onClick={(event) => handleDelModerator(event, elem._id)}
+                  onClick={(event) => handleDelModerator(event, elem._id, index)}
                 >
                   Удалить из модераторов
                 </button>
               }
-              <div className={styles.removeButton}/>
+              <button
+                className={styles.btnRemove}
+                onClick={(event) => handleRemoveUser(event, elem._id, index)}
+              >
+                <div className={styles.removeButton}/>
+              </button>
             </div>
           </div>
         )

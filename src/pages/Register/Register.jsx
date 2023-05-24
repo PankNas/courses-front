@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
@@ -10,18 +10,17 @@ import { useDispatch, useSelector } from "react-redux";
 import {fetchAuthMe, fetchRegister, selectIsAuth} from "../../redux/slices/auth";
 import { useForm } from "react-hook-form";
 import {Link, Navigate, useNavigate} from "react-router-dom";
+import axios from "../../axios";
+import {pathFolder} from "../../App";
 
 const Register = () => {
   const isAuth = useSelector(selectIsAuth);
   const user = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const inputFileRef = useRef(null);
 
-  // useEffect(() => {
-  //   if (isAuth) {
-  //     navigate('/area/catalog')
-  //   }
-  // }, []);
+  const [imageUrl, setImageUrl] = useState('');
 
   const {
     register,
@@ -62,13 +61,33 @@ const Register = () => {
     return <Navigate to="/" />;
   }
 
+  const handleChangeFile = async (event) => {
+    try {
+      const formData = new FormData();
+
+      formData.append("file", event.target.files[0]);
+
+      const {data} = await axios.post("/upload", formData);
+
+      setImageUrl(data.url.slice(4));
+    } catch (err) {
+      console.warn(err);
+      alert("Ошибка при загрузке файла!");
+    }
+  };
+
   return (
     <Paper classes={{ root: styles.root }}>
       <Typography classes={{ root: styles.title }} variant="h5">
         Создание аккаунта
       </Typography>
       <div className={styles.avatar}>
-        <Avatar sx={{ width: 100, height: 100 }} />
+        <Avatar
+          onClick={() => inputFileRef.current.click()}
+          sx={{ width: 100, height: 100 }}
+          src={`${pathFolder}${imageUrl}`}
+        />
+        <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField

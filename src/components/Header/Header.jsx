@@ -4,6 +4,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {logout, selectIsAuth, selectRoleUser} from "../../redux/slices/auth";
 import cn from "classnames";
 import {Link} from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
+import {pathFolder} from "../../App";
+import AvatarUser from "../Avatar/Avatar";
 
 const Header = () => {
   const isAuth = useSelector(selectIsAuth);
@@ -36,7 +39,7 @@ const Header = () => {
               roleUser === 'moderator' &&
               <>
                 <li><Link className={styles.navLink} to={'moderate'}>Модерация</Link></li>
-                <li><Link className={styles.navLink} to={'check'}>Проверки</Link></li>
+                {/*<li><Link className={styles.navLink} to={'check'}>Проверки</Link></li>*/}
               </>
             }
             {
@@ -49,27 +52,24 @@ const Header = () => {
             {
               isAuth ?
                 <>
-                  {/*<Link to={''}>*/}
-                  {/*  <div className={styles.imgUser}>*/}
-                  {/*    {*/}
-                  {/*      !data?.avatarUrl ?*/}
-                  {/*        <p className={styles.imgUserName}>{data?.fullName[0].toUpperCase()}</p> :*/}
-                  {/*        <img*/}
-                  {/*          className={styles.avatar}*/}
-                  {/*          src={`http://localhost:8000${data?.avatarUrl}`}*/}
-                  {/*          alt="ava"*/}
-                  {/*        />*/}
-                  {/*    }*/}
-                  {/*  </div>*/}
-                  {/*</Link>*/}
                   <li>
-                    <button
-                      className={cn(styles.buttonHeader, styles.signIn)}
-                      onClick={handleLogOut}
-                    >
-                      Выход
-                    </button>
+                    <AvatarUser symbol={data?.fullName[0].toUpperCase()}/>
+                    {/*<div>*/}
+                    {/*  {*/}
+                    {/*    !data?.avatarUrl ?*/}
+                    {/*      <Avatar style={{backgroundColor: '#FF9F67'}}>{data?.fullName[0].toUpperCase()}</Avatar> :*/}
+                    {/*      <Avatar src={`${pathFolder}${data?.avatarUrl}`}/>*/}
+                    {/*  }*/}
+                    {/*</div>*/}
                   </li>
+                  {/*<li>*/}
+                  {/*  <button*/}
+                  {/*    className={cn(styles.buttonHeader, styles.signIn)}*/}
+                  {/*    onClick={handleLogOut}*/}
+                  {/*  >*/}
+                  {/*    Выход*/}
+                  {/*  </button>*/}
+                  {/*</li>*/}
                 </>
                 :
                 <>

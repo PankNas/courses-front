@@ -39,3 +39,8 @@
 .buttonsBlock {
   display: inline-block;
 }
+
+.btnRemove {
+  background-color: #ffffff;
+  border-style: none;
+}
