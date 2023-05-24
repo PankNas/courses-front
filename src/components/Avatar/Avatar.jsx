@@ -15,16 +15,16 @@ const AvatarUser = ({symbol}) => {
   const {data} = useSelector(state => state.auth);
   const inputFileRef = useRef(null);
 
-  useEffect(() => {
-    dispatch(fetchAuthMe());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchAuthMe());
+  // }, []);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+  const handleClose = (target) => {
+    if (anchorRef.current && anchorRef.current.contains(target)) {
       return;
     }
 
@@ -48,12 +48,13 @@ const AvatarUser = ({symbol}) => {
     prevOpen.current = open;
   }, [open]);
 
-  const handleLogOut = () => {
+  const handleLogOut = (event) => {
     dispatch(logout());
+    handleClose(event.target)
     localStorage.removeItem("token");
   };
 
-  const handleDelUser = async () => {
+  const handleDelUser = async (event) => {
     try {
       if (!window.confirm('Вы уверены, что хотите удалить аккаунт?')) return;
 
@@ -62,6 +63,7 @@ const AvatarUser = ({symbol}) => {
       dispatch(fetchAuthMe());
       localStorage.removeItem("token");
 
+      handleClose(event.target)
       alert('Аккаунт удален');
     } catch (err) {
       console.log(err);
@@ -72,12 +74,21 @@ const AvatarUser = ({symbol}) => {
   const handleChangeFile = async (event) => {
     try {
       const formData = new FormData();
+      console.log('hi');
 
       formData.append("file", event.target.files[0]);
 
-      const {data} = await axios.post("/upload", formData);
+      const img = (await axios.post("/upload", formData)).data;
+      await axios.patch(`/users/${data?._id}`, {avatarUrl: img.url.slice(4)})
 
       // setImageUrl(data.url.slice(4));
+
+      handleClose(event.target)
+      // if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      //   return;
+      // }
+      //
+      // setOpen(false);
     } catch (err) {
       console.warn(err);
       alert("Ошибка при загрузке файла!");
@@ -96,7 +107,7 @@ const AvatarUser = ({symbol}) => {
         {
           !data?.avatarUrl ?
             <Avatar style={{backgroundColor: '#FF9F67'}}>{symbol.toUpperCase()}</Avatar> :
-            <Avatar src={`${pathFolder}${data?.avatarUrl}`}/>
+            <Avatar src={`http://localhost:8000${data?.avatarUrl}`}/>
         }
       </Button>
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
@@ -108,28 +119,34 @@ const AvatarUser = ({symbol}) => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                  <MenuItem onClick={handleClose}>
-                    <p
-                      style={{width: '100%'}}
+                  <MenuItem >
+                    <Button
+                      // style={{width: '100%'}}
+                      variant={'text'}
                       onClick={() => inputFileRef.current.click()}
                     >
                       Изменить изображение профиля
-                    </p>
+                    </Button>
                     <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>
                   </MenuItem>
 
-                  <Button
-                    variant={'text'}
-                    onClick={handleLogOut}
-                  >
-                    <MenuItem onClick={handleClose}>Выход</MenuItem>
-                  </Button>
-                  <Button
-                    variant={'text'}
-                    onClick={handleDelUser}
-                  >
-                    <MenuItem onClick={handleClose}>Удалить аккаунт</MenuItem>
-                  </Button>
+                  <MenuItem >
+                    <Button
+                      variant={'text'}
+                      onClick={handleLogOut}
+                    >
+                      Выход
+                    </Button>
+                  </MenuItem>
+
+                  <MenuItem >
+                    <Button
+                      variant={'text'}
+                      onClick={handleDelUser}
+                    >
+                      Удалить аккаунт
+                    </Button>
+                  </MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>

@@ -54,13 +54,6 @@ const Header = () => {
                 <>
                   <li>
                     <AvatarUser symbol={data?.fullName[0].toUpperCase()}/>
-                    {/*<div>*/}
-                    {/*  {*/}
-                    {/*    !data?.avatarUrl ?*/}
-                    {/*      <Avatar style={{backgroundColor: '#FF9F67'}}>{data?.fullName[0].toUpperCase()}</Avatar> :*/}
-                    {/*      <Avatar src={`${pathFolder}${data?.avatarUrl}`}/>*/}
-                    {/*  }*/}
-                    {/*</div>*/}
                   </li>
                   {/*<li>*/}
                   {/*  <button*/}
