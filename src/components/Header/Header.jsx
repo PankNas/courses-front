@@ -53,7 +53,7 @@ const Header = () => {
               isAuth ?
                 <>
                   <li>
-                    <AvatarUser symbol={data?.fullName[0].toUpperCase()}/>
+                    <AvatarUser />
                   </li>
                   {/*<li>*/}
                   {/*  <button*/}

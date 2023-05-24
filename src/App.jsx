@@ -26,7 +26,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className={styles.mainContent}>
       <Header />
       <Routes>
         <Route path={'/'} element={<Main />}/>

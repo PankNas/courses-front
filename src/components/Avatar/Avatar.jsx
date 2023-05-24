@@ -24,11 +24,15 @@ const AvatarUser = ({symbol}) => {
   };
 
   const handleClose = (target) => {
-    if (anchorRef.current && anchorRef.current.contains(target)) {
-      return;
-    }
+    try {
+      if (anchorRef.current && anchorRef.current.contains(target)) {
+        return;
+      }
 
-    setOpen(false);
+      setOpen(false);
+    } catch (err) {
+      setOpen(false)
+    }
   };
 
   function handleListKeyDown(event) {
@@ -74,7 +78,6 @@ const AvatarUser = ({symbol}) => {
   const handleChangeFile = async (event) => {
     try {
       const formData = new FormData();
-      console.log('hi');
 
       formData.append("file", event.target.files[0]);
 
@@ -106,7 +109,7 @@ const AvatarUser = ({symbol}) => {
       >
         {
           !data?.avatarUrl ?
-            <Avatar style={{backgroundColor: '#FF9F67'}}>{symbol.toUpperCase()}</Avatar> :
+            <Avatar style={{backgroundColor: '#FF9F67'}} /> :
             <Avatar src={`http://localhost:8000${data?.avatarUrl}`}/>
         }
       </Button>
@@ -119,30 +122,30 @@ const AvatarUser = ({symbol}) => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                  <MenuItem >
+                  <MenuItem onClick={() => inputFileRef.current.click()}>
                     <Button
-                      // style={{width: '100%'}}
+                      style={{width: '100%', margin: '0'}}
                       variant={'text'}
-                      onClick={() => inputFileRef.current.click()}
+                      // onClick={() => inputFileRef.current.click()}
                     >
                       Изменить изображение профиля
                     </Button>
                     <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>
                   </MenuItem>
 
-                  <MenuItem >
+                  <MenuItem onClick={handleLogOut}>
                     <Button
                       variant={'text'}
-                      onClick={handleLogOut}
+                      // onClick={handleLogOut}
                     >
                       Выход
                     </Button>
                   </MenuItem>
 
-                  <MenuItem >
+                  <MenuItem onClick={handleDelUser}>
                     <Button
                       variant={'text'}
-                      onClick={handleDelUser}
+                      // onClick={handleDelUser}
                     >
                       Удалить аккаунт
                     </Button>

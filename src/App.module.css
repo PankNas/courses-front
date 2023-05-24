@@ -1,6 +1,3 @@
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
+.mainContent {
+  flex: 1 0 auto; /* this will allow the content to grow and shrink */
 }
-
-
