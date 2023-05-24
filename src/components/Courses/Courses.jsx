@@ -28,7 +28,7 @@ const Courses = () => {
     <Routes>
       <Route path={'/*'} element={
         // <Catalog title={'Каталог курсов'} items={getActive()} isProgress={false}/>
-        <CatalogAll items={getActive()} title={'Онлайн-курсы'}/>
+        <CatalogAll items={getActive()} title={'Онлайн-курсы'} isModerator={true}/>
       }
       />
       <Route path={'/:courseId'} element={<Course isModerator={false}/>}/>

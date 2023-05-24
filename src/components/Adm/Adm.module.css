@@ -1,0 +1,41 @@
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.userCard {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.07), 0 10px 10px rgba(0,0,0,0.05);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button {
+  width: 200px;
+  padding: 15px;
+  color: white;
+  background-color: #FF9F67;
+  border-style: none;
+  border-radius: 5px;
+
+  font-size: 18px;
+  font-weight: normal;
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
+
+.removeButton {
+  background-image: url('../../img/icon/delete.svg');
+  margin-right: 0;
+}
+
+.buttonsBlock {
+  display: inline-block;
+}

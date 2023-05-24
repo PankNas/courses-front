@@ -57,7 +57,7 @@ const Login = () => {
   };
 
   if (isAuth) {
-    return <Navigate to="/catalog" />;
+    return <Navigate to="/" />;
   }
 
   return (

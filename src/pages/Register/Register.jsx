@@ -33,7 +33,7 @@ const Register = () => {
       fullName: "Vasya Pypkin",
       email: "vasya@test.ru",
       password: "12345",
-      codeAccess: '',
+      // codeAccess: '',
     },
     mode: "onChange",
   });
@@ -55,13 +55,11 @@ const Register = () => {
       localStorage.setItem("token", data.payload.token);
     }
 
-    // const path = data.payload.data.role === 'member' ? 'study' : 'check';
-    //
     navigate(`/catalog`)
   };
 
   if (isAuth) {
-    return <Navigate to="/catalog" />;
+    return <Navigate to="/" />;
   }
 
   return (

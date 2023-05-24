@@ -41,7 +41,7 @@ const Header = () => {
             }
             {
               roleUser === 'adm' &&
-              <li><Link className={styles.navLink} to={'moderate'}>Админ</Link></li>
+              <li><Link className={styles.navLink} to={'adm'}>Админ</Link></li>
             }
 
             {/*<li><Link className={styles.navLink} to={isAuth ? '' : '/login'}>Каталог</Link></li>*/}

@@ -54,9 +54,9 @@ const slides = [
 const Main = () => {
   const isAuth = useSelector(selectIsAuth);
 
-  if (isAuth) {
-    return <Navigate to={'/catalog'}/>
-  }
+  // if (isAuth) {
+  //   return <Navigate to={'/catalog'}/>
+  // }
 
   return (
     <>

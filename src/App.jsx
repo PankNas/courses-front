@@ -14,6 +14,7 @@ import Courses from "./components/Courses/Courses";
 import Study from "./components/Study/Study";
 import Teaching from "./components/Teaching/Teaching";
 import Check from "./components/Check/Check";
+import Adm from "./components/Adm/Adm";
 
 export const pathFolder = `http://localhost:8000/uploads`
 
@@ -36,6 +37,8 @@ function App() {
         <Route path="/study/*" element={<Study/>}/>
         <Route path="/teach/*" element={<Teaching/>}/>
         <Route path="/check/*" element={<Check/>}/>
+
+        <Route path="/adm/*" element={<Adm/>}/>
 
         {/*<Route path="/area/*" element={<PersonalArea/>}/>*/}
       </Routes>

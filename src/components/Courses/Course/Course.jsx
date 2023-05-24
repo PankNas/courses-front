@@ -15,13 +15,12 @@ import {
 import cn from 'classnames';
 import {pathFolder} from "../../../App";
 
-const Course = ({}) => {
+const Course = ({isModerator}) => {
   const {courseId} = useParams();
   const navigate = useNavigate();
 
   const isAuth = useSelector(selectIsAuth);
   const {studentCourses} = useSelector(state => state.auth);
-  const userRole = useSelector(selectRoleUser);
 
   const [dataCourse, setDataCourse] = useState({
     _id: '',
@@ -36,6 +35,7 @@ const Course = ({}) => {
   const [isSubscript, setIsSubscript] = useState(false);
   const [isModerate, setIsModerate] = useState(false);
   const [curCourse, setCurCourse] = useState(null);
+  const [isAuthor, setIsAuthor] = useState(false);
   const {data} = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
@@ -51,9 +51,14 @@ const Course = ({}) => {
         setDataCourse(res);
         setCurCourse(res);
 
-        userRole === 'moderator' || userRole === 'adm' || findCourse() ? setIsSubscript(true) : setIsSubscript(false);
+        if (res.user === data._id) {
+          setIsAuthor(true);
+          return;
+        }
 
-        if (userRole !== 'moderator') return;
+        isModerator || findCourse() ? setIsSubscript(true) : setIsSubscript(false);
+
+        if (!isModerator) return;
 
         dispatch(fetchAuthMe());
 
@@ -73,9 +78,23 @@ const Course = ({}) => {
       await axios.post('/courses/subscript', {id: courseId});
 
       setIsSubscript(true);
+      alert('Вы записаны на курс');
     } catch (err) {
       console.log(err);
       alert('Не удалось записаться на курс');
+    }
+  };
+
+  const handleClickDel = async (event) => {
+    if (!window.confirm('Вы уверены, что хотите отписаться от курса?')) return;
+
+    try {
+      await axios.delete(`/courses/subscript/${courseId}`);
+      setIsSubscript(false);
+      // dispatch(fetchStudentCourses());
+    } catch (err) {
+      console.log(err);
+      console.warn('Не удалось отписаться от курса');
     }
   };
 
@@ -84,6 +103,7 @@ const Course = ({}) => {
       await axios.post('/moderate', {course: courseId});
 
       setIsModerate(true);
+      alert('Курс добавлен к модерации');
     } catch (err) {
       console.log(err);
       alert('Не далось принять курс на модерацию');
@@ -95,6 +115,7 @@ const Course = ({}) => {
       await axios.delete(`/moderate/${courseId}`);
 
       setIsModerate(false);
+      alert('Курс удален из обучения');
     } catch (err) {
       console.log(err);
       alert('Не далось удалить курс вашего списка');
@@ -116,9 +137,10 @@ const Course = ({}) => {
 
       setIsModerate(false);
       // navigate('/check');
+      alert('Курс одобрен');
     } catch (err) {
       console.log(err);
-      alert('Не далось принять курс на модерацию');
+      alert('Не далось одобрить курс');
     }
   };
 
@@ -169,20 +191,31 @@ const Course = ({}) => {
 
           <div className={styles.manageCourse}>
             {
-              isSubscript ?
-                <Link to={''}>
-                  <button className={styles.button} onClick={handleClickRecord}>
-                    Записаться
+              (isAuthor || isModerator) &&
+              <>
+                <Link to={'lessons/'}>
+                  <button className={styles.button}>
+                    К урокам
                   </button>
                 </Link>
-                :
-                <button className={styles.button} onClick={() => {
-                }}>
-                  Отписаться
-                </button>
+              </>
             }
             {
-              userRole === 'moderator' &&
+              !isSubscript && !isAuthor && !isModerator &&
+              <Link to={''}>
+                <button className={styles.button} onClick={handleClickRecord}>
+                  Записаться
+                </button>
+              </Link>
+            }
+            {
+              isSubscript &&
+              <button className={styles.button} onClick={handleClickDel}>
+                Отписаться
+              </button>
+            }
+            {
+              isModerator &&
               <>
                 {
                   isModerate ?
@@ -197,8 +230,7 @@ const Course = ({}) => {
                       <button className={styles.button} onClick={handleDelMod}>
                         Отклонить
                       </button>
-                      <button className={styles.button} onClick={() => {
-                      }}>
+                      <button className={styles.button} onClick={handleDelMod}>
                         Отказаться
                       </button>
                     </>
