@@ -111,7 +111,7 @@ const PersonCourses = () => {
                     </button>
                   </Link>
                   {
-                    (item?.status !== 'active' && item?.status !== 'check') &&
+                    (item?.status === 'passive') &&
                     <button
                       onClick={(event) => handleClickCheck(event, item._id)}
                       className={styles.button}

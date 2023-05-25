@@ -56,10 +56,12 @@
 }
 
 .manageCourse {
-  //position: fixed;
-  //right: calc(100vw - 1100px - 288px);
-  //right: calc((100vw - 1100px) / 2 - 10px);
+  position: sticky;
+  top: 400px;
+  bottom: calc((100vw - 200px));
   width: 300px;
+  max-height: 500px;
+  transition: top 0.3s ease-in-out;
 }
 
 .button {

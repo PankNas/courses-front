@@ -44,6 +44,7 @@ const Course = ({isModerator}) => {
 
   useEffect(() => {
     dispatch(fetchStudentCourses());
+    // dispatch(fetchAuthMe());
 
     const getCourse = async () => (await axios.get(`/courses/${courseId}`)).data;
     const findCourse = () => studentCourses?.find(item => item._id === courseId);
@@ -53,7 +54,7 @@ const Course = ({isModerator}) => {
         setDataCourse(res);
         setCurCourse(res);
 
-        if (res.user === data?._id) {
+        if (res.user._id === data?._id) {
           setIsAuthor(true);
           return;
         }
@@ -66,12 +67,12 @@ const Course = ({isModerator}) => {
         dispatch(fetchAuthMe());
 
         const course = data?.reviewCourses.find(course => course._id === courseId);
-        console.log(1, course);
-        if (course)
-          console.log(2);
+        // console.log(1, course);
+        if (course) {
           setIsModerate(true);
+        }
       });
-  }, [isModerate, isSubscript]);
+  }, []);
 
   // if (!isAuth) {
   //   return <Navigate to={'/'}/>;
@@ -81,7 +82,7 @@ const Course = ({isModerator}) => {
     try {
       await axios.post('/courses/subscript', {id: courseId});
 
-      await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'moderate'});
+      // await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'moderate'});
 
       setIsSubscript(true);
       alert('Вы записаны на курс');
@@ -107,9 +108,10 @@ const Course = ({isModerator}) => {
   const handleAddMod = async () => {
     try {
       await axios.post('/moderate', {course: courseId});
+      await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'moderate'});
 
       setIsModerate(true);
-      alert('Курс добавлен к модерации');
+      alert('Вы стали модератором курса');
     } catch (err) {
       console.log(err);
       alert('Не далось принять курс на модерацию');
@@ -119,9 +121,10 @@ const Course = ({isModerator}) => {
   const handleDelMod = async () => {
     try {
       await axios.delete(`/moderate/${courseId}`);
+      await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'check'});
 
       setIsModerate(false);
-      alert('Курс удален из обучения');
+      alert('Вы отписаны от проверки курса');
     } catch (err) {
       console.log(err);
       alert('Не далось удалить курс вашего списка');
@@ -132,14 +135,7 @@ const Course = ({isModerator}) => {
     try {
       await axios.delete(`/moderate/${courseId}`);
 
-      let fields = {
-        countCheck: curCourse.countCheck + 1,
-      };
-
-      if (fields.countCheck === 2)
-        fields.status = 'active';
-
-      await axios.patch(`/courses/${courseId}`, fields);
+      await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'active'});
 
       setIsModerate(false);
       // navigate('/check');
@@ -154,21 +150,21 @@ const Course = ({isModerator}) => {
     try {
       await axios.patch(`/courses/${courseId}`, {id: courseId, text: text});
 
-      alert('Замечание сохранено')
+      alert('Замечание сохранено');
     } catch (err) {
 
     }
-  }
+  };
 
   const handleReject = async () => {
     try {
-      await axios.patch(`/courses/${courseId}`, {status: 'fail'});
+      await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'fail'});
 
-      alert('Вы отклонили курс на размещение на платформе')
+      alert('Вы отклонили курс на размещение на платформе');
     } catch (err) {
 
     }
-  }
+  };
 
   return (
     <>
@@ -218,13 +214,11 @@ const Course = ({isModerator}) => {
           <div className={styles.manageCourse}>
             {
               (isAuthor || isModerator || isSubscript) &&
-              <>
-                <Link to={'/study/lessons/'}>
-                  <button className={styles.button}>
-                    К урокам
-                  </button>
-                </Link>
-              </>
+              <Link to={`/study/${courseId}`}>
+                <button className={styles.button}>
+                  К урокам
+                </button>
+              </Link>
             }
             {
               (!isSubscript && !isAuthor && !isModerator) &&
@@ -244,13 +238,13 @@ const Course = ({isModerator}) => {
               isModerator &&
               <>
                 {
-                  isModerate ?
+                  !isModerate ?
                     <button className={styles.button} onClick={handleAddMod}>
                       Принять на модерацию
                     </button>
                     :
-                    <div style={{marginBottom: '40px'}}>
-                      <button className={styles.button} style={{marginBottom: '30px'}} onClick={handleDelMod}>
+                    <div style={{marginBottom: '20px'}}>
+                      <button className={styles.button} style={{marginBottom: '20px'}} onClick={handleDelMod}>
                         Отказаться
                       </button>
                       <button className={cn(styles.button, styles.buttonSuccess)} onClick={handleOk}>
@@ -259,7 +253,7 @@ const Course = ({isModerator}) => {
                       <button className={cn(styles.button, styles.buttonFail)} onClick={handleReject}>
                         Отклонить
                       </button>
-                      <Remark fnSave={handleSave} />
+                      <Remark fnSave={handleSave}/>
                     </div>
                 }
               </>
@@ -268,177 +262,6 @@ const Course = ({isModerator}) => {
         </div>
       </div>
     </>
-  );
-};
-
-
-const Course2 = ({isModerator, isAuth}) => {
-  const {courseId} = useParams();
-  const navigate = useNavigate();
-
-  const [dataCourse, setDataCourse] = useState({
-    _id: '',
-    title: '',
-    desc: '',
-    language: '',
-    levelLanguage: '',
-    imageUrl: '',
-    modules: [],
-  });
-  const [isSubscript, setIsSubscript] = useState(false);
-  const [isModerate, setIsModerate] = useState(false);
-  const [curCourse, setCurCourse] = useState(null);
-  const {data} = useSelector(state => state.auth);
-
-  const dispatch = useDispatch();
-  const {studentCourses} = useSelector(state => state.auth);
-
-  useEffect(() => {
-    dispatch(fetchStudentCourses());
-
-    const getCourse = async () => (await axios.get(`/courses/${courseId}`)).data;
-    const findCourse = () => studentCourses.find(item => item._id === courseId);
-
-    getCourse()
-      .then(async res => {
-        setDataCourse(res);
-        setCurCourse(res);
-
-        isModerator || isAuth || findCourse() ? setIsSubscript(true) : setIsSubscript(false);
-
-        if (!isModerator) return;
-
-        dispatch(fetchAuthMe());
-
-        const course = data.reviewCourses.find(course => course._id === courseId);
-        console.log(course);
-
-        if (course)
-          setIsModerate(true);
-
-      });
-  }, []);
-
-  const handleMove = async () => {
-    navigate(`lessons/${curCourse?.modules[0].lessons[0]._id}`);
-  };
-
-  const handleClickRecord = async () => {
-    try {
-      await axios.post('/courses/subscript', {id: courseId});
-
-      setIsSubscript(true);
-    } catch (err) {
-      console.log(err);
-      alert('Не удалось записаться на курс');
-    }
-  };
-
-  const handleAddMod = async () => {
-    try {
-      await axios.post('/moderate', {course: courseId});
-
-      setIsModerate(true);
-    } catch (err) {
-      console.log(err);
-      alert('Не далось принять курс на модерацию');
-    }
-  };
-
-  const handleDelMod = async () => {
-    try {
-      await axios.delete(`/moderate/${courseId}`);
-
-      setIsModerate(false);
-    } catch (err) {
-      console.log(err);
-      alert('Не далось удалить курс вашего списка');
-    }
-  };
-
-  const handleOk = async () => {
-    try {
-      await axios.delete(`/moderate/${courseId}`);
-
-      let fields = {
-        countCheck: curCourse.countCheck + 1,
-      };
-
-      if (fields.countCheck === 2)
-        fields.status = 'active';
-
-      await axios.patch(`/courses/${courseId}`, fields);
-
-      setIsModerate(false);
-      navigate('/check');
-    } catch (err) {
-      console.log(err);
-      alert('Не далось принять курс на модерацию');
-    }
-  };
-
-  return (
-    <div className={styles.course}>
-      <h1>{dataCourse.title}</h1>
-      <img
-        className={styles.courseImg}
-        src={`http://localhost:8000${dataCourse.imageUrl}`}
-        alt="img"
-      />
-      <p>{dataCourse.desc}</p>
-      <p>Язык: {dataCourse.language}</p>
-      <p>Уровень: {dataCourse.levelLanguage}</p>
-      <p>Программа курса</p>
-      <ol style={{marginBottom: '15px'}}>
-        {
-          dataCourse.modules.map(module =>
-            <li key={module._id} style={{marginBottom: "8px"}}>
-              {module.title}
-              <ol>
-                {module.lessons.map(lesson => <li key={lesson._id}>{lesson.title}</li>)}
-              </ol>
-            </li>
-          )
-        }
-      </ol>
-      {
-        isSubscript ?
-          <Button variant="outlined" onClick={handleMove}>К урокам</Button> :
-          <Button variant="outlined" onClick={handleClickRecord}>Записаться</Button>
-      }
-      {
-        isModerator === true &&
-        <>
-          {
-            !isModerate ?
-              <Button
-                variant="outlined"
-                onClick={handleAddMod}
-                style={{marginLeft: "15px"}}
-              >
-                Принять на модерацию
-              </Button> :
-              <>
-                <Button
-                  variant="outlined"
-                  onClick={handleOk}
-                  style={{marginLeft: "15px"}}
-                >
-                  Одобрить
-                </Button>
-                <Button
-                  variant="outlined"
-                  onClick={handleDelMod}
-                  style={{marginLeft: "15px"}}
-                  color={'error'}
-                >
-                  Отказаться
-                </Button>
-              </>
-          }
-        </>
-      }
-    </div>
   );
 };
 

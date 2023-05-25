@@ -4,7 +4,6 @@ import styles from './CreateCourse.module.css';
 import {Navigate, NavLink, Outlet, Route, Routes, useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuth} from "../../../redux/slices/auth";
-import ContentNewCourse from "./ContentNewCourse";
 import Message from "./Message";
 import {
   selectFlag, setDataCourse,
@@ -46,11 +45,11 @@ const CreateCourse = () => {
 
     getCourse()
       .then(res => {
-        setTitle(res.title === '' ? course.title : res.title);
-        setDesc(res.desc === '' ? course.desc : res.desc);
-        setLevelLanguage(res.levelLanguage === '' ? course.levelLanguage : res.levelLanguage);
-        setLanguage(res.language === '' ? course.language : res.language);
-        setImageUrl(res.imageUrl === '' ? course.imageUrl : res.imageUrl);
+        setTitle(res.title);
+        setDesc(res.desc);
+        setLevelLanguage(res.levelLanguage);
+        setLanguage(res.language);
+        setImageUrl(res.imageUrl);
       });
 
     // return () => {
@@ -58,6 +57,23 @@ const CreateCourse = () => {
     //   setLanguage('');
     //   setLevelLanguage('');
     // };
+
+    return async () => {
+      const fields = {
+        title,
+        imageUrl,
+        desc,
+        language,
+        levelLanguage,
+        status: 'passive'
+      };
+
+      for (const module of modules) {
+        await axios.patch(`/modules/${module._id}`, module);
+      }
+
+      await axios.patch(`/courses/${id}`, fields);
+    }
   }, []);
 
   if (!isAuth) {
@@ -121,15 +137,15 @@ const CreateCourse = () => {
 
       await axios.patch(`/courses/${id}`, fields);
 
-      dispatch(setFlag(true))
+      // dispatch(setFlag(true))
 
-      dispatch(setDataCourse({
-        title: '',
-        desc: '',
-        language: '',
-        levelLanguage: '',
-        imageUrl: '',
-      }))
+      // dispatch(setDataCourse({
+      //   title: '',
+      //   desc: '',
+      //   language: '',
+      //   levelLanguage: '',
+      //   imageUrl: '',
+      // }))
 
       navigate('/teach');
     } catch (err) {
@@ -140,9 +156,9 @@ const CreateCourse = () => {
   };
 
   const onCancel = async () => {
-    if (!flag) {
-      await axios.delete(`/courses/${id}`);
-    }
+    // if (!flag) {
+    //   await axios.delete(`/courses/${id}`);
+    // }
     navigate(-1);
   };
 

@@ -22,9 +22,9 @@ const Check = () => {
     // dispatch(fetchAuthMe());
   }, []);
 
-  if (!isAuth || userRole !== 'moderator') {
-    return <Navigate to={'/'}/>
-  }
+  // if (!isAuth || userRole !== 'moderator') {
+  //   return <Navigate to={'/'}/>
+  // }
 
   // const getCheck = () => items.filter(item => item.status === 'check');
   //
@@ -35,7 +35,7 @@ const Check = () => {
       <Route path={'/*'} element={
         <CatalogAll title={'Мои проверки'} items={data?.reviewCourses}/>
       }/>
-      <Route path={'/:courseId'} element={<Course isModerator={true} isAuthor={false}/>}/>
+      <Route path={'/:courseId'} element={<Course isModerator={true}/>}/>
     </Routes>
   )
 }

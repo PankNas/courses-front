@@ -16,3 +16,8 @@
   background-color: white;
   border: 2px solid red;
 }
+
+.buttonBlock {
+  display: flex;
+  justify-content: center;
+}
