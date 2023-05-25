@@ -32,18 +32,10 @@ const Check = () => {
 
   return (
     <Routes>
-      <Route path={'/'} element={
+      <Route path={'/*'} element={
         <CatalogAll title={'Мои проверки'} items={data?.reviewCourses}/>
       }/>
-
-      {/*<Route path={'/'} element={*/}
-      {/*  <Catalog title={'Курсы на проверку'} items={getCheck()} isProgress={false}/>}*/}
-      {/*/>*/}
-      {/*<Route path={'/'} element={*/}
-      {/*  <Catalog title={'Каталог курсов'} items={getActive()} isProgress={false}/>}*/}
-      {/*/>*/}
-      {/*<Route path={'/:courseId'} element={<Course isModerator={true}/>}/>*/}
-      {/*<Route path={'/:courseId/*'} element={<CourseStudy isActive={true}/>}/>*/}
+      <Route path={'/:courseId/*'} element={<Course isModerator={true}/>}/>
     </Routes>
   )
 }

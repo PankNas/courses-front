@@ -38,6 +38,7 @@ const Login = () => {
     }
 
     dispatch(fetchAuthMe())
+    console.log(data.payload.token);
 
     if ("token" in data.payload.data) {
       localStorage.setItem("token", data.payload.data.token);

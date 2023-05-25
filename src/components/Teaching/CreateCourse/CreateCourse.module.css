@@ -4,6 +4,29 @@
   color: #4255A4;
 }
 
+.navigate {
+  display: flex;
+  font-size: 20px;
+}
+
+.link {
+  height: 40px;
+  box-sizing: border-box;
+  padding: 15px;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #4255A4;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.linkActive {
+  border-bottom: 2px solid #FF9F67;
+  border-radius: 10px;
+}
+
 .content {
   display: flex;
   flex-wrap: wrap;
@@ -25,7 +48,7 @@
   border-style: none;
   border-radius: 5px;
 
-  padding: 15px 38px;
+  padding: 15px 25px;
   font-family: 'Mulish', sans-serif;
 }
 

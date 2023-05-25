@@ -156,6 +156,16 @@ const Course = ({isModerator}) => {
     }
   }
 
+  const handleReject = async () => {
+    try {
+      await axios.patch(`/courses/${courseId}`, {status: 'fail'});
+
+      alert('Вы отклонили курс на размещение на платформе')
+    } catch (err) {
+
+    }
+  }
+
   return (
     <>
       <div className={styles.promo}>
@@ -239,7 +249,7 @@ const Course = ({isModerator}) => {
                       <button className={styles.button} onClick={handleOk}>
                         Одобрить
                       </button>
-                      <button className={styles.button} onClick={handleDelMod}>
+                      <button className={styles.button} onClick={handleReject}>
                         Отклонить
                       </button>
                       <button className={styles.button} onClick={handleDelMod}>

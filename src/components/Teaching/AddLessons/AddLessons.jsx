@@ -119,7 +119,7 @@ const AddLessons = () => {
             modules?.map((block, index) =>
               <div key={block._id} className={styles.moduleCard}>
                 <div className={styles.moduleHeader}>
-                  <span style={{marginLeft: "10px"}}>{index + 1}</span>
+                  <p style={{marginLeft: "10px"}}>{index + 1}</p>
                   <TextField
                     id={`${index}`}
                     value={block.title}
@@ -129,7 +129,7 @@ const AddLessons = () => {
                     style={{marginBottom: '20px', marginTop: '20px', width: "90%"}}
                   />
                   <IconButton id={index} onClick={onClickRemoveModule} color="error">
-                    Удалить
+                    <Avatar src={`${pathFolder}/my/delete.svg`}/>
                   </IconButton>
                 </div>
 
@@ -144,7 +144,7 @@ const AddLessons = () => {
                         <IconButton sr id={index} data-index={index} onClick={onClickEdit}>
                           <Avatar src={`${pathFolder}/my/edit.svg`}/>
                         </IconButton>
-                        <IconButton id={index} data-index={index} onClick={onClickRemove} color="secondary">
+                        <IconButton id={index} data-index={index} onClick={onClickRemove}>
                           <Avatar src={`${pathFolder}/my/delete.svg`}/>
                         </IconButton>
                       </ListItem>

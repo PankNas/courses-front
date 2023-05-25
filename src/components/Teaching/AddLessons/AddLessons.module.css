@@ -1,7 +1,8 @@
 .header {
-  /*display: flex;*/
-  /*align-items: center;*/
+  display: flex;
+  align-items: center;
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .moduleAdd {
@@ -63,7 +64,7 @@
   /*width: 100%;*/
   min-height: 50px;
   margin-top: 20px;
-  border: 2px solid var(--purple);
+  border-bottom: 2px solid #FF9F67;
   display: flex;
   align-items: center;
 }

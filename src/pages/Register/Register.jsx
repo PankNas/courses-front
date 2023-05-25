@@ -48,7 +48,9 @@ const Register = () => {
       return alert("Не удалось зарегистрироваться!");
     }
 
-    dispatch(fetchAuthMe())
+    // dispatch(fetchAuthMe())
+
+    console.log(data.payload.token);
 
     if ("token" in data.payload) {
       localStorage.setItem("token", data.payload.token);
