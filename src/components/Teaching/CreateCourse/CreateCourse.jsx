@@ -41,10 +41,6 @@ const CreateCourse = () => {
 
   const inputFileRef = useRef(null);
 
-  if (!isAuth) {
-    return <Navigate to={'/'} />
-  }
-
   useEffect(() => {
     const getCourse = async () => (await axios.get(`/courses/${id}`)).data;
 
@@ -57,12 +53,16 @@ const CreateCourse = () => {
         setImageUrl(res.imageUrl === '' ? course.imageUrl : res.imageUrl);
       });
 
-    return () => {
-      setImageUrl('');
-      setLanguage('');
-      setLevelLanguage('');
-    };
+    // return () => {
+    //   setImageUrl('');
+    //   setLanguage('');
+    //   setLevelLanguage('');
+    // };
   }, []);
+
+  if (!isAuth) {
+    return <Navigate to={'/'} />
+  }
 
   const handleChangeFile = async (event) => {
     try {

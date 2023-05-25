@@ -42,13 +42,18 @@ const AddLessons = () => {
       setAnchorEls(newAnchorEls);
     }
   };
-  const onClickRemove = (event) => {
+  const onClickRemove = (event, indexModule, indexLesson) => {
     if (!window.confirm("Вы действительно хотите удалить урок?")) return;
 
     try {
-      const dataIndex = event.currentTarget.getAttribute('data-index');
+      // const dataIndex = event.currentTarget.getAttribute('data-index');
+      //
+      // dispatch(fetchRemoveLesson(modules[dataIndex].lessons[event.target.id]._id));
+      // dispatch(fetchLessons(id));
 
-      dispatch(fetchRemoveLesson(modules[dataIndex].lessons[event.target.id]._id));
+      // const dataIndex = event.currentTarget.getAttribute('data-index');
+
+      dispatch(fetchRemoveLesson(modules[indexModule].lessons[indexLesson]._id));
       dispatch(fetchLessons(id));
     } catch (err) {}
   };
@@ -141,7 +146,7 @@ const AddLessons = () => {
                     variant="outlined"
                     style={{marginBottom: '20px', marginTop: '20px', width: "90%"}}
                   />
-                  <IconButton id={index} onClick={onClickRemoveModule} color="error">
+                  <IconButton id={index} onClick={(event) => onClickRemoveModule(event, index)} color="error">
                     <Avatar src={`${pathFolder}/my/delete.svg`}/>
                   </IconButton>
                 </div>
@@ -157,7 +162,7 @@ const AddLessons = () => {
                         <IconButton onClick={(event) => onClickEdit(event, index, indexLesson)}>
                           <Avatar src={`${pathFolder}/my/edit.svg`}/>
                         </IconButton>
-                        <IconButton onClick={(event) => onClickRemove(event, index)}>
+                        <IconButton onClick={(event) => onClickRemove(event, index, indexLesson)}>
                           <Avatar src={`${pathFolder}/my/delete.svg`}/>
                         </IconButton>
                       </ListItem>
@@ -167,7 +172,7 @@ const AddLessons = () => {
 
                 <div style={{marginTop: "15px"}}>
                   <button
-                    style={{padding: '0'}}
+                    // style={{padding: '0'}}
                     className={styles.button}
                     onClick={(e) => handleClick(index, e)}
                     aria-controls={`simple-menu-${index}`}
