@@ -215,7 +215,7 @@ const Course = ({isModerator}) => {
           <div className={styles.manageCourse}>
             {
               (isAuthor || isModerator || isSubscript) &&
-              <Link to={`/study/${courseId}`}>
+              <Link to={isModerator ?`/check/${courseId}/lessons` : `/study/${courseId}/lessons`}>
                 <button className={styles.button}>
                   К урокам
                 </button>
@@ -254,7 +254,7 @@ const Course = ({isModerator}) => {
                       <button className={cn(styles.button, styles.buttonFail)} onClick={handleReject}>
                         Отклонить
                       </button>
-                      <Remark fnSave={handleSave} fnDelete={handleDelRemark} isCourse={true}/>
+                      <Remark fnSave={handleSave} fnDelete={handleDelRemark} isCourse={true} rowsCount={5}/>
                     </div>
                 }
               </>

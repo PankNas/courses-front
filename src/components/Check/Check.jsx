@@ -9,33 +9,15 @@ import CourseStudy from "../Study/CourseStudy/CourseStudy";
 import CatalogAll from "../Catalogs/CatalogAll";
 
 const Check = () => {
-  const isAuth = useSelector(selectIsAuth);
-  const userRole = useSelector(selectRoleUser);
-
-  const dispatch = useDispatch();
-  const {items} = useSelector(state => state.courses);
-
   const {data} = useSelector(state => state.auth);
-
-  useEffect(() => {
-    // dispatch(fetchCourses());
-    // dispatch(fetchAuthMe());
-  }, []);
-
-  // if (!isAuth || userRole !== 'moderator') {
-  //   return <Navigate to={'/'}/>
-  // }
-
-  // const getCheck = () => items.filter(item => item.status === 'check');
-  //
-  // const getActive = () => items.filter(item => item.status === 'active');
 
   return (
     <Routes>
       <Route path={'/*'} element={
         <CatalogAll title={'Мои проверки'} items={data?.reviewCourses}/>
       }/>
-      <Route path={'/:courseId'} element={<Course isModerator={true}/>}/>
+      <Route path={'/:courseId/*'} element={<Course isModerator={true}/>}/>
+      <Route path={'/:courseId/lessons/*'} element={<CourseStudy isModerate={true}/>} />
     </Routes>
   )
 }

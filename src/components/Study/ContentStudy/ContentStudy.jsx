@@ -12,8 +12,9 @@ import {fetchProgressCourses} from "../../../redux/slices/auth";
 import TranslateLesson from "../Lessons/TranslateLesson";
 import TestLesson from "../Lessons/TestLesson";
 import PassesLesson from "../Lessons/PassesLesson";
+import Remark from "../../Remark/Remark";
 
-const ContentStudy = ({isActive}) => {
+const ContentStudy = ({isModerate}) => {
   const {courseId, lessonId} = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,7 +28,10 @@ const ContentStudy = ({isActive}) => {
     const getLesson = async () => (await axios.get(`lessons/${lessonId}`)).data
 
     getLesson()
-      .then(res => setLesson(res));
+      .then(res => {
+        console.log(res);
+        setLesson(res);
+      });
   }, [lessonId]);
 
   const handleClickBack = async () => {
@@ -38,7 +42,7 @@ const ContentStudy = ({isActive}) => {
 
     if (indexLesson === 0) return;
 
-    if (isActive) {
+    if (isModerate) {
       navigate(`/check/${courseId}/lesson/${lessons[indexLesson - 1]._id}`);
       return;
     }
@@ -53,7 +57,7 @@ const ContentStudy = ({isActive}) => {
 
     if (indexLesson === lessons.length - 1) return;
 
-    if (isActive) {
+    if (isModerate) {
       navigate(`/check/${courseId}/lesson/${lessons[indexLesson + 1]._id}`);
       return;
     }
@@ -77,22 +81,28 @@ const ContentStudy = ({isActive}) => {
 
   return (
     <div className={styles.content}>
-      <h1>{lesson?.title}</h1>
-      {typeContent(lesson)}
-      <div className={styles.navigation}>
-        <Button
-          variant={'outlined'}
-          onClick={handleClickBack}
-        >
-          {'<--'}
-        </Button>
-        <Button
-          variant={'outlined'}
-          onClick={handleClickNext}
-        >
-          {'-->'}
-        </Button>
+      <div>
+        <h2>{lesson?.title}</h2>
+        {typeContent(lesson)}
+        <div className={styles.navigation}>
+          <Button
+            variant={'outlined'}
+            onClick={handleClickBack}
+          >
+            {'<--'}
+          </Button>
+          <Button
+            variant={'outlined'}
+            onClick={handleClickNext}
+          >
+            {'-->'}
+          </Button>
+        </div>
       </div>
+
+      {
+        isModerate && <div className={styles.remark}><Remark rowsCount={5}/></div>
+      }
     </div>
   )
 }

@@ -7,7 +7,7 @@ import {pathFolder} from "../../App";
 import {useParams} from "react-router-dom";
 import axios from "../../axios";
 
-const Remark = ({fnSave, fnDelete, isCourse}) => {
+const Remark = ({fnSave, fnDelete, isCourse, rowsCount}) => {
   const {courseId, lessonId} = useParams();
 
   const [comment, setComment] = useState('');
@@ -40,7 +40,7 @@ const Remark = ({fnSave, fnDelete, isCourse}) => {
         value={comment}
         label="Замечание"
         multiline
-        rows={5}
+        rows={rowsCount}
         onChange={handleChange}
         variant="outlined"
         fullWidth

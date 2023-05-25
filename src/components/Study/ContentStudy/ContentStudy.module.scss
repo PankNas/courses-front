@@ -1,7 +1,23 @@
 .content {
-  padding: 15px;
-  margin: 0 auto;
-  width: 500px;
+  //padding: 15px;
+  //margin: 0 auto;
+  //width: 500px;
+  width: 900px;
+  //padding: 20px;
+  margin-left: 25px;
+  box-sizing: border-box;
+  //display: flex;
+  //justify-content: space-between;
+}
+
+.remark {
+  width: 900px;
+  margin-top: 50px;
+  //position: sticky;
+  //top: 400px;
+  //bottom: calc(100vw - 200px);
+  //max-height: 500px;
+  //transition: top 0.3s ease-in-out;
 }
 
 .navigation {
