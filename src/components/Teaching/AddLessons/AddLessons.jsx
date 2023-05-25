@@ -28,14 +28,19 @@ const AddLessons = () => {
   };
 
   const handleMove = (event) => {
-    dispatch(setType(event.target.id));
+    try {
+      dispatch(setType(event.target.id));
 
-    const dataIndex = event.currentTarget.getAttribute('data-index');
-    const newAnchorEls = [...anchorEls];
-    newAnchorEls[dataIndex] = null; // сброс якоря после закрытия списка меню
-    setAnchorEls(newAnchorEls);
+      const dataIndex = event.currentTarget.getAttribute('data-index');
+      const newAnchorEls = [...anchorEls];
+      newAnchorEls[dataIndex] = null; // сброс якоря после закрытия списка меню
+      setAnchorEls(newAnchorEls);
 
-    navigate(`module/${modules[dataIndex]._id}/sample`);
+      navigate(`module/${modules[dataIndex]._id}/sample`);
+    } catch (err) {
+      const newAnchorEls = [...anchorEls];
+      setAnchorEls(newAnchorEls);
+    }
   };
   const onClickRemove = (event) => {
     if (!window.confirm("Вы действительно хотите удалить урок?")) return;
@@ -47,25 +52,33 @@ const AddLessons = () => {
       dispatch(fetchLessons(id));
     } catch (err) {}
   };
-  const onClickRemoveModule = (event) => {
+  const onClickRemoveModule = (event, indexModule) => {
     if (!window.confirm("Вы действительно хотите удалить модуль?")) return;
 
     try {
-      dispatch(fetchRemoveModule(modules[event.target.id]._id));
+      dispatch(fetchRemoveModule(modules[indexModule]._id));
       dispatch(fetchLessons(id));
-    } catch (err) {}
+
+    } catch (err) {
+
+    }
   }
 
-  const onClickEdit = (event) => {
+  const onClickEdit = (event, indexModule, indexLesson) => {
+    dispatch(setType(modules[indexModule].lessons[indexLesson].type));
+
+    navigate(`module/${modules[indexModule]._id}/sample/${modules[indexModule].lessons[indexLesson]._id}`);
+
+
     // const item = items[event.target.id];
 
-    const dataIndex = event.currentTarget.getAttribute('data-index');
-
-    dispatch(setType(modules[dataIndex].lessons[event.target.id].type));
-
-    navigate(`module/${modules[dataIndex]._id}/sample/${modules[dataIndex].lessons[event.target.id]._id}`);
-
-    // navigate(`sample/${item._id}`);
+    // const dataIndex = event.currentTarget.getAttribute('data-index');
+    //
+    // dispatch(setType(modules[dataIndex].lessons[event.target.id].type));
+    //
+    // navigate(`module/${modules[dataIndex]._id}/sample/${modules[dataIndex].lessons[event.target.id]._id}`);
+    //
+    // // navigate(`sample/${item._id}`);
   };
 
   const handleAddModel = async () => {
@@ -111,7 +124,7 @@ const AddLessons = () => {
           onClick={handleAddModel}
           className={styles.addCourse}
         >
-          <p className={styles.plus}>+ Новый модуль</p>
+          + Новый модуль
         </button>
 
         <div style={{marginTop: "15px"}}>
@@ -119,7 +132,7 @@ const AddLessons = () => {
             modules?.map((block, index) =>
               <div key={block._id} className={styles.moduleCard}>
                 <div className={styles.moduleHeader}>
-                  <p style={{marginLeft: "10px"}}>{index + 1}</p>
+                  <p style={{padding: "10px"}}>{index + 1}</p>
                   <TextField
                     id={`${index}`}
                     value={block.title}
@@ -135,16 +148,16 @@ const AddLessons = () => {
 
                 <List>
                   {
-                    block.lessons?.map((item, indexLesson) =>
+                    block?.lessons?.map((item, indexLesson) =>
                       <ListItem key={index} className={styles.lessonsItem}>
                         <ListItemIcon>
                           <Avatar src={`${pathFolder}/my/${selectIcon(item.type)}.svg`}/>
                         </ListItemIcon>
                         <ListItemText primary={item.title}/>
-                        <IconButton sr id={index} data-index={index} onClick={onClickEdit}>
+                        <IconButton onClick={(event) => onClickEdit(event, index, indexLesson)}>
                           <Avatar src={`${pathFolder}/my/edit.svg`}/>
                         </IconButton>
-                        <IconButton id={index} data-index={index} onClick={onClickRemove}>
+                        <IconButton onClick={(event) => onClickRemove(event, index)}>
                           <Avatar src={`${pathFolder}/my/delete.svg`}/>
                         </IconButton>
                       </ListItem>
@@ -152,32 +165,32 @@ const AddLessons = () => {
                   }
                 </List>
 
-                {/*<div style={{marginTop: "15px"}}>*/}
-                {/*  <Button*/}
-                {/*    style={{padding: '0'}}*/}
-                {/*    className={styles.moduleAdd}*/}
-                {/*    onClick={(e) => handleClick(index, e)}*/}
-                {/*    aria-controls={`simple-menu-${index}`}*/}
-                {/*    aria-haspopup="true"*/}
-                {/*  >*/}
-                {/*    + Добавить урок*/}
-                {/*  </Button>*/}
-                {/*  <Menu*/}
-                {/*    id={`simple-menu-${index}`}*/}
-                {/*    anchorEl={anchorEls[index]} // используем соответствующий якорь для элемента меню*/}
-                {/*    keepMounted*/}
-                {/*    open={Boolean(anchorEls[index])}*/}
-                {/*    onClose={handleMove}*/}
-                {/*    PaperProps={{ sx: { width: '650px' } }}*/}
-                {/*  >*/}
-                {/*    <MenuItem id={`text`} data-index={index} onClick={handleMove}>Теория</MenuItem>*/}
-                {/*    <MenuItem id={'video'} data-index={index} onClick={handleMove}>Видео</MenuItem>*/}
-                {/*    <MenuItem id={'sentence'} data-index={index} onClick={handleMove}>Составить текст</MenuItem>*/}
-                {/*    <MenuItem id={'passes'} data-index={index} onClick={handleMove}>Пропуски</MenuItem>*/}
-                {/*    <MenuItem id={'test'} data-index={index} onClick={handleMove}>Тест</MenuItem>*/}
-                {/*    <MenuItem id={'translate'} data-index={index} onClick={handleMove}>Перевод</MenuItem>*/}
-                {/*  </Menu>*/}
-                {/*</div>*/}
+                <div style={{marginTop: "15px"}}>
+                  <button
+                    style={{padding: '0'}}
+                    className={styles.button}
+                    onClick={(e) => handleClick(index, e)}
+                    aria-controls={`simple-menu-${index}`}
+                    aria-haspopup="true"
+                  >
+                    + Добавить урок
+                  </button>
+                  <Menu
+                    id={`simple-menu-${index}`}
+                    anchorEl={anchorEls[index]} // используем соответствующий якорь для элемента меню
+                    keepMounted
+                    open={Boolean(anchorEls[index])}
+                    onClose={handleMove}
+                    PaperProps={{ sx: { width: '650px' } }}
+                  >
+                    <MenuItem id={`text`} data-index={index} onClick={handleMove}>Теория</MenuItem>
+                    <MenuItem id={'video'} data-index={index} onClick={handleMove}>Видео</MenuItem>
+                    <MenuItem id={'sentence'} data-index={index} onClick={handleMove}>Составить текст</MenuItem>
+                    <MenuItem id={'passes'} data-index={index} onClick={handleMove}>Пропуски</MenuItem>
+                    <MenuItem id={'test'} data-index={index} onClick={handleMove}>Тест</MenuItem>
+                    <MenuItem id={'translate'} data-index={index} onClick={handleMove}>Перевод</MenuItem>
+                  </Menu>
+                </div>
               </div>
             )
           }

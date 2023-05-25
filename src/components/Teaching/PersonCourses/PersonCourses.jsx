@@ -11,11 +11,13 @@ import cn from "classnames";
 import {IconButton} from "@mui/material";
 import {pathFolder} from "../../../App";
 import Avatar from "@mui/material/Avatar";
+import {selectFlag, setFlag} from "../../../redux/slices/lessons";
 
 const PersonCourses = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isAuth = useSelector(selectIsAuth)
+  const isAuth = useSelector(selectIsAuth);
+  const flag = useSelector(selectFlag);
 
   const teachCourses = useSelector(state => state.auth.teachCourses);
   const [isChange, setIsChange] = useState(false);
@@ -31,6 +33,7 @@ const PersonCourses = () => {
   const handleClickAddCourse = async () => {
     try {
       const {data} = await axios.post("/courses", {});
+      dispatch(setFlag(false));
 
       navigate(`/teach/${data._id}/edit/`);
     } catch (err) {

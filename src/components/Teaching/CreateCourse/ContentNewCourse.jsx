@@ -10,6 +10,13 @@ import AddLessons from "../AddLessons/AddLessons";
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "../../../axios";
+import {
+  setDescCourse,
+  setImageUrlCourse,
+  setLanguageCourse,
+  setLevelLanguageCourse,
+  setTitleCourse
+} from "../../../redux/slices/lessons";
 
 const ContentNewCourse = () => {
   const {id} = useParams();
@@ -54,6 +61,7 @@ const ContentNewCourse = () => {
       const {data} = await axios.post("/upload", formData);
 
       setImageUrl(data.url.slice(4));
+      dispatch(setImageUrlCourse(data.url.slice(4)))
     } catch (err) {
       console.warn(err);
       alert("Ошибка при загрузке файла!");
@@ -63,18 +71,25 @@ const ContentNewCourse = () => {
   const handleChange = (event) => {
     switch (event.target.id) {
       case 'name-course':
+        dispatch(setTitleCourse(event.target.value))
         return setTitle(event.target.value);
       case 'desc-course':
+        dispatch(setDescCourse(event.target.value))
         return setDesc(event.target.value);
       case 'languages':
+        dispatch(setLanguageCourse(event.target.value))
         return setLanguage(event.target.value);
       case 'levelLanguages':
+        dispatch(setLevelLanguageCourse(event.target.value))
         return setLevelLanguage(event.target.value);
       default:
         break;
     }
   };
-  const handleDelBtn = () => setImageUrl('');
+  const handleDelBtn = () => {
+    dispatch(setImageUrlCourse(''));
+    setImageUrl('');
+  };
 
   const onSubmit = async () => {
     try {
@@ -102,24 +117,25 @@ const ContentNewCourse = () => {
     }
   };
 
-  const onCancel = () => navigate(-1);
+  const onCancel = () => {
+    navigate(-1);
+  };
 
   return (
     <div className={styles.content}>
       <div className={styles.imgBlock}>
-        <button
-          onClick={() => inputFileRef.current.click()}
-          style={{marginRight: '15px'}}
-          className={styles.button}
-        >
-          Загрузить превью
-        </button>
-        <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>
+        <div>
+          <button
+            onClick={() => inputFileRef.current.click()}
+            style={{marginRight: '15px'}}
+            className={styles.button}
+          >
+            Загрузить превью
+          </button>
+          <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>
+        </div>
         {imageUrl && (
           <>
-            <IconButton onClick={handleDelBtn}>
-              <Avatar src={`${pathFolder}/my/delete.svg`}/>
-            </IconButton>
             {
               imageUrl !== '' ?
                 <img
@@ -129,6 +145,9 @@ const ContentNewCourse = () => {
                 /> :
                 <Avatar src={`${pathFolder}/my/backAvaCourse.jpg`}/>
             }
+            <IconButton style={{padding: '0'}} onClick={handleDelBtn}>
+              <Avatar src={`${pathFolder}/my/delete.svg`}/>
+            </IconButton>
           </>
         )}
       </div>
@@ -164,14 +183,14 @@ const ContentNewCourse = () => {
               id={'languages'}
               options={languages}
               onChange={handleChange}
-              style={{width: '740px / 2'}}
+              style={{width: '360px'}}
             />
             <SelectItem
               value={levelLanguage}
               id={'levelLanguages'}
               options={levelLanguages}
               onChange={handleChange}
-              style={{width: '740px / 2'}}
+              style={{width: '360px'}}
             />
           </div>
         </div>

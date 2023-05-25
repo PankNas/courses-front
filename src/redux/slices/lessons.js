@@ -22,6 +22,14 @@ export const fetchRemoveModule = createAsyncThunk(
 
 const initialState = {
   modules: [],
+  course: {
+    title: '',
+    desc: '',
+    language: '',
+    levelLanguage: '',
+    imageUrl: '',
+  },
+  flag: false,
   status: "loading",
 };
 
@@ -35,7 +43,35 @@ const lessonsSlice = createSlice({
       console.log(action, module);
 
       state.modules = modules;
-    }
+    },
+
+    setFlag:(state, action) => {
+      state.flag = action.payload;
+    },
+
+    setDataCourse: (state, action) => {
+      state.course.title = action.payload.title;
+      state.course.desc = action.payload.desc;
+      state.course.langage = action.payload.language;
+      state.course.levelLanguage = action.payload.levelLanguage;
+      state.course.imageUrl = action.payload.imageUrl;
+    },
+
+    setTitleCourse: (state, action) => {
+      state.course.title = action.payload;
+    },
+    setDescCourse: (state, action) => {
+      state.course.desc = action.payload;
+    },
+    setLanguageCourse: (state, action) => {
+      state.course.language = action.payload;
+    },
+    setLevelLanguageCourse: (state, action) => {
+      state.course.levelLanguage = action.payload;
+    },
+    setImageUrlCourse: (state, action) => {
+      state.course.imageUrl = action.payload;
+    },
   },
   extraReducers: {
     [fetchLessons.pending]: (state) => {
@@ -66,5 +102,14 @@ const lessonsSlice = createSlice({
 
 export const {
   setTitle,
+
+  setDescCourse,
+  setImageUrlCourse,
+  setLanguageCourse,
+  setLevelLanguageCourse,
+  setTitleCourse,
+  setDataCourse,
+  setFlag,
 } = lessonsSlice.actions;
 export const lessonsReducer = lessonsSlice.reducer;
+export const selectFlag = (state) => state.lessons.flag;

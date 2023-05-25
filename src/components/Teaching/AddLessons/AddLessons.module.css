@@ -1,6 +1,6 @@
 .header {
-  display: flex;
-  align-items: center;
+  /*display: flex;*/
+  /*align-items: center;*/
   margin-bottom: 20px;
   width: 100%;
 }
@@ -11,17 +11,38 @@
   margin: 0;
 }
 
-.addCourse {
+.button {
+  color: white;
+  background-color: #FF9F67;
+
+  font-size: 18px;
+  font-weight: normal;
   border-style: none;
+  border-radius: 5px;
+
+  padding: 15px 15px;
+  font-family: 'Mulish', sans-serif;
+}
+
+.addCourse {
+  /*border-style: none;*/
   background-color: transparent;
+  color: #FF9F67;
+  font-size: 20px;
+  border: 2px solid #FF9F67;
+  /*width: 70px;*/
+  /*height: 70px;*/
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
 }
 
 .plus {
   color: #FF9F67;
   font-size: 20px;
   border: 2px solid #FF9F67;
-  width: 70px;
-  height: 70px;
+  /*width: 70px;*/
+  /*height: 70px;*/
   border-radius: 10px;
 }
 

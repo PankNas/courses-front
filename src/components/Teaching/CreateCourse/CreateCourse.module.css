@@ -5,8 +5,12 @@
 }
 
 .navigate {
-  display: flex;
-  font-size: 20px;
+  /*display: flex;*/
+  display: inline-block;
+  font-size: 18px;
+  align-items: center;
+  font-weight: bold;
+  color: #4255A4;
 }
 
 .link {
@@ -20,6 +24,11 @@
   color: #4255A4;
   text-decoration: none;
   background-color: transparent;
+}
+
+.link:visited {
+  color: #4255A4;
+  text-decoration: none;
 }
 
 .linkActive {
@@ -36,7 +45,12 @@
 
 .imgBlock {
   width: 250px;
+  margin-top: 20px;
   /*margin-right: 70px;*/
+}
+
+.imgButtons {
+  display: flex;
 }
 
 .button {
@@ -48,7 +62,7 @@
   border-style: none;
   border-radius: 5px;
 
-  padding: 15px 25px;
+  padding: 15px 15px;
   font-family: 'Mulish', sans-serif;
 }
 
