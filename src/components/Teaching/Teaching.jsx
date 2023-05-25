@@ -4,7 +4,6 @@ import {Route, Routes} from "react-router-dom";
 import PersonCourses from "./PersonCourses/PersonCourses";
 import CreateCourse from "./CreateCourse/CreateCourse";
 import Sample from "./Samples/Sample";
-import Message from "./CreateCourse/Message";
 
 const Teaching = () => {
   return (
@@ -14,16 +13,10 @@ const Teaching = () => {
         <Route path="/edit/*" element={<CreateCourse/>}/>
         <Route path="/edit/module/:moduleId/sample/*" element={<Sample/>} />
         <Route path="/edit/module/:moduleId/sample/:sampleId" element={<Sample/>}/>
-        <Route path="/:id/message" element={<Message/>}/>
 
         <Route path="/:id/edit/*" element={<CreateCourse/>}/>
         <Route path="/:id/edit/module/:moduleId/sample/*" element={<Sample/>} />
         <Route path="/:id/edit/module/:moduleId/sample/:sampleId" element={<Sample/>}/>
-
-        {/*<Route path="/:id/edit/*" element={<CreateCourse/>}/>*/}
-        {/*<Route path="/:id/edit/module/:moduleId/sample/*" element={<Sample/>} />*/}
-        {/*<Route path="/:id/edit/module/:moduleId/sample/:sampleId" element={<Sample/>}/>*/}
-        {/*<Route path="/:id/message" element={<Message/>}/>*/}
       </Routes>
     </div>
   );

@@ -5,7 +5,7 @@ export const setFinishLesson = async (courseId, lessonId) => {
 
   const {progressCourses} = data;
   const index = progressCourses.findIndex(elem => elem.course === courseId);
-  const indexLesson = progressCourses[index].lessonsEnd.includes(lessonId);
+  const indexLesson = progressCourses[index]?.lessonsEnd.includes(lessonId);
 
   if (indexLesson) return;
 

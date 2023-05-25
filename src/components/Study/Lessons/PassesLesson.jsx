@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import {setFinishLesson} from "./finishLesson";
 import {useParams} from "react-router-dom";
 
-const PassesLesson = ({sentence, size, options, answers}) => {
+const PassesLesson = ({sentence, size, options, answers, isModerate}) => {
   const {courseId, lessonId} = useParams();
 
   const [text, setText] = useState([]);
@@ -38,6 +38,7 @@ const PassesLesson = ({sentence, size, options, answers}) => {
   }, [text]);
 
   const handleClick = async () => {
+
     const isCorrect = values.findIndex((value, index) => value !== answers[index]);
 
     if (isCorrect !== -1) {
@@ -46,6 +47,9 @@ const PassesLesson = ({sentence, size, options, answers}) => {
     }
 
     alert('Успех!')
+
+    if (isModerate) return;
+
     await setFinishLesson(courseId, lessonId);
   }
 

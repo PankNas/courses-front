@@ -27,12 +27,12 @@ const Moderate = () => {
   return (
 
     <Routes>
-      <Route path={'/*'} element={
+      <Route path={'/'} element={
         // <Catalog title={'Каталог курсов'} items={getActive()} isProgress={false}/>
         <CatalogAll items={getActive()} title={'Курсы на модерацию'}/>
       }
       />
-      <Route path={'/:courseId/*'} element={<Course isModerator={true}/>}/>
+      {/*<Route path={'/:courseId/*'} element={<Course isModerator={true}/>}/>*/}
     </Routes>
   );
 };

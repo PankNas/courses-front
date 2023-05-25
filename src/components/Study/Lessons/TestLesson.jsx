@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useParams} from "react-router-dom";
 import {setFinishLesson} from "./finishLesson";
 import Button from "@mui/material/Button";
 import styles from './style.module.scss';
-import {Checkbox, FormControlLabel, FormGroup} from "@mui/material";
 import CheckboxItem from "../../CheckboxItem";
 
-const TestLesson = ({items, totalScore}) => {
+const TestLesson = ({items, totalScore, isModerate}) => {
   const {courseId, lessonId} = useParams();
   const [answers, setAnswers] = useState(new Array(items?.length).fill(-1));
   const [score, setScore] = useState('');
@@ -25,6 +24,9 @@ const TestLesson = ({items, totalScore}) => {
     }, 0);
 
     setScore(sumScore);
+
+    if (isModerate) return;
+
     setFinishLesson(courseId, lessonId).then();
   };
 

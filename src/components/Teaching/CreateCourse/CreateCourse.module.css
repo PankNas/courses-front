@@ -87,3 +87,15 @@
   justify-content: space-between;
 }
 
+.remarkBlock {
+  position: relative;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.deleteButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+

@@ -1,14 +1,15 @@
 import React, {useEffect} from 'react';
 import ReactPlayer from "react-player";
 import {useParams} from "react-router-dom";
-import axios from "../../../axios";
 import {setFinishLesson} from "./finishLesson";
 
-const VideoLesson = ({desc, videoUrl}) => {
+const VideoLesson = ({desc, videoUrl, isModerate}) => {
   const {courseId, lessonId} = useParams();
 
   useEffect(() => {
     try {
+      if (isModerate) return;
+
       setFinishLesson(courseId, lessonId).then();
     } catch (err) {
       alert('Ошибка прохождения курса!')

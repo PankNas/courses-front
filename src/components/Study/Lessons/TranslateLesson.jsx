@@ -1,15 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useParams} from "react-router-dom";
 import {setFinishLesson} from "./finishLesson";
 import Button from "@mui/material/Button";
-import {Checkbox, FormControlLabel, FormGroup} from "@mui/material";
 import CheckboxItem from "../../CheckboxItem";
 
-const TranslateLesson = ({question, options, answer}) => {
+const TranslateLesson = ({question, options, answer, isModerate}) => {
   const {courseId, lessonId} = useParams();
   const [curAnswer, setCurAnswer] = useState(-1);
-
-  // const isChecked = (index) => index === curAnswer;
 
   const handleChangeCheckBox = (event, index, _numItem) => {
     setCurAnswer(+index);
@@ -21,6 +18,9 @@ const TranslateLesson = ({question, options, answer}) => {
     }
 
     alert('Успех!');
+
+    if (isModerate) return;
+
     setFinishLesson(courseId, lessonId).then();
   }
 

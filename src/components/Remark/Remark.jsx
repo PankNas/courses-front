@@ -7,7 +7,7 @@ import {pathFolder} from "../../App";
 import {useParams} from "react-router-dom";
 import axios from "../../axios";
 
-const Remark = ({fnSave, fnDelete, isCourse, rowsCount}) => {
+const Remark = ({fnSave, fnDelete, isCourse, rowsCount, isRead = false}) => {
   const {courseId, lessonId} = useParams();
 
   const [comment, setComment] = useState('');
@@ -21,13 +21,14 @@ const Remark = ({fnSave, fnDelete, isCourse, rowsCount}) => {
           setComment(res.remarkForCourse)
         } else {
           const remark = res.remarks.find(item => item._id === lessonId);
-
-          if (!remark) return;
-
-          setComment(remark.text)
+          if (!remark) {
+            setComment('');
+          } else {
+            setComment(remark.text);
+          }
         }
       })
-  }, []);
+  }, [lessonId]);
 
   const handleChange = (event) => setComment(event.target.value);
   const handleSave = async () => fnSave(comment);
@@ -38,22 +39,30 @@ const Remark = ({fnSave, fnDelete, isCourse, rowsCount}) => {
       <TextField
         id={'desc-course'}
         value={comment}
-        label="Замечание"
+        label="Замечания от проверяющего"
         multiline
         rows={rowsCount}
         onChange={handleChange}
         variant="outlined"
         fullWidth
+        InputProps={{
+          readOnly: isRead, // делаем поле только для чтения
+        }}
         style={{marginBottom: '20px'}}
       />
-      <div className={styles.buttonBlock}>
-        <IconButton style={{padding: '0', marginRight: '20px'}} onClick={handleSave}>
-          <Avatar src={`${pathFolder}/my/done.svg`}/>
-        </IconButton>
-        <IconButton style={{padding: '0'}} onClick={handleDel}>
-          <Avatar src={`${pathFolder}/my/delete.svg`}/>
-        </IconButton>
-      </div>
+      {
+        !isRead &&
+        <>
+          <div className={styles.buttonBlock}>
+            <IconButton style={{padding: '0', marginRight: '20px'}} onClick={handleSave}>
+              <Avatar src={`${pathFolder}/my/done.svg`}/>
+            </IconButton>
+            <IconButton style={{padding: '0'}} onClick={handleDel}>
+              <Avatar src={`${pathFolder}/my/delete.svg`}/>
+            </IconButton>
+          </div>
+        </>
+      }
     </>
   )
 }

@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import {setFinishLesson} from "./finishLesson";
 import {useParams} from "react-router-dom";
 
-const SentenceLesson = ({sentence, translate}) => {
+const SentenceLesson = ({sentence, translate, isModerate}) => {
   const {courseId, lessonId} = useParams();
 
   const [text, setText] = useState([]);
@@ -46,6 +46,9 @@ const SentenceLesson = ({sentence, translate}) => {
     }
 
     alert('Успех!');
+
+    if (isModerate) return;
+
     setFinishLesson(courseId, lessonId).then();
   }
 

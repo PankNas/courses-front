@@ -13,6 +13,9 @@ import TranslateLesson from "../Lessons/TranslateLesson";
 import TestLesson from "../Lessons/TestLesson";
 import PassesLesson from "../Lessons/PassesLesson";
 import Remark from "../../Remark/Remark";
+import Avatar from "@mui/material/Avatar";
+import {pathFolder} from "../../../App";
+import {IconButton} from "@mui/material";
 
 const ContentStudy = ({isModerate}) => {
   const {courseId, lessonId} = useParams();
@@ -43,11 +46,11 @@ const ContentStudy = ({isModerate}) => {
     if (indexLesson === 0) return;
 
     if (isModerate) {
-      navigate(`/check/${courseId}/lesson/${lessons[indexLesson - 1]._id}`);
+      navigate(`/check/${courseId}/lessons/${lessons[indexLesson - 1]._id}`);
       return;
     }
 
-    navigate(`/study/${courseId}/lesson/${lessons[indexLesson - 1]._id}`);
+    navigate(`/study/${courseId}/lessons/${lessons[indexLesson - 1]._id}`);
   };
   const handleClickNext = async () => {
     const course = (await axios.get(`courses/${courseId}`)).data;
@@ -58,7 +61,7 @@ const ContentStudy = ({isModerate}) => {
     if (indexLesson === lessons.length - 1) return;
 
     if (isModerate) {
-      navigate(`/check/${courseId}/lesson/${lessons[indexLesson + 1]._id}`);
+      navigate(`/check/${courseId}/lessons/${lessons[indexLesson + 1]._id}`);
       return;
     }
 
@@ -76,56 +79,75 @@ const ContentStudy = ({isModerate}) => {
       nextLesson = lessons[indexLesson + 1]._id;
     }
 
-    navigate(`/study/${courseId}/lesson/${nextLesson}`);
+    navigate(`/study/${courseId}/lessons/${nextLesson}`);
+  }
+
+  const handleSaveRemark = async (text) => {
+    try {
+      await axios.patch(`/remarks/course/${courseId}/lesson/${lessonId}`, {text: text});
+
+      alert('Замечание сохранено');
+    } catch (err) {
+
+    }
+  }
+
+  const handleDelRemark = async () => {
+    try {
+        await axios.delete(`/remarks/course/${courseId}/lesson/${lessonId}`);
+
+      alert('Замечание удалено');
+    } catch (err) {
+
+    }
   }
 
   return (
     <div className={styles.content}>
       <div>
         <h2>{lesson?.title}</h2>
-        {typeContent(lesson)}
+        {typeContent(lesson, isModerate)}
         <div className={styles.navigation}>
-          <Button
-            variant={'outlined'}
+          <IconButton
             onClick={handleClickBack}
           >
-            {'<--'}
-          </Button>
-          <Button
-            variant={'outlined'}
+            <Avatar src={`${pathFolder}/my/arrow_back.svg`}/>
+          </IconButton>
+          <IconButton
             onClick={handleClickNext}
           >
-            {'-->'}
-          </Button>
+            <Avatar src={`${pathFolder}/my/arrow_forward.svg`}/>
+          </IconButton>
         </div>
       </div>
 
       {
-        isModerate && <div className={styles.remark}><Remark rowsCount={5}/></div>
+        isModerate &&
+        <div className={styles.remark}><Remark fnSave={handleSaveRemark} fnDelete={handleDelRemark} rowsCount={5}/></div>
       }
     </div>
   )
 }
 
-function typeContent(lesson) {
+function typeContent(lesson, isModerate) {
   switch (lesson?.type) {
     case 'text':
-      return <TextLesson desc={lesson.desc}/>;
+      return <TextLesson desc={lesson.desc} isModerate={isModerate}/>;
     case 'video':
-      return <VideoLesson desc={lesson.desc} videoUrl={lesson.videoUrl}/>;
+      return <VideoLesson desc={lesson.desc} videoUrl={lesson.videoUrl} isModerate={isModerate}/>;
     case 'sentence':
-      return <SentenceLesson sentence={lesson.sentence} translate={lesson.translate}/>
+      return <SentenceLesson sentence={lesson.sentence} translate={lesson.translate} isModerate={isModerate}/>
     case 'translate':
-      return <TranslateLesson question={lesson.question} options={lesson.options} answer={lesson.answer}/>
+      return <TranslateLesson question={lesson.question} options={lesson.options} answer={lesson.answer} isModerate={isModerate}/>
     case 'test':
-      return <TestLesson items={lesson.itemsTest} totalScore={lesson.totalScore}/>
+      return <TestLesson items={lesson.itemsTest} totalScore={lesson.totalScore} isModerate={isModerate}/>
     case 'passes':
       const parts = lesson.sentence.split(/\[(.*?)\]/g);
       const size = Math.trunc(parts.length / 2);
 
       const [options, answers] = setParamsPasses(lesson.sentence);
 
-      return <PassesLesson sentence={lesson.sentence} size={size} options={options} answers={answers}/>;
+      return <PassesLesson sentence={lesson.sentence} size={size} options={options} answers={answers} isModerate={isModerate}/>;
     default:
       return;
   }

@@ -28,6 +28,7 @@ const initialState = {
     language: '',
     levelLanguage: '',
     imageUrl: '',
+    status: '',
   },
   flag: false,
   status: "loading",
@@ -40,7 +41,6 @@ const lessonsSlice = createSlice({
     setTitle: (state, action) => {
       const modules = state.modules.slice();
       modules[+action.payload.id].title = action.payload.value;
-      console.log(action, module);
 
       state.modules = modules;
     },
@@ -52,9 +52,10 @@ const lessonsSlice = createSlice({
     setDataCourse: (state, action) => {
       state.course.title = action.payload.title;
       state.course.desc = action.payload.desc;
-      state.course.langage = action.payload.language;
+      state.course.language = action.payload.language;
       state.course.levelLanguage = action.payload.levelLanguage;
       state.course.imageUrl = action.payload.imageUrl;
+      state.course.status = action.payload.status;
     },
 
     setTitleCourse: (state, action) => {

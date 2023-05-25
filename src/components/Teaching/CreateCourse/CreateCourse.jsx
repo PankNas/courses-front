@@ -4,7 +4,7 @@ import styles from './CreateCourse.module.css';
 import {Navigate, NavLink, Outlet, Route, Routes, useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuth} from "../../../redux/slices/auth";
-import Message from "./Message";
+
 import {
   selectFlag, setDataCourse,
   setDescCourse, setFlag,
@@ -20,6 +20,7 @@ import SelectItem from "../../SelectItem";
 import {languages, levelLanguages} from "./helper";
 import AddLessons from "../AddLessons/AddLessons";
 import axios from "../../../axios";
+import Remark from "../../Remark/Remark";
 
 const CreateCourse = () => {
   const {id} = useParams();
@@ -50,6 +51,15 @@ const CreateCourse = () => {
         setLevelLanguage(res.levelLanguage);
         setLanguage(res.language);
         setImageUrl(res.imageUrl);
+
+        dispatch(setDataCourse({
+          title: res.title,
+          desc: res.desc,
+          levelLanguage: res.levelLanguage,
+          language: res.language,
+          imageUrl: res.imageUrl,
+          status: res.status,
+        }));
       });
 
     // return () => {
@@ -59,25 +69,27 @@ const CreateCourse = () => {
     // };
 
     return async () => {
-      const fields = {
-        title,
-        imageUrl,
-        desc,
-        language,
-        levelLanguage,
-        status: 'passive'
-      };
+      // const fields = {
+      //   title,
+      //   imageUrl,
+      //   desc,
+      //   language,
+      //   levelLanguage,
+      //   status: 'passive'
+      // };
+      //
+      // console.log('hi', course);
 
       for (const module of modules) {
         await axios.patch(`/modules/${module._id}`, module);
       }
 
-      await axios.patch(`/courses/${id}`, fields);
-    }
+      // await axios.patch(`/courses/${id}`, course);
+    };
   }, []);
 
   if (!isAuth) {
-    return <Navigate to={'/'} />
+    return <Navigate to={'/'}/>;
   }
 
   const handleChangeFile = async (event) => {
@@ -89,7 +101,7 @@ const CreateCourse = () => {
       const {data} = await axios.post("/upload", formData);
 
       setImageUrl(data.url.slice(4));
-      dispatch(setImageUrlCourse(data.url.slice(4)))
+      dispatch(setImageUrlCourse(data.url.slice(4)));
     } catch (err) {
       console.warn(err);
       alert("Ошибка при загрузке файла!");
@@ -99,16 +111,16 @@ const CreateCourse = () => {
   const handleChange = (event) => {
     switch (event.target.id) {
       case 'name-course':
-        dispatch(setTitleCourse(event.target.value))
+        dispatch(setTitleCourse(event.target.value));
         return setTitle(event.target.value);
       case 'desc-course':
-        dispatch(setDescCourse(event.target.value))
+        dispatch(setDescCourse(event.target.value));
         return setDesc(event.target.value);
       case 'languages':
-        dispatch(setLanguageCourse(event.target.value))
+        dispatch(setLanguageCourse(event.target.value));
         return setLanguage(event.target.value);
       case 'levelLanguages':
-        dispatch(setLevelLanguageCourse(event.target.value))
+        dispatch(setLevelLanguageCourse(event.target.value));
         return setLevelLanguage(event.target.value);
       default:
         break;
@@ -156,59 +168,59 @@ const CreateCourse = () => {
   };
 
   const onCancel = async () => {
-    // if (!flag) {
-    //   await axios.delete(`/courses/${id}`);
-    // }
     navigate(-1);
   };
+
+  const handleClickRemoveRemark = async () => {
+    try {
+      await axios.delete(`/remarks/course/${id}`);
+
+      alert('Замечание удалено');
+    } catch (err) {
+
+    }
+  }
 
   return (
     <div className={styles.container}>
       <h1>Мой курс</h1>
-
-      <nav className={styles.navigate}>
-        <NavLink
-          to={`/teach/${id}/edit`}
-          className={({isActive}) => styles.link + (isActive ? styles.linkActive : '')}
-        >
-          Содержание
-        </NavLink>
-        <NavLink
-          className={({isActive}) => styles.link + (isActive ? styles.linkActive : '')}
-          to={`/teach/${id}/message`}
-        >
-          Ответ модератора
-        </NavLink>
-      </nav>
-
       <div className={styles.content}>
         <div className={styles.imgBlock}>
           <div>
             <button
               onClick={() => inputFileRef.current.click()}
-              style={{marginRight: '15px'}}
+              style={{marginRight: '15px', width: '100%'}}
               className={styles.button}
             >
               Загрузить превью
             </button>
             <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>
           </div>
+          {!imageUrl && <Avatar src={`${pathFolder}/my/backAvaCourse.jpg`}/>}
           {imageUrl && (
             <>
-              {
-                imageUrl !== '' ?
-                  <img
-                    className={styles.image}
-                    src={`http://localhost:8000${imageUrl}`}
-                    alt="Uploaded"
-                  /> :
-                  <Avatar src={`${pathFolder}/my/backAvaCourse.jpg`}/>
-              }
-              <IconButton style={{padding: '0'}} onClick={handleDelBtn}>
+              <img
+                className={styles.image}
+                src={`http://localhost:8000${imageUrl}`}
+                alt="Uploaded"
+              />
+              <IconButton style={{padding: '0', textAlign: 'center'}} onClick={handleDelBtn}>
                 <Avatar src={`${pathFolder}/my/delete.svg`}/>
               </IconButton>
             </>
           )}
+          {
+            (course?.status === 'passive' || course?.status === 'fail') &&
+            <div className={styles.remarkBlock}>
+              <Remark isRead={true} rowsCount={7}/>
+              {/*<IconButton*/}
+              {/*  onClick={handleClickRemoveRemark}*/}
+              {/*  className={styles.deleteButton}*/}
+              {/*>*/}
+              {/*  <Avatar src={`${pathFolder}/my/delete.svg`}/>*/}
+              {/*</IconButton>*/}
+            </div>
+          }
         </div>
 
         <div style={{width: '750px'}}>

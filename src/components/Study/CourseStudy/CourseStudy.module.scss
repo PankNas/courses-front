@@ -13,19 +13,7 @@
 
 .infoCourse {
   width: 200px;
-  //display: grid;
-  //gap: 15px;
-  //grid-template-columns: repeat(1, 1fr);
-  //border-right: 2px solid #4255A4;
-  //height: calc(100vh);
-  //position: fixed;
   overflow: auto;
-
-  //position: sticky;
-  //top: 400px;
-  //bottom: calc(100vw - 200px);
-  //min-height: 500px;
-  //transition: top 0.3s ease-in-out;
 }
 
 .infoCourse::-webkit-scrollbar {
@@ -57,7 +45,6 @@
   width: 100%;
   text-align: left;
   background-color: transparent;
-  //margin-bottom: 30px;
   padding: 0;
 }
 

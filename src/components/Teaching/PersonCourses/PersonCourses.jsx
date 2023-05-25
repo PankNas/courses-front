@@ -134,57 +134,6 @@ const PersonCourses = () => {
             </div>
           )
         }
-
-
-        {/*{*/}
-        {/*  teachCourses?.map(course =>*/}
-        {/*    <div key={course._id} className={styles.courseCard}>*/}
-        {/*      <p>Статус: {setStatus(course.status)}</p>*/}
-        {/*      {course.status === 'check' && <p>Пройдено проверок: {course.countCheck} из 2</p>}*/}
-
-        {/*      <div className={styles.courseContent}>*/}
-        {/*        {*/}
-        {/*          course.imageUrl &&*/}
-        {/*          <img className={styles.courseImg} src={`http://localhost:8000${course.imageUrl}`} alt="img"/>*/}
-        {/*        }*/}
-        {/*        <div>*/}
-        {/*          <h3 style={{textAlign: "center"}}>{course.title}</h3>*/}
-        {/*          <div className={styles.courseButtons}>*/}
-        {/*            <Button*/}
-        {/*              id={course._id}*/}
-        {/*              size={'large'}*/}
-        {/*              variant="outlined"*/}
-        {/*              onClick={handleEditCourse}*/}
-        {/*              style={{marginRight: "15px"}}*/}
-        {/*            >*/}
-        {/*              Pедактировать*/}
-        {/*            </Button>*/}
-        {/*            {*/}
-        {/*              course.status === 'passive' &&*/}
-        {/*              <Button*/}
-        {/*                id={course._id}*/}
-        {/*                size={'large'}*/}
-        {/*                variant="outlined"*/}
-        {/*                onClick={handleClickCheck}*/}
-        {/*                style={{marginRight: "15px"}}*/}
-        {/*              >*/}
-        {/*                Опубликовать*/}
-        {/*              </Button>*/}
-        {/*            }*/}
-        {/*            <Button*/}
-        {/*              id={course._id}*/}
-        {/*              style={{color: "red"}}*/}
-        {/*              variant="outlined"*/}
-        {/*              onClick={handleDelCourse}*/}
-        {/*            >*/}
-        {/*              Удалить*/}
-        {/*            </Button>*/}
-        {/*          </div>*/}
-        {/*        </div>*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*  )*/}
-        {/*}*/}
       </div>
     </div>
   );
