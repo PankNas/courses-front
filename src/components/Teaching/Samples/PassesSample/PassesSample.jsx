@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {useDispatch} from "react-redux";
 import {setDataPassesSample, setSentence} from "../../../../redux/slices/sampleLesson";
+import styles from './PassesSample.module.scss';
 
 const PassesSample = ({sentence}) => {
   const dispatch = useDispatch();
@@ -37,9 +38,9 @@ const PassesSample = ({sentence}) => {
     <>
       <p>Правила оформления шаблона</p>
       <ol>
-        <li>Место пропуска отмечается квадратными скобками - []</li>
-        <li>В [] скобках <i>первым</i> пунктом указывается верный ответ</li>
-        <li>Варианты ответа нужно писать через запятую</li>
+        <li className={styles.listItem}>Место пропуска отмечается квадратными скобками - []</li>
+        <li className={styles.listItem}>В [] скобках <i>первым</i> пунктом указывается верный ответ</li>
+        <li className={styles.listItem}>Варианты ответа нужно писать через запятую</li>
       </ol>
       <p>
         Пример: Мистер и миссис Дурсль проживали в доме номер четыре по

@@ -22,15 +22,15 @@ const AddLessons = () => {
   const dispatch = useDispatch();
   const {modules} = useSelector(state => state.lessons);
   const [anchorEls, setAnchorEls] = useState(Array(modules.length).fill(null));
-  const menuRef = useRef(null);
+  // const menuRef = useRef(null);
 
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutsideMenu);
-
-    return () => {
-      document.removeEventListener('click', handleClickOutsideMenu);
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener('click', handleClickOutsideMenu);
+  //
+  //   return () => {
+  //     document.removeEventListener('click', handleClickOutsideMenu);
+  //   };
+  // }, []);
 
   const handleClick = (index, event) => {
     const newAnchorEls = [...anchorEls];             // создаем новый массив якорей
@@ -40,8 +40,6 @@ const AddLessons = () => {
 
   const handleMove = async (event) => {
     try {
-      await axios.patch(`/courses/${id}`, course);
-
       dispatch(setType(event.target.id));
 
       const dataIndex = event.currentTarget.getAttribute('data-index');
@@ -50,18 +48,22 @@ const AddLessons = () => {
       setAnchorEls(newAnchorEls);
 
       navigate(`module/${modules[dataIndex]._id}/sample`);
+
+      console.log(id, course);
+      await axios.patch(`/courses/${course.id}`, course);
     } catch (err) {
       const newAnchorEls = [...anchorEls];
       setAnchorEls(newAnchorEls);
+      console.log('error');
     }
   };
 
-  const handleClickOutsideMenu = async (event) => {
-    // проверяем, находится ли target элемента, по которому был клик, внутри меню
-    if (menuRef.current && !menuRef.current.contains(event.target)) {
-      await handleMove(event);
-    }
-  };
+  // const handleClickOutsideMenu = async (event) => {
+  //   // проверяем, находится ли target элемента, по которому был клик, внутри меню
+  //   if (menuRef.current && !menuRef.current.contains(event.target)) {
+  //     await handleMove(event);
+  //   }
+  // };
 
   const onClickRemove = (event, indexModule, indexLesson) => {
     if (!window.confirm("Вы действительно хотите удалить урок?")) return;
@@ -209,7 +211,7 @@ const AddLessons = () => {
                     open={Boolean(anchorEls[index])}
                     onClose={handleMove}
                     PaperProps={{sx: {width: '650px'}}}
-                    ref={menuRef}
+                    // ref={menuRef}
                   >
                     <MenuItem id={`text`} data-index={index} onClick={handleMove}>Теория</MenuItem>
                     <MenuItem id={'video'} data-index={index} onClick={handleMove}>Видео</MenuItem>

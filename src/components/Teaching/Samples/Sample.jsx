@@ -12,6 +12,7 @@ import PassesSample from "./PassesSample/PassesSample";
 import TestSample from "./TestSample/TestSample";
 import TranslateSample from "./TranslateSample/TranslateSample";
 import styles from './Sample.module.css';
+import Remark from "../../Remark/Remark";
 
 const Sample = () => {
   const dispatch = useDispatch();
@@ -49,32 +50,38 @@ const Sample = () => {
   return (
     <div className={styles.container}>
       <h1>{sampleLesson.welcomeText}</h1>
-      <TextField
-        id={'name-lesson'}
-        value={sampleLesson.title}
-        label="Название урока"
-        onChange={handleInput}
-        variant="outlined"
-        fullWidth
-        style={{marginBottom: '20px'}}
-      />
+      <div className={styles.content}>
+        <div style={{width: '700px'}}>
+          <TextField
+            id={'name-lesson'}
+            value={sampleLesson.title}
+            label="Название урока"
+            onChange={handleInput}
+            variant="outlined"
+            fullWidth
+            style={{marginBottom: '20px'}}
+          />
 
-      {setSampleComponent(sampleLesson)}
+          {setSampleComponent(sampleLesson)}
 
-      <div className={styles.buttons}>
-        <button
-          onClick={handleSaveBtn}
-          style={{marginRight: '15px'}}
-          className={styles.button}
-        >
-          Сохранить
-        </button>
-        <button
-          onClick={handleNavigate}
-          className={styles.button}
-        >
-          Отмена
-        </button>
+          <div className={styles.buttons}>
+            <button
+              onClick={handleSaveBtn}
+              style={{marginRight: '15px'}}
+              className={styles.button}
+            >
+              Сохранить
+            </button>
+            <button
+              onClick={handleNavigate}
+              className={styles.button}
+            >
+              Отмена
+            </button>
+          </div>
+        </div>
+
+        <div style={{width: '350px'}}><Remark isRead={true} rowsCount={15}/></div>
       </div>
     </div>
   );

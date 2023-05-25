@@ -53,6 +53,7 @@ const CreateCourse = () => {
         setImageUrl(res.imageUrl);
 
         dispatch(setDataCourse({
+          id: res._id,
           title: res.title,
           desc: res.desc,
           levelLanguage: res.levelLanguage,
@@ -149,37 +150,17 @@ const CreateCourse = () => {
 
       await axios.patch(`/courses/${id}`, fields);
 
-      // dispatch(setFlag(true))
-
-      // dispatch(setDataCourse({
-      //   title: '',
-      //   desc: '',
-      //   language: '',
-      //   levelLanguage: '',
-      //   imageUrl: '',
-      // }))
-
       navigate('/teach');
     } catch (err) {
       console.warn(err);
 
-      alert('Ошибка при создании курса');
+      alert('Ошибка при сохранении данных');
     }
   };
 
   const onCancel = async () => {
     navigate(-1);
   };
-
-  const handleClickRemoveRemark = async () => {
-    try {
-      await axios.delete(`/remarks/course/${id}`);
-
-      alert('Замечание удалено');
-    } catch (err) {
-
-    }
-  }
 
   return (
     <div className={styles.container}>
@@ -213,12 +194,6 @@ const CreateCourse = () => {
             (course?.status === 'passive' || course?.status === 'fail') &&
             <div className={styles.remarkBlock}>
               <Remark isRead={true} rowsCount={7}/>
-              {/*<IconButton*/}
-              {/*  onClick={handleClickRemoveRemark}*/}
-              {/*  className={styles.deleteButton}*/}
-              {/*>*/}
-              {/*  <Avatar src={`${pathFolder}/my/delete.svg`}/>*/}
-              {/*</IconButton>*/}
             </div>
           }
         </div>

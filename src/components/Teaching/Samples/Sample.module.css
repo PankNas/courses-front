@@ -20,3 +20,8 @@
   padding: 15px 15px;
   font-family: 'Mulish', sans-serif;
 }
+
+.content {
+  display: flex;
+  justify-content: space-between;
+}

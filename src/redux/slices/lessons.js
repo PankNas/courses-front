@@ -23,6 +23,7 @@ export const fetchRemoveModule = createAsyncThunk(
 const initialState = {
   modules: [],
   course: {
+    id: '',
     title: '',
     desc: '',
     language: '',
@@ -50,6 +51,7 @@ const lessonsSlice = createSlice({
     },
 
     setDataCourse: (state, action) => {
+      state.course.id = action.payload.id;
       state.course.title = action.payload.title;
       state.course.desc = action.payload.desc;
       state.course.language = action.payload.language;

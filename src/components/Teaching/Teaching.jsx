@@ -10,9 +10,9 @@ const Teaching = () => {
     <div style={{margin: '30px'}}>
       <Routes>
         <Route path="/" element={<PersonCourses/>}/>
-        <Route path="/edit/*" element={<CreateCourse/>}/>
-        <Route path="/edit/module/:moduleId/sample/*" element={<Sample/>} />
-        <Route path="/edit/module/:moduleId/sample/:sampleId" element={<Sample/>}/>
+        {/*<Route path="/edit/*" element={<CreateCourse/>}/>*/}
+        {/*<Route path="/edit/module/:moduleId/sample/*" element={<Sample/>} />*/}
+        {/*<Route path="/edit/module/:moduleId/sample/:sampleId" element={<Sample/>}/>*/}
 
         <Route path="/:id/edit/*" element={<CreateCourse/>}/>
         <Route path="/:id/edit/module/:moduleId/sample/*" element={<Sample/>} />
