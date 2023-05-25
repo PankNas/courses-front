@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import axios from "../../axios";
 
 import styles from './Avatar.module.css';
+import {useNavigate} from "react-router-dom";
 
 const AvatarUser = () => {
   const [open, setOpen] = React.useState(false);
@@ -16,6 +17,7 @@ const AvatarUser = () => {
   const {data} = useSelector(state => state.auth);
   const inputFileRef = useRef(null);
   const [isChange, setIsChange] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // dispatch(fetchAuthMe());
@@ -58,6 +60,7 @@ const AvatarUser = () => {
     dispatch(logout());
     handleClose(event.target)
     localStorage.removeItem("token");
+    navigate('/')
   };
 
   const handleDelUser = async (event) => {

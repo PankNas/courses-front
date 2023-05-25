@@ -35,7 +35,7 @@ const Check = () => {
       <Route path={'/*'} element={
         <CatalogAll title={'Мои проверки'} items={data?.reviewCourses}/>
       }/>
-      <Route path={'/:courseId/*'} element={<Course isModerator={true}/>}/>
+      <Route path={'/:courseId'} element={<Course isModerator={true} isAuthor={false}/>}/>
     </Routes>
   )
 }

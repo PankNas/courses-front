@@ -8,6 +8,9 @@ import {useParams} from "react-router-dom";
 import ItemTest from "./ItemTest/ItemTest";
 import {setDataTestSample, setItemsTest} from "../../../../redux/slices/sampleLesson";
 import {useDispatch} from "react-redux";
+import Avatar from "@mui/material/Avatar";
+import {pathFolder} from "../../../../App";
+import {IconButton} from "@mui/material";
 
 const TestSample = ({itemsTest}) => {
   const {sampleId} = useParams();
@@ -55,9 +58,15 @@ const TestSample = ({itemsTest}) => {
 
   return (
     <>
-      <Button style={{padding: '0'}}>
-        <div className={styles.moduleAddPlus} onClick={handleAddItem}>+</div>
-      </Button>
+      <IconButton
+        onClick={handleAddItem}
+        // className={styles.addCourse}
+      >
+        <Avatar src={`${pathFolder}/my/add.svg`}/>
+      </IconButton>
+      {/*<Button style={{padding: '0'}}>*/}
+      {/*  <div className={styles.moduleAddPlus} onClick={handleAddItem}>+</div>*/}
+      {/*</Button>*/}
 
       {
         itemsTest.map((item) =>

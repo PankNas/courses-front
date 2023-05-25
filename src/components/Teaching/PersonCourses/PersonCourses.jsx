@@ -61,6 +61,8 @@ const PersonCourses = () => {
     if (status === 'passive')
       res = 'черновик';
     else if (status === 'check')
+      res = 'отправлен на проверку';
+    else if (status === 'moderate')
       res = 'на проверке';
     else if (status === 'fail')
       res = 'отклонен';
@@ -71,7 +73,9 @@ const PersonCourses = () => {
 
   const handleClickCheck = async (event, id) => {
     try {
-      await axios.patch(`/courses/${id}`, {status: 'check'});
+      const course = (await axios.get(`/courses/${id}`)).data;
+      course.status = 'check';
+      await axios.patch(`/courses/${id}`, course);
       dispatch(fetchTeachCourses());
     } catch (err) {
       console.log(err);

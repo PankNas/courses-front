@@ -11,6 +11,7 @@ import SentenceSample from "./SentenceSample/SentenceSample";
 import PassesSample from "./PassesSample/PassesSample";
 import TestSample from "./TestSample/TestSample";
 import TranslateSample from "./TranslateSample/TranslateSample";
+import styles from './Sample.module.css';
 
 const Sample = () => {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const Sample = () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1>{sampleLesson.welcomeText}</h1>
       <TextField
         id={'name-lesson'}
@@ -60,12 +61,21 @@ const Sample = () => {
 
       {setSampleComponent(sampleLesson)}
 
-      <Button variant="outlined" onClick={handleSaveBtn} style={{marginRight: '15px'}}>
-        Сохранить
-      </Button>
-      <Button variant="outlined" onClick={handleNavigate}>
-        Отмена
-      </Button>
+      <div className={styles.buttons}>
+        <button
+          onClick={handleSaveBtn}
+          style={{marginRight: '15px'}}
+          className={styles.button}
+        >
+          Сохранить
+        </button>
+        <button
+          onClick={handleNavigate}
+          className={styles.button}
+        >
+          Отмена
+        </button>
+      </div>
     </div>
   );
 };

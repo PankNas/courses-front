@@ -4,9 +4,11 @@ import styles from './ItemTest.module.scss';
 import {useDispatch} from "react-redux";
 import TextField from "@mui/material/TextField";
 import Editor from "../../Editor";
-import {Checkbox, FormControlLabel, FormGroup} from "@mui/material";
+import {Checkbox, FormControlLabel, FormGroup, IconButton} from "@mui/material";
 import {setItemsTest} from "../../../../../redux/slices/sampleLesson";
 import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
+import {pathFolder} from "../../../../../App";
 
 const ItemTest = ({items, curItem}) => {
   const dispatch = useDispatch();
@@ -42,22 +44,22 @@ const ItemTest = ({items, curItem}) => {
 
   return (
     <div className={styles.itemTest}>
-      <TextField
-        value={item.score}
-        label="Балл"
-        onChange={handleInputScore}
-        variant="outlined"
-        style={{marginRight: '20px'}}
-        pattern={/^[1-9]\d*$/}
-      />
-      <Button
-        variant="outlined"
-        onClick={handleSaveItem}
-        style={{marginRight: '20px'}}
-      >
-        С
-      </Button>
-      <Button variant="outlined" onClick={handleDelItem}>У</Button>
+      <div className={styles.headerItem}>
+        <TextField
+          value={item.score}
+          label="Балл"
+          onChange={handleInputScore}
+          variant="outlined"
+          style={{marginRight: '20px'}}
+          pattern={/^[1-9]\d*$/}
+        />
+        <IconButton style={{padding: '0', marginRight: '20px'}} onClick={handleSaveItem}>
+          <Avatar src={`${pathFolder}/my/done.svg`}/>
+        </IconButton>
+        <IconButton style={{padding: '0'}} onClick={handleDelItem}>
+          <Avatar src={`${pathFolder}/my/delete.svg`}/>
+        </IconButton>
+      </div>
       <Editor
         value={item.question}
         height={'100px'}

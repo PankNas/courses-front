@@ -21,7 +21,7 @@ const Remark = ({fnSave}) => {
       <TextField
         id={'desc-course'}
         value={comment}
-        label="Описание курса"
+        label="Замечание"
         multiline
         rows={5}
         onChange={handleChange}

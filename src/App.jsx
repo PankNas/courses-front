@@ -15,6 +15,7 @@ import Study from "./components/Study/Study";
 import Teaching from "./components/Teaching/Teaching";
 import Check from "./components/Check/Check";
 import Adm from "./components/Adm/Adm";
+import Moderate from "./components/Check/Moderate/Moderate";
 
 export const pathFolder = `http://localhost:8000/uploads`
 
@@ -39,7 +40,7 @@ function App() {
           <Route path="/teach/*" element={<Teaching/>}/>
 
           <Route path="/check/*" element={<Check/>}/>
-          <Route path="/moderate/*" element={<Check/>}/>
+          <Route path="/moderate/*" element={<Moderate/>}/>
 
           <Route path="/adm/*" element={<Adm/>}/>
 

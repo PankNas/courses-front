@@ -17,18 +17,18 @@
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
-  padding-top: 40px;
+  //padding-top: 40px;
 }
 
 .textPromo {
-  max-width: 800px;
+  max-width: 700px;
   //min-height: 200px;
   //margin-top: 30px;
 }
 
 .courseImg {
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
   object-fit: contain;
   border-radius: 5px;
 }
@@ -52,18 +52,18 @@
 }
 
 .infoCourse {
-  width: 800px;
+  width: 600px;
 }
 
 .manageCourse {
-  position: fixed;
+  //position: fixed;
   //right: calc(100vw - 1100px - 288px);
-  right: calc((100vw - 1100px) / 2 - 10px);
-  width: 200px;
+  //right: calc((100vw - 1100px) / 2 - 10px);
+  width: 300px;
 }
 
 .button {
-  width: 200px;
+  width: 100%;
   padding: 15px;
   color: white;
   background-color: #FF9F67;
@@ -71,8 +71,21 @@
   border-radius: 5px;
 
   font-size: 18px;
-  font-weight: normal;
+  //font-weight: normal;
   margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.buttonSuccess {
+  background-color: white;
+  color: green;
+  border: 2px solid green;
+}
+
+.buttonFail {
+  background-color: white;
+  color: red;
+  border: 2px solid red;
 }
 
 .language {

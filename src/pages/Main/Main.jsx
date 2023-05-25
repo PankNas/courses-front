@@ -63,11 +63,11 @@ const Main = () => {
       <div className={styles.main}>
         <div className={cn(styles.container, styles.mainContent)}>
           <div className={styles.welcomeText}>
-            <h1 className={styles.title}>Сервис для изучения иностранных языков.</h1>
+            <h1 className={styles.title}>Сервис для изучения иностранных языков</h1>
             <p className={styles.textHeader}>Вступай в команду лингвистов-любителей. Проходи и создавай онлайн-курсы по
               любимым
               языкам.</p>
-            <Link to={isAuth ? '' : '/login'}>
+            <Link to={isAuth ? '/catalog' : '/login'}>
               <button className={styles.buttonJoin}>{isAuth ? "Обучаться" : 'Присоединиться'}</button>
             </Link>
           </div>
@@ -135,7 +135,7 @@ const Main = () => {
           <div className={styles.courseItem}></div>
           <div className={styles.courseItem}></div>
         </div>
-        <Link to={isAuth ? '' : '/login'}>
+        <Link to={isAuth ? '/catalog' : '/login'}>
           <button className={styles.buttonCourses}>Узнать больше</button>
         </Link>
       </section>
@@ -150,7 +150,7 @@ const Main = () => {
                 'Еще не с нами? Скорее присоединяйся, чтобы вместе грызть гранит науки.'
             }
           </p>
-          <Link to={isAuth ? '' : '/login'}>
+          <Link to={isAuth ? '/catalog' : '/login'}>
             <button className={styles.buttonJoin}>{isAuth ? "Обучаться" : 'Присоединиться'}</button>
           </Link>
         </div>

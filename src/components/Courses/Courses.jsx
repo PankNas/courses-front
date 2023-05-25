@@ -16,19 +16,19 @@ const Courses = () => {
     dispatch(fetchCourses());
   }, []);
 
-  if (!isAuth) {
-    return <Navigate to={'/'} />
-  }
+  // if (!isAuth) {
+  //   return <Navigate to={'/'} />
+  // }
 
   const getActive = () => {
-    return items.filter(item => item.status === 'active');
+    return items?.filter(item => item.status === 'active');
   };
 
   return (
     <Routes>
       <Route path={'/*'} element={
         // <Catalog title={'Каталог курсов'} items={getActive()} isProgress={false}/>
-        <CatalogAll items={getActive()} title={'Онлайн-курсы'} isModerator={true}/>
+        <CatalogAll items={getActive()} title={'Онлайн-курсы'} isModerator={false}/>
       }
       />
       <Route path={'/:courseId/*'} element={<Course isModerator={false}/>}/>

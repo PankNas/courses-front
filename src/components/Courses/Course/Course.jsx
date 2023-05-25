@@ -46,38 +46,42 @@ const Course = ({isModerator}) => {
     dispatch(fetchStudentCourses());
 
     const getCourse = async () => (await axios.get(`/courses/${courseId}`)).data;
-    const findCourse = () => studentCourses.find(item => item._id === courseId);
+    const findCourse = () => studentCourses?.find(item => item._id === courseId);
 
     getCourse()
       .then(res => {
         setDataCourse(res);
         setCurCourse(res);
 
-        if (res.user === data._id) {
+        if (res.user === data?._id) {
           setIsAuthor(true);
           return;
         }
 
-        isModerator || findCourse() ? setIsSubscript(true) : setIsSubscript(false);
+        // console.log(findCourse(), !isModerator);
+        (findCourse() && !isModerator) ? setIsSubscript(true) : setIsSubscript(false);
 
         if (!isModerator) return;
 
         dispatch(fetchAuthMe());
 
-        const course = data.reviewCourses.find(course => course._id === courseId);
-
+        const course = data?.reviewCourses.find(course => course._id === courseId);
+        console.log(1, course);
         if (course)
+          console.log(2);
           setIsModerate(true);
       });
-  }, []);
+  }, [isModerate, isSubscript]);
 
-  if (!isAuth) {
-    return <Navigate to={'/'}/>;
-  }
+  // if (!isAuth) {
+  //   return <Navigate to={'/'}/>;
+  // }
 
   const handleClickRecord = async () => {
     try {
       await axios.post('/courses/subscript', {id: courseId});
+
+      await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'moderate'});
 
       setIsSubscript(true);
       alert('Вы записаны на курс');
@@ -213,9 +217,9 @@ const Course = ({isModerator}) => {
 
           <div className={styles.manageCourse}>
             {
-              (isAuthor || isModerator) &&
+              (isAuthor || isModerator || isSubscript) &&
               <>
-                <Link to={'lessons/'}>
+                <Link to={'/study/lessons/'}>
                   <button className={styles.button}>
                     К урокам
                   </button>
@@ -223,7 +227,7 @@ const Course = ({isModerator}) => {
               </>
             }
             {
-              !isSubscript && !isAuthor && !isModerator &&
+              (!isSubscript && !isAuthor && !isModerator) &&
               <Link to={''}>
                 <button className={styles.button} onClick={handleClickRecord}>
                   Записаться
@@ -245,15 +249,15 @@ const Course = ({isModerator}) => {
                       Принять на модерацию
                     </button>
                     :
-                    <div style={{marginBottom: '20px'}}>
-                      <button className={styles.button} onClick={handleOk}>
+                    <div style={{marginBottom: '40px'}}>
+                      <button className={styles.button} style={{marginBottom: '30px'}} onClick={handleDelMod}>
+                        Отказаться
+                      </button>
+                      <button className={cn(styles.button, styles.buttonSuccess)} onClick={handleOk}>
                         Одобрить
                       </button>
-                      <button className={styles.button} onClick={handleReject}>
+                      <button className={cn(styles.button, styles.buttonFail)} onClick={handleReject}>
                         Отклонить
-                      </button>
-                      <button className={styles.button} onClick={handleDelMod}>
-                        Отказаться
                       </button>
                       <Remark fnSave={handleSave} />
                     </div>

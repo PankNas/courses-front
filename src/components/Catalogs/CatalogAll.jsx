@@ -14,7 +14,7 @@ const CatalogAll = ({items, title}) => {
               <div className={styles.courseCard}>
                 <div >
                   <h4>{item.title}</h4>
-                  <p>Автор: {item.fullName}</p>
+                  <p>Автор: {item.user.fullName}</p>
                   <div className={styles.tags}>
                     <div className={styles.language} style={{marginRight: "10px"}}>{item.language}</div>
                     <div className={cn(styles.language, styles.levelLanguage)}>{item.levelLanguage}</div>
