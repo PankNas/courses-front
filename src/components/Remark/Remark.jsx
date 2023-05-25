@@ -4,19 +4,34 @@ import styles from './Remark.module.css';
 import {IconButton} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import {pathFolder} from "../../App";
+import {useParams} from "react-router-dom";
+import axios from "../../axios";
 
-const Remark = ({fnSave}) => {
+const Remark = ({fnSave, fnDelete, isCourse}) => {
+  const {courseId, lessonId} = useParams();
+
   const [comment, setComment] = useState('');
 
   useEffect(() => {
+    const getCourse = async () => (await axios.get(`/courses/${courseId}`)).data;
 
+    getCourse()
+      .then(res => {
+        if (isCourse) {
+          setComment(res.remarkForCourse)
+        } else {
+          const remark = res.remarks.find(item => item._id === lessonId);
+
+          if (!remark) return;
+
+          setComment(remark.text)
+        }
+      })
   }, []);
 
   const handleChange = (event) => setComment(event.target.value);
   const handleSave = async () => fnSave(comment);
-  const handleDel = () => {
-
-  }
+  const handleDel = () => fnDelete()
 
   return (
     <>
@@ -39,8 +54,6 @@ const Remark = ({fnSave}) => {
           <Avatar src={`${pathFolder}/my/delete.svg`}/>
         </IconButton>
       </div>
-      {/*<button className={styles.button} onClick={handleSave}>Сохранить</button>*/}
-      {/*<button className={styles.button} onClick={handleDel}>Удалить</button>*/}
     </>
   )
 }

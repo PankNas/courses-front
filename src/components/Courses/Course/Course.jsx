@@ -44,7 +44,6 @@ const Course = ({isModerator}) => {
 
   useEffect(() => {
     dispatch(fetchStudentCourses());
-    // dispatch(fetchAuthMe());
 
     const getCourse = async () => (await axios.get(`/courses/${courseId}`)).data;
     const findCourse = () => studentCourses?.find(item => item._id === courseId);
@@ -59,7 +58,6 @@ const Course = ({isModerator}) => {
           return;
         }
 
-        // console.log(findCourse(), !isModerator);
         (findCourse() && !isModerator) ? setIsSubscript(true) : setIsSubscript(false);
 
         if (!isModerator) return;
@@ -67,22 +65,15 @@ const Course = ({isModerator}) => {
         dispatch(fetchAuthMe());
 
         const course = data?.reviewCourses.find(course => course._id === courseId);
-        // console.log(1, course);
         if (course) {
           setIsModerate(true);
         }
       });
   }, []);
 
-  // if (!isAuth) {
-  //   return <Navigate to={'/'}/>;
-  // }
-
   const handleClickRecord = async () => {
     try {
       await axios.post('/courses/subscript', {id: courseId});
-
-      // await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'moderate'});
 
       setIsSubscript(true);
       alert('Вы записаны на курс');
@@ -138,7 +129,7 @@ const Course = ({isModerator}) => {
       await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'active'});
 
       setIsModerate(false);
-      // navigate('/check');
+      navigate('/moderate');
       alert('Курс одобрен');
     } catch (err) {
       console.log(err);
@@ -148,13 +139,23 @@ const Course = ({isModerator}) => {
 
   const handleSave = async (text) => {
     try {
-      await axios.patch(`/courses/${courseId}`, {id: courseId, text: text});
+      await axios.patch(`/remarks/course/${courseId}`, {remarkForCourse: text});
 
       alert('Замечание сохранено');
     } catch (err) {
 
     }
   };
+
+  const handleDelRemark = async () => {
+    try {
+      await axios.delete(`/remarks/course/${courseId}`);
+
+      alert('Замечание удалено');
+    } catch (err) {
+
+    }
+  }
 
   const handleReject = async () => {
     try {
@@ -253,7 +254,7 @@ const Course = ({isModerator}) => {
                       <button className={cn(styles.button, styles.buttonFail)} onClick={handleReject}>
                         Отклонить
                       </button>
-                      <Remark fnSave={handleSave}/>
+                      <Remark fnSave={handleSave} fnDelete={handleDelRemark} isCourse={true}/>
                     </div>
                 }
               </>
