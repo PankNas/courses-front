@@ -63,6 +63,9 @@ const lessonsSlice = createSlice({
     setTitleCourse: (state, action) => {
       state.course.title = action.payload;
     },
+    setIdCourse: (state, action) => {
+      state.course.id = action.payload;
+    },
     setDescCourse: (state, action) => {
       state.course.desc = action.payload;
     },
@@ -113,6 +116,7 @@ export const {
   setTitleCourse,
   setDataCourse,
   setFlag,
+  setIdCourse,
 } = lessonsSlice.actions;
 export const lessonsReducer = lessonsSlice.reducer;
 export const selectFlag = (state) => state.lessons.flag;

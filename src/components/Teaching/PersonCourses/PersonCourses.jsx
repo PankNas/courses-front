@@ -11,7 +11,7 @@ import cn from "classnames";
 import {IconButton} from "@mui/material";
 import {pathFolder} from "../../../App";
 import Avatar from "@mui/material/Avatar";
-import {selectFlag, setFlag} from "../../../redux/slices/lessons";
+import {selectFlag, setFlag, setIdCourse} from "../../../redux/slices/lessons";
 
 const PersonCourses = () => {
   const navigate = useNavigate();
@@ -23,17 +23,19 @@ const PersonCourses = () => {
   const [isChange, setIsChange] = useState(false);
 
   useEffect(() => {
+    dispatch(fetchAuthMe());
     dispatch(fetchTeachCourses());
   }, [isChange]);
 
-  if (!isAuth) {
-    return <Navigate to={'/'}/>
-  }
+  // if (!isAuth) {
+  //   return <Navigate to={'/'}/>
+  // }
 
   const handleClickAddCourse = async () => {
     try {
       const {data} = await axios.post("/courses", {});
-      dispatch(setFlag(false));
+      // dispatch(setFlag(false));
+      // dispatch(setIdCourse(data._id))
 
       navigate(`/teach/${data._id}/edit/`);
     } catch (err) {
@@ -42,9 +44,15 @@ const PersonCourses = () => {
       alert('Ошибка при создании курса');
     }
   };
-  const handleDelCourse = (event, id) => {
+  const handleDelCourse = (event) => {
     try {
-      dispatch(fetchRemoveCourse(event.id));
+      console.log('del', event.target.id);
+      dispatch(fetchRemoveCourse(event.target.id));
+      dispatch(fetchTeachCourses());
+
+      // dispatch(fetchRemoveCourse(id));
+      // dispatch(fetchAuthMe());
+      // dispatch(fetchTeachCourses());
       setIsChange(prev => !prev);
     } catch (err) {
       alert('Не удалось удалить курс')
@@ -73,9 +81,10 @@ const PersonCourses = () => {
 
   const handleClickCheck = async (event, id) => {
     try {
-      const course = (await axios.get(`/courses/${id}`)).data;
+      let course = (await axios.get(`/courses/${id}`)).data;
+      console.log('course', course);
       course.status = 'check';
-      await axios.patch(`/courses/${id}`, course);
+      await axios.patch(`/courses/${course._id}`, course);
       dispatch(fetchTeachCourses());
     } catch (err) {
       console.log(err);
@@ -116,14 +125,15 @@ const PersonCourses = () => {
                       onClick={(event) => handleClickCheck(event, item._id)}
                       className={styles.button}
                     >
-                      <div>Опубликовать</div>
+                      Опубликовать
                     </button>
                   }
                   <button
-                    onClick={(event) => handleDelCourse(event, item._id)}
+                    onClick={handleDelCourse}
                     className={cn(styles.button, styles.delButton)}
+                    id={item._id}
                   >
-                    <div>Удалить</div>
+                    Удалить
                   </button>
                 </div>
               </div>

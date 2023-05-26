@@ -14,23 +14,14 @@ import Avatar from "@mui/material/Avatar";
 import {pathFolder} from "../../../App";
 
 const AddLessons = () => {
-  const {course} = useSelector(state => state.lessons);
+  // const {course} = useSelector(state => state.lessons);
 
   const {id} = useParams();
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const {modules} = useSelector(state => state.lessons);
-  const [anchorEls, setAnchorEls] = useState(Array(modules.length).fill(null));
-  // const menuRef = useRef(null);
-
-  // useEffect(() => {
-  //   document.addEventListener('click', handleClickOutsideMenu);
-  //
-  //   return () => {
-  //     document.removeEventListener('click', handleClickOutsideMenu);
-  //   };
-  // }, []);
+  const [anchorEls, setAnchorEls] = useState(Array(modules?.length).fill(null));
 
   const handleClick = (index, event) => {
     const newAnchorEls = [...anchorEls];             // создаем новый массив якорей
@@ -49,21 +40,14 @@ const AddLessons = () => {
 
       navigate(`module/${modules[dataIndex]._id}/sample`);
 
-      console.log(id, course);
-      await axios.patch(`/courses/${course.id}`, course);
+      // console.log(id, course);
+      // await axios.patch(`/courses/${id}`, course);
     } catch (err) {
       const newAnchorEls = [...anchorEls];
       setAnchorEls(newAnchorEls);
       console.log('error');
     }
   };
-
-  // const handleClickOutsideMenu = async (event) => {
-  //   // проверяем, находится ли target элемента, по которому был клик, внутри меню
-  //   if (menuRef.current && !menuRef.current.contains(event.target)) {
-  //     await handleMove(event);
-  //   }
-  // };
 
   const onClickRemove = (event, indexModule, indexLesson) => {
     if (!window.confirm("Вы действительно хотите удалить урок?")) return;
@@ -72,7 +56,7 @@ const AddLessons = () => {
       // const dataIndex = event.currentTarget.getAttribute('data-index');
       //
       // dispatch(fetchRemoveLesson(modules[dataIndex].lessons[event.target.id]._id));
-      // dispatch(fetchLessons(id));
+      // dispatch(fetchLessons(course.id));
 
       // const dataIndex = event.currentTarget.getAttribute('data-index');
 
@@ -121,7 +105,7 @@ const AddLessons = () => {
     // modules[+event.target.id].title = event.target.value;
 
     // setModules(modules);
-    dispatch(setTitle({id: +event.target.id, value: event.target.value}));
+    // dispatch(setTitle({id: +event.target.id, value: event.target.value}));
   };
 
   useEffect(() => {

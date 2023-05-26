@@ -26,7 +26,8 @@ const CreateCourse = () => {
   const {id} = useParams();
   const isAuth = useSelector(selectIsAuth);
   const flag = useSelector(selectFlag);
-  const {course} = useSelector(state => state.lessons);
+  // const {course} = useSelector(state => state.lessons);
+  const [course, setCourse] = useState(null);
 
   const dispatch = useDispatch();
   const {modules} = useSelector(state => state.lessons);
@@ -35,7 +36,7 @@ const CreateCourse = () => {
   const [desc, setDesc] = useState('');
   const [language, setLanguage] = useState('');
   const [levelLanguage, setLevelLanguage] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState(undefined);
 
   const navigate = useNavigate();
 
@@ -46,21 +47,24 @@ const CreateCourse = () => {
 
     getCourse()
       .then(res => {
+        console.log('res', res);
+        setCourse(res);
+
         setTitle(res.title);
         setDesc(res.desc);
         setLevelLanguage(res.levelLanguage);
         setLanguage(res.language);
         setImageUrl(res.imageUrl);
 
-        dispatch(setDataCourse({
-          id: res._id,
-          title: res.title,
-          desc: res.desc,
-          levelLanguage: res.levelLanguage,
-          language: res.language,
-          imageUrl: res.imageUrl,
-          status: res.status,
-        }));
+        // dispatch(setDataCourse({
+        //   id: res._id,
+        //   title: res.title,
+        //   desc: res.desc,
+        //   levelLanguage: res.levelLanguage,
+        //   language: res.language,
+        //   imageUrl: res.imageUrl,
+        //   status: res.status,
+        // }));
       });
 
     // return () => {
@@ -68,30 +72,11 @@ const CreateCourse = () => {
     //   setLanguage('');
     //   setLevelLanguage('');
     // };
-
-    return async () => {
-      // const fields = {
-      //   title,
-      //   imageUrl,
-      //   desc,
-      //   language,
-      //   levelLanguage,
-      //   status: 'passive'
-      // };
-      //
-      // console.log('hi', course);
-
-      for (const module of modules) {
-        await axios.patch(`/modules/${module._id}`, module);
-      }
-
-      // await axios.patch(`/courses/${id}`, course);
-    };
   }, []);
 
-  if (!isAuth) {
-    return <Navigate to={'/'}/>;
-  }
+  // if (!isAuth) {
+  //   return <Navigate to={'/'}/>;
+  // }
 
   const handleChangeFile = async (event) => {
     try {
@@ -112,24 +97,24 @@ const CreateCourse = () => {
   const handleChange = (event) => {
     switch (event.target.id) {
       case 'name-course':
-        dispatch(setTitleCourse(event.target.value));
+        // dispatch(setTitleCourse(event.target.value));
         return setTitle(event.target.value);
       case 'desc-course':
-        dispatch(setDescCourse(event.target.value));
+        // dispatch(setDescCourse(event.target.value));
         return setDesc(event.target.value);
       case 'languages':
-        dispatch(setLanguageCourse(event.target.value));
+        // dispatch(setLanguageCourse(event.target.value));
         return setLanguage(event.target.value);
       case 'levelLanguages':
-        dispatch(setLevelLanguageCourse(event.target.value));
+        // dispatch(setLevelLanguageCourse(event.target.value));
         return setLevelLanguage(event.target.value);
       default:
         break;
     }
   };
   const handleDelBtn = () => {
-    dispatch(setImageUrlCourse(''));
-    setImageUrl('');
+    // dispatch(setImageUrlCourse(''));
+    setImageUrl(undefined);
   };
 
   const onSubmit = async () => {
@@ -159,7 +144,7 @@ const CreateCourse = () => {
   };
 
   const onCancel = async () => {
-    navigate(-1);
+    navigate('/teach');
   };
 
   return (
@@ -177,7 +162,7 @@ const CreateCourse = () => {
             </button>
             <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>
           </div>
-          {!imageUrl && <Avatar src={`${pathFolder}/my/backAvaCourse.jpg`}/>}
+          {/*{!imageUrl && <Avatar src={`${pathFolder}/my/backAvaCourse.jpg`}/>}*/}
           {imageUrl && (
             <>
               <img
