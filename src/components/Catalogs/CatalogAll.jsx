@@ -3,7 +3,7 @@ import styles from './Catalogs.module.css';
 import cn from 'classnames';
 import {Link} from "react-router-dom";
 
-const CatalogAll = ({items, title}) => {
+const CatalogAll = ({items, title, isModarate}) => {
   return (
     <div className={styles.content}>
       <h1 className={styles.title}>{title}</h1>

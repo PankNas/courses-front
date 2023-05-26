@@ -11,10 +11,14 @@ import CatalogAll from "../Catalogs/CatalogAll";
 const Check = () => {
   const {data} = useSelector(state => state.auth);
 
+  useEffect(() => {
+
+  }, []);
+
   return (
     <Routes>
       <Route path={'/*'} element={
-        <CatalogAll title={'Мои проверки'} items={data?.reviewCourses}/>
+        <CatalogAll title={'Мои проверки'} items={data?.reviewCourses} isModerate={true}/>
       }/>
       <Route path={'/:courseId/*'} element={<Course isModerator={true}/>}/>
       <Route path={'/:courseId/lessons/*'} element={<CourseStudy isModerate={true}/>} />

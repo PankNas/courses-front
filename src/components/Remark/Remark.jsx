@@ -21,6 +21,7 @@ const Remark = ({fnSave, fnDelete, isCourse, rowsCount, isRead = false}) => {
           setComment(res.remarkForCourse)
         } else {
           const remark = res.remarks.find(item => item._id === lessonId);
+          console.log(remark);
           if (!remark) {
             setComment('');
           } else {

@@ -69,7 +69,7 @@ const Course = ({isModerator}) => {
           setIsModerate(true);
         }
       });
-  }, []);
+  }, [isModerate, isSubscript]);
 
   const handleClickRecord = async () => {
     try {
@@ -89,7 +89,7 @@ const Course = ({isModerator}) => {
     try {
       await axios.delete(`/courses/subscript/${courseId}`);
       setIsSubscript(false);
-      // dispatch(fetchStudentCourses());
+      dispatch(fetchStudentCourses());
     } catch (err) {
       console.log(err);
       console.warn('Не удалось отписаться от курса');
@@ -113,6 +113,7 @@ const Course = ({isModerator}) => {
     try {
       await axios.delete(`/moderate/${courseId}`);
       await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'check'});
+      dispatch(fetchAuthMe());
 
       setIsModerate(false);
       alert('Вы отписаны от проверки курса');
@@ -125,6 +126,7 @@ const Course = ({isModerator}) => {
   const handleOk = async () => {
     try {
       await axios.delete(`/moderate/${courseId}`);
+      dispatch(fetchAuthMe());
 
       await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'active'});
 

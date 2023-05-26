@@ -26,7 +26,7 @@ const CatalogStudy = ({items, title}) => {
               <div className={styles.courseCard}>
                 <div>
                   <h4>{item.title}</h4>
-                  <p>Автор: {item.user.fullName}</p>
+                  {/*<p>Автор: {item.user.fullName}</p>*/}
                   <div className={styles.tags}>
                     <div className={styles.language} style={{marginRight: "10px"}}>{item.language}</div>
                     <div className={cn(styles.language, styles.levelLanguage)}>{item.levelLanguage}</div>
@@ -36,10 +36,10 @@ const CatalogStudy = ({items, title}) => {
                     !isActive ?
                       <p>Извините, в данный момент курс не доступен для прохождения.</p> :
                       <div className={styles.progress}>
-                        <p>Пройдено {progress[index]?.lessonsEnd.length} из {countLessons}</p>
+                        <p>Пройдено {progress && progress[index]?.lessonsEnd.length} из {countLessons}</p>
                         <div
                           className={styles.progressBar}
-                          style={{width: `${progress[index]?.lessonsEnd.length * 100 / countLessons}%`}}
+                          style={{width: `${progress && progress[index]?.lessonsEnd.length * 100 / countLessons}%`}}
                         ></div>
                       </div>
                   }

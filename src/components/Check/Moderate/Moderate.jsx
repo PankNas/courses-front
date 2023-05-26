@@ -5,6 +5,7 @@ import CatalogAll from "../../Catalogs/CatalogAll";
 import {selectIsAuth} from "../../../redux/slices/auth";
 import {fetchCourses} from "../../../redux/slices/courses";
 import Course from "../../Courses/Course/Course";
+import CourseStudy from "../../Study/CourseStudy/CourseStudy";
 
 const Moderate = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const Moderate = () => {
   const isAuth = useSelector(selectIsAuth);
 
   useEffect(() => {
+    // dispatch(fetchAuthMe())
     dispatch(fetchCourses());
   }, []);
 
@@ -21,18 +23,20 @@ const Moderate = () => {
   // }
 
   const getActive = () => {
+    // dispatch(fetchCourses());
     return items?.filter(item => item.status === 'check' && item?.user?._id !== data?._id);
   };
 
   return (
-
     <Routes>
-      <Route path={'/'} element={
+      <Route path={'/*'} element={
         // <Catalog title={'Каталог курсов'} items={getActive()} isProgress={false}/>
-        <CatalogAll items={getActive()} title={'Курсы на модерацию'}/>
+        <CatalogAll items={getActive()} title={'Курсы на модерацию'} isModerate={true}/>
       }
       />
       {/*<Route path={'/:courseId/*'} element={<Course isModerator={true}/>}/>*/}
+      <Route path={'/:courseId/*'} element={<Course isModerator={true}/>}/>
+      <Route path={'/:courseId/lessons/*'} element={<CourseStudy isModerate={true}/>} />
     </Routes>
   );
 };
