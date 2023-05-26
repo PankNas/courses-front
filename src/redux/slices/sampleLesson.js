@@ -12,6 +12,8 @@ const initialState = {
   options: new Array(4).fill(''),
   answer: -1,
   question: '',
+
+  remarks: '',
 };
 
 const sampleSlice = createSlice({
@@ -28,6 +30,8 @@ const sampleSlice = createSlice({
       state.welcomeText = 'Теоретический урок';
       state.title = action.payload.title;
       state.desc = action.payload.desc;
+
+      state.remarks = action.payload.remarks;
     },
     setDataSentenceSample: (state, action) => {
       state.welcomeText = 'Составить текст';

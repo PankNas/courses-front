@@ -6,6 +6,7 @@ import {Route, Routes} from "react-router-dom";
 import CourseStudy from "./CourseStudy/CourseStudy";
 import axios from "../../axios";
 import CatalogStudy from "../Catalogs/CatalogStudy";
+import Course from "../Courses/Course/Course";
 
 const Study = () => {
   const dispatch = useDispatch();
@@ -28,14 +29,15 @@ const Study = () => {
   return (
     <>
       <Routes>
-        <Route path={'/'} element={
+        <Route path={'/*'} element={
           <CatalogStudy
             title={'Мое обучение'}
             items={studentCourses}
             // fnUnsubscribe={handleUnsubscribe}
           />
         }/>
-        <Route path={':courseId/*'} element={<CourseStudy />} />
+        <Route path={'/:courseId/'} element={<Course />} />
+        <Route path={'/:courseId/lessons/*'} element={<CourseStudy/>} />
       </Routes>
     </>
   )

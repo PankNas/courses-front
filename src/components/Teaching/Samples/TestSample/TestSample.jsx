@@ -1,6 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import styles from './TestSample.module.scss';
+import stylesSample from '../Sample.module.css';
 
 import Button from "@mui/material/Button";
 import axios from "../../../../axios";
@@ -11,10 +12,14 @@ import {useDispatch} from "react-redux";
 import Avatar from "@mui/material/Avatar";
 import {pathFolder} from "../../../../App";
 import {IconButton} from "@mui/material";
+import RemarkTeach from "../RemarkTeach";
+import {findRemark} from "../Sample";
 
 const TestSample = ({itemsTest}) => {
-  const {sampleId} = useParams();
+  const {sampleId, id} = useParams();
   const dispatch = useDispatch();
+  const [course, setCourse] = useState(null);
+
 
   useEffect(() => {
     if (!sampleId) {
@@ -30,6 +35,7 @@ const TestSample = ({itemsTest}) => {
     axios
       .get(`lessons/${sampleId}`)
       .then(({data}) => {
+        setCourse(data)
         dispatch(setDataTestSample({
           title: data.title,
           itemsTest: data.itemsTest,
@@ -57,23 +63,24 @@ const TestSample = ({itemsTest}) => {
   };
 
   return (
-    <>
-      <IconButton
-        onClick={handleAddItem}
-        // className={styles.addCourse}
-      >
-        <Avatar src={`${pathFolder}/my/add.svg`}/>
-      </IconButton>
-      {/*<Button style={{padding: '0'}}>*/}
-      {/*  <div className={styles.moduleAddPlus} onClick={handleAddItem}>+</div>*/}
-      {/*</Button>*/}
+    <div className={stylesSample.content}>
+      <div style={{width: '700px'}}>
+        <IconButton
+          onClick={handleAddItem}
+          // className={styles.addCourse}
+        >
+          <Avatar src={`${pathFolder}/my/add.svg`}/>
+        </IconButton>
 
-      {
-        itemsTest.map((item) =>
-          <ItemTest key={item.id} items={itemsTest} curItem={item}/>
-        )
-      }
-    </>
+        {
+          itemsTest.map((item) =>
+            <ItemTest key={item.id} items={itemsTest} curItem={item}/>
+          )
+        }
+      </div>
+
+      <div style={{width: '350px'}}><RemarkTeach value={course?.remarks} rowsCount={15}/></div>
+    </div>
   );
 };
 

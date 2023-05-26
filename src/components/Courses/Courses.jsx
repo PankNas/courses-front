@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchCourses} from "../../redux/slices/courses";
 import CatalogAll from "../Catalogs/CatalogAll";
 import {fetchAuthMe, selectIsAuth} from "../../redux/slices/auth";
+import CourseStudy from "../Study/CourseStudy/CourseStudy";
 
 const Courses = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const Courses = () => {
       }
       />
       <Route path={'/:courseId/*'} element={<Course isModerator={false}/>}/>
+      <Route path={'/:courseId/lessons/*'} element={<CourseStudy/>} />
     </Routes>
   );
 };

@@ -161,7 +161,15 @@ const Course = ({isModerator}) => {
 
   const handleReject = async () => {
     try {
+      await axios.delete(`/moderate/${courseId}`);
+      dispatch(fetchAuthMe());
+
       await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'fail'});
+
+      setIsModerate(false);
+      navigate('/moderate');
+
+      // await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'fail'});
 
       alert('Вы отклонили курс на размещение на платформе');
     } catch (err) {

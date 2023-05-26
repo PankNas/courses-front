@@ -1,14 +1,19 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import axios from "../../../../axios";
 import TextField from "@mui/material/TextField";
 import {useDispatch} from "react-redux";
 import {setDataSentenceSample, setSentence, setTranslate} from "../../../../redux/slices/sampleLesson";
+import stylesSample from '../Sample.module.css';
+import RemarkTeach from "../RemarkTeach";
+import {findRemark} from "../Sample";
 
 const SentenceSample = ({sentence, translate}) => {
   const dispatch = useDispatch();
 
-  const {sampleId} = useParams();
+  const {sampleId, id} = useParams();
+  const [course, setCourse] = useState(null);
+
 
   useEffect(() => {
     if (!sampleId) {
@@ -24,6 +29,8 @@ const SentenceSample = ({sentence, translate}) => {
     axios
       .get(`lessons/${sampleId}`)
       .then(({data}) => {
+        setCourse(data)
+
         dispatch(setDataSentenceSample({
           title: data.title,
           sentence: data.sentence,
@@ -43,30 +50,34 @@ const SentenceSample = ({sentence, translate}) => {
   };
 
   return (
-    <>
-      <TextField
-        id={'sentence'}
-        value={sentence}
-        label="Введите текст на иностранном языке"
-        multiline
-        rows={4}
-        onChange={handleChange}
-        variant="outlined"
-        fullWidth
-      />
-      <p>Примечание: число блоков для составления текста будет равняться числу слов.</p>
-      <TextField
-        id={'translate'}
-        value={translate}
-        label="Введите перевод"
-        multiline
-        rows={4}
-        onChange={handleChange}
-        variant="outlined"
-        fullWidth
-        style={{marginBottom: '20px'}}
-      />
-    </>
+    <div className={stylesSample.content}>
+      <div style={{width: '700px'}}>
+        <TextField
+          id={'sentence'}
+          value={sentence}
+          label="Введите текст на иностранном языке"
+          multiline
+          rows={4}
+          onChange={handleChange}
+          variant="outlined"
+          fullWidth
+        />
+        <p>Примечание: число блоков для составления текста будет равняться числу слов.</p>
+        <TextField
+          id={'translate'}
+          value={translate}
+          label="Введите перевод"
+          multiline
+          rows={4}
+          onChange={handleChange}
+          variant="outlined"
+          fullWidth
+          style={{marginBottom: '20px'}}
+        />
+      </div>
+
+      <div style={{width: '350px'}}><RemarkTeach value={course?.remarks} rowsCount={15}/></div>
+    </div>
   );
 }
 

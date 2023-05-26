@@ -1,44 +1,61 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import axios from "../../../../axios";
 import {setDataTextSample, setDesc} from "../../../../redux/slices/sampleLesson";
 import {useDispatch} from "react-redux";
 import Editor from "../Editor";
+import styles from '../Sample.module.css';
+import RemarkTeach from "../RemarkTeach";
+import {findRemark} from "../Sample";
+import Remark from "../../../Remark/Remark";
 
-const TextSample = ({desc}) => {
+const TextSample = ({desc, remarks}) => {
   const dispatch = useDispatch();
+  const [course, setCourse] = useState(null);
 
-  const {sampleId} = useParams();
+  const {sampleId, id} = useParams();
+  // const [remark, setRemark] = useState('');
 
   useEffect(() => {
     if (!sampleId) {
       dispatch(setDataTextSample({
         title: '',
         desc: '',
+        remarks: '',
       }));
 
       return;
     }
 
-    axios
-      .get(`lessons/${sampleId}`)
-      .then(({data}) => {
+    const getLesson = async () => (await axios.get(`/lessons/${sampleId}`)).data;
+
+    getLesson()
+      .then(res => {
+        console.log('res', res);
+
+        setCourse(res);
         dispatch(setDataTextSample({
-          title: data.title,
-          desc: data.desc,
-        }))
+          title: res.title,
+          desc: res.desc,
+          remarks: res.remarks,
+        }));
       });
   }, []);
 
   const updateDesc = (value) => dispatch(setDesc(value));
 
   return (
-    <Editor
-      value={desc}
-      placeholder={'Введите описание урока...'}
-      height={'400px'}
-      fn={updateDesc}
-    />
+    <div className={styles.content}>
+      <div style={{width: '700px'}}>
+        <Editor
+          value={desc}
+          placeholder={'Введите описание урока...'}
+          height={'400px'}
+          fn={updateDesc}
+        />
+      </div>
+      <div style={{width: '350px'}}><RemarkTeach value={course?.remarks} rowsCount={15}/></div>
+    </div>
   );
 };
 

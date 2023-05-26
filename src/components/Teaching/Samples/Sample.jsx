@@ -13,12 +13,58 @@ import TestSample from "./TestSample/TestSample";
 import TranslateSample from "./TranslateSample/TranslateSample";
 import styles from './Sample.module.css';
 import Remark from "../../Remark/Remark";
+import RemarkTeach from "./RemarkTeach";
+
+export const findRemark = async (lessonId, id) => {
+  try {
+    if (!lessonId) return '';
+
+    let text;
+
+    // axios.get(`/lessons/${lessonId}`)
+    //   .then((lesson) => {
+    //     axios.get(`/courses/${id}`)
+    //       .then(course => {
+    //         const remark = course.data?.remarks.find(remark => remark.id === lesson.data._id);
+    //         console.log('hi', course, remark, lesson);
+    //
+    //         text = remark?.text || '';
+    //         console.log('text2', text);
+    //       })
+    //   })
+
+    const lesson = (await axios.get(`/lessons/${lessonId}`)).data;
+    const course = (await axios.get(`/courses/${id}`)).data;
+    //
+    const remark = course.remarks.find(remark => remark.id === lesson._id);
+    // console.log('hi', course, remark.text);
+    //
+    return remark?.text || '';
+    // console.log('text', text);
+    // return text;
+  } catch (err) {
+    console.log(err);
+    return '';
+  }
+}
+
+export const getRemark = (lessonId, id) => {
+  let remark;
+
+  findRemark(lessonId, id)
+    .then(res => {
+      console.log(res);
+      remark = res;
+
+      return remark
+    })
+}
 
 const Sample = () => {
   const dispatch = useDispatch();
   const sampleLesson = useSelector(state => state.sample);
 
-  const {id, sampleId, moduleId} = useParams();
+  const {id, sampleId, moduleId, lessonId} = useParams();
   const navigate = useNavigate();
 
   const handleNavigate = () => navigate(`/teach/${id}/edit`);
@@ -39,6 +85,8 @@ const Sample = () => {
         await axios.patch(`/lessons/${sampleLesson.type}/${sampleId}`, fields)
         : await axios.post(`/lessons/${sampleLesson.type}`, fields);
 
+      // console.log('lesson', lesson);
+
       navigate(`/teach/${id}/edit`);
     } catch (err) {
       console.warn(err);
@@ -50,8 +98,8 @@ const Sample = () => {
   return (
     <div className={styles.container}>
       <h1>{sampleLesson.welcomeText}</h1>
-      <div className={styles.content}>
-        <div style={{width: '700px'}}>
+      {/*<div className={styles.content}>*/}
+        {/*<div style={{width: '700px'}}>*/}
           <TextField
             id={'name-lesson'}
             value={sampleLesson.title}
@@ -78,10 +126,10 @@ const Sample = () => {
             >
               Отмена
             </button>
-          </div>
-        </div>
+          {/*</div>*/}
+        {/*</div>*/}
 
-        <div style={{width: '350px'}}><Remark isRead={true} rowsCount={15}/></div>
+        {/*<div style={{width: '350px'}}><RemarkTeach value={findRemark()} rowsCount={15}/></div>*/}
       </div>
     </div>
   );
@@ -92,7 +140,7 @@ function setSampleComponent(sample) {
     case 'video':
       return <VideoSample desc={sample.desc} videoUrl={sample.videoUrl} />;
     case 'text':
-      return <TextSample desc={sample.desc} />;
+      return <TextSample desc={sample.desc} remarks={sample.remarks}/>;
     case 'sentence':
       return <SentenceSample sentence={sample.sentence} translate={sample.translate}/>;
     case 'passes':

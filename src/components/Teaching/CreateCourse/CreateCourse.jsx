@@ -21,6 +21,7 @@ import {languages, levelLanguages} from "./helper";
 import AddLessons from "../AddLessons/AddLessons";
 import axios from "../../../axios";
 import Remark from "../../Remark/Remark";
+import RemarkTeach from "../Samples/RemarkTeach";
 
 const CreateCourse = () => {
   const {id} = useParams();
@@ -55,16 +56,6 @@ const CreateCourse = () => {
         setLevelLanguage(res.levelLanguage);
         setLanguage(res.language);
         setImageUrl(res.imageUrl);
-
-        // dispatch(setDataCourse({
-        //   id: res._id,
-        //   title: res.title,
-        //   desc: res.desc,
-        //   levelLanguage: res.levelLanguage,
-        //   language: res.language,
-        //   imageUrl: res.imageUrl,
-        //   status: res.status,
-        // }));
       });
 
     // return () => {
@@ -178,7 +169,7 @@ const CreateCourse = () => {
           {
             (course?.status === 'passive' || course?.status === 'fail') &&
             <div className={styles.remarkBlock}>
-              <Remark isRead={true} rowsCount={7}/>
+              <RemarkTeach value={course?.remarkForCourse} rowsCount={7}/>
             </div>
           }
         </div>
