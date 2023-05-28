@@ -15,51 +15,6 @@ import styles from './Sample.module.css';
 import Remark from "../../Remark/Remark";
 import RemarkTeach from "./RemarkTeach";
 
-export const findRemark = async (lessonId, id) => {
-  try {
-    if (!lessonId) return '';
-
-    let text;
-
-    // axios.get(`/lessons/${lessonId}`)
-    //   .then((lesson) => {
-    //     axios.get(`/courses/${id}`)
-    //       .then(course => {
-    //         const remark = course.data?.remarks.find(remark => remark.id === lesson.data._id);
-    //         console.log('hi', course, remark, lesson);
-    //
-    //         text = remark?.text || '';
-    //         console.log('text2', text);
-    //       })
-    //   })
-
-    const lesson = (await axios.get(`/lessons/${lessonId}`)).data;
-    const course = (await axios.get(`/courses/${id}`)).data;
-    //
-    const remark = course.remarks.find(remark => remark.id === lesson._id);
-    // console.log('hi', course, remark.text);
-    //
-    return remark?.text || '';
-    // console.log('text', text);
-    // return text;
-  } catch (err) {
-    console.log(err);
-    return '';
-  }
-}
-
-export const getRemark = (lessonId, id) => {
-  let remark;
-
-  findRemark(lessonId, id)
-    .then(res => {
-      console.log(res);
-      remark = res;
-
-      return remark
-    })
-}
-
 const Sample = () => {
   const dispatch = useDispatch();
   const sampleLesson = useSelector(state => state.sample);

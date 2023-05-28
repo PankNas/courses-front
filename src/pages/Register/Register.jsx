@@ -70,6 +70,7 @@ const Register = () => {
       const {data} = await axios.post("/upload", formData);
 
       setImageUrl(data.url.slice(4));
+      // dispatch(fetchAuthMe())
     } catch (err) {
       console.warn(err);
       alert("Ошибка при загрузке файла!");
@@ -81,14 +82,14 @@ const Register = () => {
       <Typography classes={{ root: styles.title }} variant="h5">
         Создание аккаунта
       </Typography>
-      <div className={styles.avatar}>
-        <Avatar
-          onClick={() => inputFileRef.current.click()}
-          sx={{ width: 100, height: 100 }}
-          src={`${pathFolder}${imageUrl}`}
-        />
-        <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>
-      </div>
+      {/*<div className={styles.avatar}>*/}
+      {/*  <Avatar*/}
+      {/*    onClick={() => inputFileRef.current.click()}*/}
+      {/*    sx={{ width: 100, height: 100 }}*/}
+      {/*    src={`${pathFolder}${imageUrl}`}*/}
+      {/*  />*/}
+      {/*  <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>*/}
+      {/*</div>*/}
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
           error={Boolean(errors.fullName?.message)}

@@ -73,6 +73,7 @@ const AvatarUser = () => {
       localStorage.removeItem("token");
 
       handleClose(event.target)
+      navigate('/')
       alert('Аккаунт удален');
     } catch (err) {
       console.log(err);
@@ -92,7 +93,7 @@ const AvatarUser = () => {
       // setImageUrl(data.url.slice(4));
 
       handleClose(event.target)
-
+      dispatch(fetchAuthMe())
       setIsChange(prev => !prev);
     } catch (err) {
       console.warn(err);
@@ -111,8 +112,8 @@ const AvatarUser = () => {
       >
         {
           !data?.avatarUrl ?
-            <Avatar style={{backgroundColor: '#FF9F67'}} /> :
-            <Avatar src={`http://localhost:8000${data?.avatarUrl}`}/>
+            <Avatar style={{backgroundColor: '#FF9F67', padding: '0'}} /> :
+            <Avatar style={{padding: '0'}} src={`http://localhost:8000${data?.avatarUrl}`}/>
         }
       </Button>
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>

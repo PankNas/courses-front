@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormControl, Select} from "@mui/material";
+import {FormControl, InputLabel, Select} from "@mui/material";
 
 type SelectItemType = {
   id: string,
@@ -7,12 +7,15 @@ type SelectItemType = {
   value: string,
   style?: any,
   height?: any,
+  label?: string,
   onChange(event: any): void,
+  required: boolean,
 }
 
 const SelectItem = (props:SelectItemType):JSX.Element => {
   return (
-    <FormControl variant="outlined" style={props.style} required>
+    <FormControl variant="outlined" style={props.style} required={props.required}>
+      <InputLabel>{props.label}</InputLabel>
       <Select
         key={props.id}
         native
@@ -23,6 +26,7 @@ const SelectItem = (props:SelectItemType):JSX.Element => {
           id: `${props.id}`,
         }}
         style={props.height}
+        label={props.label}
       >
         <option key={0} aria-label="None" value=""/>
         {

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './Main.module.css';
 import cn from 'classnames';
-import {useSelector} from "react-redux";
-import {selectIsAuth} from "../../redux/slices/auth";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchStudentCourses, selectIsAuth} from "../../redux/slices/auth";
 import {Link, Navigate} from "react-router-dom";
 import MySlider from "../../components/Slider/Slider";
+import Avatar from "@mui/material/Avatar";
 
 const adventures = [
   {
@@ -53,10 +54,12 @@ const slides = [
 
 const Main = () => {
   const isAuth = useSelector(selectIsAuth);
+  const dispatch = useDispatch();
+  const courses = useSelector(state => state.auth.studentCourses);
 
-  // if (isAuth) {
-  //   return <Navigate to={'/catalog'}/>
-  // }
+  useEffect(() => {
+    dispatch(fetchStudentCourses());
+  }, []);
 
   return (
     <>
@@ -108,6 +111,36 @@ const Main = () => {
       <section className={cn(styles.container, styles.space)}>
         <h2 className={styles.headerCourses}>Подборка наших курсов</h2>
         <div className={styles.blockCourses}>
+          {
+            courses?.map(course =>
+              <Link key={course._id} to={isAuth ? `/catalog/${course._id}` : '/login'}>
+                <div className={styles.courseItem}>
+                  <div className={styles.textCourse}>
+                    <h3 className={styles.headerCourse}>{course.title}</h3>
+                    <p className={styles.courseText}>Автор: {course.fullName}</p>
+                  </div>
+                  <div className={styles.blockImg}>
+                    {/*<div className={styles.circle}>*/}
+                    {
+                      !course.avatarUrl ?
+                        <Avatar
+                          style={{backgroundColor: '#FF9F67'}}
+                          sx={{width: 56, height: 56}}
+                        >
+                          {course.fullName[0].toUpperCase()}
+                        </Avatar> :
+                        <Avatar
+                          sx={{width: 56, height: 56}}
+                          src={`http://localhost:8000${course.avatarUrl}`}
+                        />
+                    }
+                    {/*</div>*/}
+                  </div>
+                </div>
+              </Link>
+            )
+          }
+
           <div className={styles.courseItem}>
             <div className={styles.textCourse}>
               <h3 className={styles.headerCourse}><a href="#">Какое-то название курса</a></h3>

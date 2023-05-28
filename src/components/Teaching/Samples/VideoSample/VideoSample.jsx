@@ -18,7 +18,6 @@ import axios from "../../../../axios";
 import {useParams} from "react-router-dom";
 import Editor from "../Editor";
 import RemarkTeach from "../RemarkTeach";
-import {findRemark} from "../Sample";
 
 const VideoSample = ({desc, videoUrl}) => {
   const dispatch = useDispatch();

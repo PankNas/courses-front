@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './Menu.module.css';
 
-import Navigation from "../Navigation/Navigation";
+import Search from "../Search/Search";
 import Logo from "../Logo/Logo";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
@@ -22,7 +22,7 @@ const Menu = () => {
   return (
     <div className={styles.menu}>
       <Logo />
-      <Navigation />
+      <Search />
       <Button
         variant={'outlined'}
         size={'large'}

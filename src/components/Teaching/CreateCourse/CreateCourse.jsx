@@ -17,7 +17,7 @@ import {pathFolder} from "../../../App";
 import {IconButton} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SelectItem from "../../SelectItem";
-import {languages, levelLanguages} from "./helper";
+import {languages, levelLanguages} from "../../languages";
 import AddLessons from "../AddLessons/AddLessons";
 import axios from "../../../axios";
 import Remark from "../../Remark/Remark";
