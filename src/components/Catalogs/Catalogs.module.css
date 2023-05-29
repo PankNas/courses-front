@@ -8,7 +8,7 @@
 
 .catalog {
   display: grid;
-  gap: 10px;
+  gap: 15px;
   grid-template-columns: repeat(3, 1fr);
 }
 
@@ -30,12 +30,12 @@ h1, h2, h3, h4, h5, h6 {
 .courseCard {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /*align-items: center;*/
 
   margin-bottom: 15px;
   padding: 20px 20px;
   width: 350px;
-  height: 230px;
+  min-height: 230px;
   box-sizing: border-box;
 
   border-radius: 20px;
@@ -60,7 +60,31 @@ h1, h2, h3, h4, h5, h6 {
   color: #ffffff;
   margin-bottom: 10px;
   font-size: 16px;
-  background-color: rgb(189, 184, 252);
+  background-color: var(--purple);
+}
+
+.beginning {
+  background-color: rgb(198, 155, 244);
+}
+
+.elementary {
+  background-color: rgb(146, 166, 245);
+}
+
+.intermediate {
+  background-color: rgb(170, 239, 78);
+}
+
+.upperIntermediate {
+  background-color: rgb(230, 208, 21);
+}
+
+.advanced {
+  background-color: #FF9F67;
+}
+
+.proficiency {
+  background-color: rgb(223, 123, 115);
 }
 
 .levelLanguage {

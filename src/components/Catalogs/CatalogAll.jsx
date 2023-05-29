@@ -4,22 +4,25 @@ import cn from 'classnames';
 import {Link} from "react-router-dom";
 import Search from "../Search/Search";
 
+export const setLevel = (level) => {
+  switch (level) {
+    case 'Начальный':
+      return 'beginning';
+    case 'Ниже среднего':
+      return 'elementary';
+    case 'Средний':
+      return 'intermediate';
+    case 'Выше среднего':
+      return 'upperIntermediate';
+    case 'Продвинутый':
+      return 'advanced';
+    case 'Профессиональный':
+      return 'proficiency';
+  }
+};
+
 const CatalogAll = ({items, title}) => {
   const [courses, setCourses] = useState(items);
-
-  // const handleSearch = () => {
-  //   let search = items.filter(item => item.title.includes(input));
-  //
-  //   if (language.language !== '') {
-  //     search = search.filter(item => item.language === language.language);
-  //   }
-  //
-  //   if (language.level !== '') {
-  //     search = search.filter(item => item.levelLanguage === language.level);
-  //   }
-  //
-  //   setCourses(search);
-  // }
 
   return (
     <div className={styles.content}>
@@ -27,23 +30,20 @@ const CatalogAll = ({items, title}) => {
       <Search
         items={items}
         setCourses={setCourses}
-        // input={input}
-        // language={language}
-        // fnInput={handleInput}
-        // fnChangeLanguage={handleChangeLanguage}
-        // fnSearch={handleSearch}
       />
       <div className={styles.catalog}>
         {
-          courses?.map((item) =>
-            <Link key={item._id} to={`${item._id}`} className={styles.link}>
+          courses?.map((item) => {
+            const level = setLevel(item.levelLanguage);
+
+            return <Link key={item._id} to={`${item._id}`} className={styles.link}>
               <div className={styles.courseCard}>
                 <div className={styles.cartContent}>
                   <h4>{item.title}</h4>
                   {/*<p>Автор: {item.user.fullName}</p>*/}
                   <div className={styles.tags}>
-                    <div className={styles.language} >{item.language}</div>
-                    <div className={cn(styles.language, styles.levelLanguage)}>{item.levelLanguage}</div>
+                    <div className={styles.language}>{item.language}</div>
+                    <div className={cn(styles.language, styles[level])}>{item.levelLanguage}</div>
                   </div>
                 </div>
                 <img
@@ -51,8 +51,8 @@ const CatalogAll = ({items, title}) => {
                   src={`http://localhost:8000${item.imageUrl}`} alt="img"
                 />
               </div>
-            </Link>
-          )
+            </Link>;
+          })
         }
       </div>
     </div>

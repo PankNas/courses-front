@@ -125,6 +125,73 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 
+.courseCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 15px;
+  padding: 20px 20px;
+  width: 350px;
+  height: 230px;
+  box-sizing: border-box;
+
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.07), 0 10px 10px rgba(0,0,0,0.05);
+}
+
+.cartContent {
+  width: 180px;
+  /*height: 50px;*/
+}
+
+.tags {
+  margin-top: 50px;
+}
+
+.language {
+  box-sizing: border-box;
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px;
+  color: #ffffff;
+  margin-bottom: 10px;
+  font-size: 16px;
+  background-color: #FF9F67;
+}
+
+.beginning {
+  background-color: rgb(198, 155, 244);
+}
+
+.elementary {
+  background-color: rgb(146, 166, 245);
+}
+
+.intermediate {
+  background-color: rgb(170, 239, 78);
+}
+
+.upperIntermediate {
+  background-color: rgb(234, 224, 104);
+}
+
+.advanced {
+  background-color: #FF9F67;
+}
+
+.proficiency {
+  background-color: rgb(223, 123, 115);
+}
+
+.img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
 /*-------------------- END LANGUAGES --------------------*/
 
 /*-------------------- INFO --------------------*/
@@ -178,7 +245,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /*align-items: center;*/
   flex-wrap: wrap;
 }
 

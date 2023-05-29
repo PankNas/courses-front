@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './Main.module.css';
 import cn from 'classnames';
 import {useDispatch, useSelector} from "react-redux";
@@ -6,6 +6,7 @@ import {fetchStudentCourses, selectIsAuth} from "../../redux/slices/auth";
 import {Link, Navigate} from "react-router-dom";
 import MySlider from "../../components/Slider/Slider";
 import Avatar from "@mui/material/Avatar";
+import {setLevel} from "../../components/Catalogs/CatalogAll";
 
 const adventures = [
   {
@@ -55,10 +56,13 @@ const slides = [
 const Main = () => {
   const isAuth = useSelector(selectIsAuth);
   const dispatch = useDispatch();
-  const courses = useSelector(state => state.auth.studentCourses);
+  const {items} = useSelector(state => state.courses);
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     dispatch(fetchStudentCourses());
+
+    setCourses(items?.filter(item => item.status === 'active'))
   }, []);
 
   return (
@@ -112,61 +116,85 @@ const Main = () => {
         <h2 className={styles.headerCourses}>Подборка наших курсов</h2>
         <div className={styles.blockCourses}>
           {
-            courses?.map(course =>
-              <Link key={course._id} to={isAuth ? `/catalog/${course._id}` : '/login'}>
-                <div className={styles.courseItem}>
-                  <div className={styles.textCourse}>
-                    <h3 className={styles.headerCourse}>{course.title}</h3>
-                    <p className={styles.courseText}>Автор: {course.fullName}</p>
+            courses?.map((item) => {
+              const level = setLevel(item.levelLanguage);
+
+              return <Link key={item._id} to={isAuth ? `/catalog/${item._id}` : '/login'}>
+                <div className={styles.courseCard}>
+                  <div className={styles.cartContent}>
+                    <h4>{item.title}</h4>
+                    {/*<p>Автор: {item.user.fullName}</p>*/}
+                    <div className={styles.tags}>
+                      <div className={styles.language}>{item.language}</div>
+                      <div className={cn(styles.language, styles[level])}>{item.levelLanguage}</div>
+                    </div>
                   </div>
-                  <div className={styles.blockImg}>
-                    {/*<div className={styles.circle}>*/}
-                    {
-                      !course.avatarUrl ?
-                        <Avatar
-                          style={{backgroundColor: '#FF9F67'}}
-                          sx={{width: 56, height: 56}}
-                        >
-                          {course.fullName[0].toUpperCase()}
-                        </Avatar> :
-                        <Avatar
-                          sx={{width: 56, height: 56}}
-                          src={`http://localhost:8000${course.avatarUrl}`}
-                        />
-                    }
-                    {/*</div>*/}
-                  </div>
+                  <img
+                    className={styles.img}
+                    src={`http://localhost:8000${item.imageUrl}`} alt="img"
+                  />
                 </div>
-              </Link>
-            )
+              </Link>;
+            })
           }
 
-          <div className={styles.courseItem}>
-            <div className={styles.textCourse}>
-              <h3 className={styles.headerCourse}><a href="#">Какое-то название курса</a></h3>
-              <p className={styles.courseText}>Автор</p>
-              {/*<div className="rating">*/}
-              {/*  <span className="num-rating"><b>0</b></span>*/}
-              {/*  <div className="stars">*/}
-              {/*    <span className="star material-symbols-outlined">star</span>*/}
-              {/*    <span className="star material-symbols-outlined">star</span>*/}
-              {/*    <span className="star material-symbols-outlined">star</span>*/}
-              {/*    <span className="star material-symbols-outlined">star</span>*/}
-              {/*    <span className="star material-symbols-outlined">star</span>*/}
-              {/*  </div>*/}
-              {/*</div>*/}
-            </div>
-            <div className={styles.blockImg}>
-              <div className="circle">
-                <img src={`http://localhost:8000/uploads/my/feature3.png`} className={styles.img} alt="img-course"/>
-              </div>
-            </div>
-          </div>
-          <div className={styles.courseItem}></div>
-          <div className={styles.courseItem}></div>
-          <div className={styles.courseItem}></div>
-          <div className={styles.courseItem}></div>
-          <div className={styles.courseItem}></div>
+
+          {/*{*/}
+          {/*  courses?.map(course =>*/}
+          {/*    <Link key={course._id} to={isAuth ? `/catalog/${course._id}` : '/login'}>*/}
+          {/*      <div className={styles.courseItem}>*/}
+          {/*        <div className={styles.textCourse}>*/}
+          {/*          <h3 className={styles.headerCourse}>{course.title}</h3>*/}
+          {/*          <p className={styles.courseText}>Автор: {course.user.fullName}</p>*/}
+          {/*        </div>*/}
+          {/*        <div className={styles.blockImg}>*/}
+          {/*          /!*<div className={styles.circle}>*!/*/}
+          {/*          {*/}
+          {/*            !course.avatarUrl ?*/}
+          {/*              <Avatar*/}
+          {/*                style={{backgroundColor: '#FF9F67'}}*/}
+          {/*                sx={{width: 56, height: 56}}*/}
+          {/*              >*/}
+          {/*                /!*{course.fullName[0].toUpperCase()}*!/*/}
+          {/*              </Avatar> :*/}
+          {/*              <Avatar*/}
+          {/*                sx={{width: 56, height: 56}}*/}
+          {/*                src={`http://localhost:8000${course.avatarUrl}`}*/}
+          {/*              />*/}
+          {/*          }*/}
+          {/*          /!*</div>*!/*/}
+          {/*        </div>*/}
+          {/*      </div>*/}
+          {/*    </Link>*/}
+          {/*  )*/}
+          {/*}*/}
+
+          {/*<div className={styles.courseItem}>*/}
+          {/*  <div className={styles.textCourse}>*/}
+          {/*    <h3 className={styles.headerCourse}><a href="#">Какое-то название курса</a></h3>*/}
+          {/*    <p className={styles.courseText}>Автор</p>*/}
+          {/*    /!*<div className="rating">*!/*/}
+          {/*    /!*  <span className="num-rating"><b>0</b></span>*!/*/}
+          {/*    /!*  <div className="stars">*!/*/}
+          {/*    /!*    <span className="star material-symbols-outlined">star</span>*!/*/}
+          {/*    /!*    <span className="star material-symbols-outlined">star</span>*!/*/}
+          {/*    /!*    <span className="star material-symbols-outlined">star</span>*!/*/}
+          {/*    /!*    <span className="star material-symbols-outlined">star</span>*!/*/}
+          {/*    /!*    <span className="star material-symbols-outlined">star</span>*!/*/}
+          {/*    /!*  </div>*!/*/}
+          {/*    /!*</div>*!/*/}
+          {/*  </div>*/}
+          {/*  <div className={styles.blockImg}>*/}
+          {/*    <div className="circle">*/}
+          {/*      <img src={`http://localhost:8000/uploads/my/feature3.png`} className={styles.img} alt="img-course"/>*/}
+          {/*    </div>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
+          {/*<div className={styles.courseItem}></div>*/}
+          {/*<div className={styles.courseItem}></div>*/}
+          {/*<div className={styles.courseItem}></div>*/}
+          {/*<div className={styles.courseItem}></div>*/}
+          {/*<div className={styles.courseItem}></div>*/}
         </div>
         <Link to={isAuth ? '/catalog' : '/login'}>
           <button className={styles.buttonCourses}>Узнать больше</button>
