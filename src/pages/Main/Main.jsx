@@ -137,64 +137,6 @@ const Main = () => {
               </Link>;
             })
           }
-
-
-          {/*{*/}
-          {/*  courses?.map(course =>*/}
-          {/*    <Link key={course._id} to={isAuth ? `/catalog/${course._id}` : '/login'}>*/}
-          {/*      <div className={styles.courseItem}>*/}
-          {/*        <div className={styles.textCourse}>*/}
-          {/*          <h3 className={styles.headerCourse}>{course.title}</h3>*/}
-          {/*          <p className={styles.courseText}>Автор: {course.user.fullName}</p>*/}
-          {/*        </div>*/}
-          {/*        <div className={styles.blockImg}>*/}
-          {/*          /!*<div className={styles.circle}>*!/*/}
-          {/*          {*/}
-          {/*            !course.avatarUrl ?*/}
-          {/*              <Avatar*/}
-          {/*                style={{backgroundColor: '#FF9F67'}}*/}
-          {/*                sx={{width: 56, height: 56}}*/}
-          {/*              >*/}
-          {/*                /!*{course.fullName[0].toUpperCase()}*!/*/}
-          {/*              </Avatar> :*/}
-          {/*              <Avatar*/}
-          {/*                sx={{width: 56, height: 56}}*/}
-          {/*                src={`http://localhost:8000${course.avatarUrl}`}*/}
-          {/*              />*/}
-          {/*          }*/}
-          {/*          /!*</div>*!/*/}
-          {/*        </div>*/}
-          {/*      </div>*/}
-          {/*    </Link>*/}
-          {/*  )*/}
-          {/*}*/}
-
-          {/*<div className={styles.courseItem}>*/}
-          {/*  <div className={styles.textCourse}>*/}
-          {/*    <h3 className={styles.headerCourse}><a href="#">Какое-то название курса</a></h3>*/}
-          {/*    <p className={styles.courseText}>Автор</p>*/}
-          {/*    /!*<div className="rating">*!/*/}
-          {/*    /!*  <span className="num-rating"><b>0</b></span>*!/*/}
-          {/*    /!*  <div className="stars">*!/*/}
-          {/*    /!*    <span className="star material-symbols-outlined">star</span>*!/*/}
-          {/*    /!*    <span className="star material-symbols-outlined">star</span>*!/*/}
-          {/*    /!*    <span className="star material-symbols-outlined">star</span>*!/*/}
-          {/*    /!*    <span className="star material-symbols-outlined">star</span>*!/*/}
-          {/*    /!*    <span className="star material-symbols-outlined">star</span>*!/*/}
-          {/*    /!*  </div>*!/*/}
-          {/*    /!*</div>*!/*/}
-          {/*  </div>*/}
-          {/*  <div className={styles.blockImg}>*/}
-          {/*    <div className="circle">*/}
-          {/*      <img src={`http://localhost:8000/uploads/my/feature3.png`} className={styles.img} alt="img-course"/>*/}
-          {/*    </div>*/}
-          {/*  </div>*/}
-          {/*</div>*/}
-          {/*<div className={styles.courseItem}></div>*/}
-          {/*<div className={styles.courseItem}></div>*/}
-          {/*<div className={styles.courseItem}></div>*/}
-          {/*<div className={styles.courseItem}></div>*/}
-          {/*<div className={styles.courseItem}></div>*/}
         </div>
         <Link to={isAuth ? '/catalog' : '/login'}>
           <button className={styles.buttonCourses}>Узнать больше</button>

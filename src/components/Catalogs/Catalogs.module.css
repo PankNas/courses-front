@@ -60,7 +60,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #ffffff;
   margin-bottom: 10px;
   font-size: 16px;
-  background-color: var(--purple);
+  background-color: rgb(147, 115, 255);
 }
 
 .beginning {
@@ -87,10 +87,6 @@ h1, h2, h3, h4, h5, h6 {
   background-color: rgb(223, 123, 115);
 }
 
-.levelLanguage {
-  background-color: #FF9F67;
-}
-
 .img {
   width: 100px;
   height: 100px;
@@ -103,9 +99,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .progressBar {
-  background-color: var(--purple);
+  background-color: rgb(147, 115, 255);
   border-radius: 5px;
-  height: 10px;
+  height: 8px;
 }
 
 .link {

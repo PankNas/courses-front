@@ -1,14 +1,16 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './Catalogs.module.css';
 import cn from 'classnames';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProgressCourses} from "../../redux/slices/auth";
 import {setLevel} from "./CatalogAll";
+import Search from "../Search/Search";
 
 const CatalogStudy = ({items, title}) => {
   const dispatch = useDispatch();
   const progress = useSelector(state => state.auth.progressCourses);
+  const [courses, setCourses] = useState(items);
 
   useEffect(() => {
     dispatch(fetchProgressCourses());
@@ -17,9 +19,13 @@ const CatalogStudy = ({items, title}) => {
   return (
     <div className={styles.content}>
       <h1 className={styles.title}>{title}</h1>
+      <Search
+        items={items}
+        setCourses={setCourses}
+      />
       <div className={styles.catalog}>
         {
-          items?.map((item, index) => {
+          courses?.map((item, index) => {
             const countLessons = item.modules.reduce((acc, elem) => acc + elem?.lessons.length, 0);
             const isActive = item.status === 'active';
             const level = setLevel(item.levelLanguage);
@@ -35,7 +41,7 @@ const CatalogStudy = ({items, title}) => {
                         !isActive ?
                           <p>Извините, в данный момент курс не доступен для прохождения.</p> :
                           <div className={styles.progress}>
-                            <p>Пройдено {progress && progress[index]?.lessonsEnd.length} из {countLessons}</p>
+                            <p style={{marginBottom: '5px'}}>Пройдено {progress && progress[index]?.lessonsEnd.length} из {countLessons}</p>
                             <div
                               className={styles.progressBar}
                               style={{width: `${progress && progress[index]?.lessonsEnd.length * 100 / countLessons}%`}}

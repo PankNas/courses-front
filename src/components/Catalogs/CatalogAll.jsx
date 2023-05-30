@@ -21,7 +21,7 @@ export const setLevel = (level) => {
   }
 };
 
-const CatalogAll = ({items, title}) => {
+const CatalogAll = ({items, title, isStudy}) => {
   const [courses, setCourses] = useState(items);
 
   return (

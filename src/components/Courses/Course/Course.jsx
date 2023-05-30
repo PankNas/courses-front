@@ -1,27 +1,22 @@
 import React, {useEffect, useState} from 'react';
-import {Link, Navigate, useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "../../../axios";
 import styles from './Course.module.scss';
-import AddLessons from "../../Teaching/AddLessons/AddLessons";
-import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {
   fetchAuthMe,
   fetchStudentCourses,
-  fetchTeachCourses,
   selectIsAuth,
-  selectRoleUser
 } from "../../../redux/slices/auth";
 import cn from 'classnames';
-import {pathFolder} from "../../../App";
-import TextField from "@mui/material/TextField";
 import Remark from "../../Remark/Remark";
+import AddComment from "../../Comments/AddComment";
+import CommentsBlock from "../../Comments/CommentsBlock";
 
 const Course = ({isModerator}) => {
   const {courseId} = useParams();
   const navigate = useNavigate();
 
-  const isAuth = useSelector(selectIsAuth);
   const {studentCourses} = useSelector(state => state.auth);
 
   const [dataCourse, setDataCourse] = useState({
@@ -31,10 +26,12 @@ const Course = ({isModerator}) => {
     language: '',
     levelLanguage: '',
     imageUrl: '',
+    comments: [],
     modules: [],
   });
 
   const [isSubscript, setIsSubscript] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
   const [isModerate, setIsModerate] = useState(false);
   const [curCourse, setCurCourse] = useState(null);
   const [isAuthor, setIsAuthor] = useState(false);
@@ -69,7 +66,11 @@ const Course = ({isModerator}) => {
           setIsModerate(true);
         }
       });
-  }, [isModerate, isSubscript]);
+  }, [isModerate, isSubscript, isUpdate]);
+
+  const updateComments = () => {
+    setIsUpdate(prev => !prev)
+  }
 
   const handleClickRecord = async () => {
     try {
@@ -220,6 +221,15 @@ const Course = ({isModerator}) => {
                 )
               }
             </div>
+
+            <CommentsBlock
+              items={dataCourse?.comments}
+              isLoading={false}
+              data={dataCourse}
+              setData={setDataCourse}
+            >
+              <AddComment fnUpdate={updateComments} dataCourse={dataCourse} setDataCourse={setDataCourse}/>
+            </CommentsBlock>
           </div>
 
           <div className={styles.manageCourse}>

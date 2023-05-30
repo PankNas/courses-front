@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchAuthMe, selectIsAuth, selectRoleUser} from "../../redux/slices/auth";
 import {fetchCourses} from "../../redux/slices/courses";
 import {Navigate, Route, Routes} from "react-router-dom";
-import Catalog from "../Catalog/Catalog";
 import Course from "../Courses/Course/Course";
 import CourseStudy from "../Study/CourseStudy/CourseStudy";
 import CatalogAll from "../Catalogs/CatalogAll";

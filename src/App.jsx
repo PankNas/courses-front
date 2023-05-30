@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 
-import PersonalArea from "./pages/PersonalArea/PersonalArea";
 import {Route, Routes} from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
@@ -16,7 +15,6 @@ import Teaching from "./components/Teaching/Teaching";
 import Check from "./components/Check/Check";
 import Adm from "./components/Adm/Adm";
 import Moderate from "./components/Check/Moderate/Moderate";
-import CourseStudy from "./components/Study/CourseStudy/CourseStudy";
 
 export const pathFolder = `http://localhost:8000/uploads`
 
@@ -44,9 +42,6 @@ function App() {
           <Route path="/moderate/*" element={<Moderate/>}/>
 
           <Route path="/adm/*" element={<Adm/>}/>
-
-          {/*<Route path="/area/*" element={<PersonalArea/>}/>*/}
-          {/*<Route path={'/study/:courseId/lessons/*'} element={<CourseStudy/>} />*/}
         </Routes>
       </div>
       <Footer />
