@@ -24,7 +24,7 @@ const Courses = () => {
         <CatalogAll items={getActive()} title={'Онлайн-курсы'} isModerator={false}/>
       }
       />
-      <Route path={'/:courseId/*'} element={<Course isModerator={false}/>}/>
+      <Route path={'/:courseId/*'} element={<Course isModerator={false} isStudy={true}/>}/>
       <Route path={'/:courseId/lessons/*'} element={<CourseStudy/>} />
     </Routes>
   );

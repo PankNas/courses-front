@@ -64,7 +64,7 @@ const CourseStudy = ({isModerate}) => {
                   {
                     module.lessons.map(lesson =>
                       <li className={styles.lesson} key={lesson._id} id={lesson._id} onClick={handleClickNav}>
-                        <Button variant={'text'} id={lesson._id}>
+                        <Button className={styles.buttonLesson} variant={'text'} id={lesson._id}>
                           {lesson.title}
                         </Button>
                       </li>

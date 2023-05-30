@@ -9,7 +9,7 @@ import axios from "../../axios";
 import {useParams} from "react-router-dom";
 
 const AddComment = ({fnUpdate}) => {
-  const {courseId} = useParams();
+  const {courseId, lessonId} = useParams();
   const {data} = useSelector(state => state.auth);
 
   const [comment, setComment] = useState('');
@@ -21,11 +21,15 @@ const AddComment = ({fnUpdate}) => {
     try {
       const dateTime = setDate();
 
-      const newComment = {
+      let newComment = {
         text: comment,
         dateTime: dateTime,
-        course: courseId,
       }
+
+      if (lessonId)
+        newComment.lesson = lessonId;
+      else
+        newComment.course = courseId;
 
       const {data} = await axios.post(`/comments`, newComment);
 
@@ -60,7 +64,7 @@ const AddComment = ({fnUpdate}) => {
   );
 };
 
-function setDate() {
+export function setDate() {
   const date = new Date();
 
   return date.toLocaleString().slice(0, -3);

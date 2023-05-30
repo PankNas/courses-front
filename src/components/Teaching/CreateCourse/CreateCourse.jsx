@@ -57,17 +57,7 @@ const CreateCourse = () => {
         setLanguage(res.language);
         setImageUrl(res.imageUrl);
       });
-
-    // return () => {
-    //   setImageUrl('');
-    //   setLanguage('');
-    //   setLevelLanguage('');
-    // };
   }, []);
-
-  // if (!isAuth) {
-  //   return <Navigate to={'/'}/>;
-  // }
 
   const handleChangeFile = async (event) => {
     try {
@@ -167,7 +157,7 @@ const CreateCourse = () => {
             </>
           )}
           {
-            (course?.status === 'passive' || course?.status === 'fail') &&
+            (course?.status === 'passive' || course?.status === 'fail') && course?.remarkForCourse !== '' &&
             <div className={styles.remarkBlock}>
               <RemarkTeach value={course?.remarkForCourse} rowsCount={7}/>
             </div>

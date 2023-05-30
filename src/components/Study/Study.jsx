@@ -22,10 +22,9 @@ const Study = () => {
           <CatalogStudy
             title={'Мое обучение'}
             items={studentCourses}
-            // fnUnsubscribe={handleUnsubscribe}
           />
         }/>
-        <Route path={'/:courseId/'} element={<Course />} />
+        <Route path={'/:courseId/'} element={<Course isStudy={true}/>} />
         <Route path={'/:courseId/lessons/*'} element={<CourseStudy/>} />
       </Routes>
     </>

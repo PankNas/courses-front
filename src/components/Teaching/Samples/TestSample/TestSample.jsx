@@ -79,7 +79,10 @@ const TestSample = ({itemsTest}) => {
         }
       </div>
 
-      <div style={{width: '350px'}}><RemarkTeach value={course?.remarks} rowsCount={15}/></div>
+      {
+        course?.remarks !== '' &&
+        <div style={{width: '350px'}}><RemarkTeach value={course?.remarks} rowsCount={15}/></div>
+      }
     </div>
   );
 };

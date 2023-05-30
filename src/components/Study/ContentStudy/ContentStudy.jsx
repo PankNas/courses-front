@@ -16,6 +16,8 @@ import Remark from "../../Remark/Remark";
 import Avatar from "@mui/material/Avatar";
 import {pathFolder} from "../../../App";
 import {IconButton} from "@mui/material";
+import AddComment from "../../Comments/AddComment";
+import CommentsBlock from "../../Comments/CommentsBlock";
 
 const ContentStudy = ({isModerate}) => {
   const {courseId, lessonId} = useParams();
@@ -24,18 +26,18 @@ const ContentStudy = ({isModerate}) => {
 
   const [lesson, setLesson] = useState({});
   const {progressCourses} = useSelector(state => state.auth);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   useEffect(() => {
     // dispatch(fetchProgressCourses());
 
-    const getLesson = async () => (await axios.get(`lessons/${lessonId}`)).data
+    const getLesson = async () => (await axios.get(`lessons/${lessonId}`)).data;
 
     getLesson()
       .then(res => {
-        console.log(res);
         setLesson(res);
       });
-  }, [lessonId]);
+  }, [lessonId, isUpdate]);
 
   const handleClickBack = async () => {
     const course = (await axios.get(`courses/${courseId}`)).data;
@@ -80,7 +82,7 @@ const ContentStudy = ({isModerate}) => {
     }
 
     navigate(`/study/${courseId}/lessons/${nextLesson}`);
-  }
+  };
 
   const handleSaveRemark = async (text) => {
     try {
@@ -90,17 +92,20 @@ const ContentStudy = ({isModerate}) => {
     } catch (err) {
 
     }
-  }
+  };
 
   const handleDelRemark = async () => {
     try {
-        await axios.delete(`/remarks/course/${courseId}/lesson/${lessonId}`);
+      await axios.delete(`/remarks/course/${courseId}/lesson/${lessonId}`);
 
       alert('Замечание удалено');
     } catch (err) {
 
     }
-  }
+  };
+
+  const updateComments = () => setIsUpdate(prev => !prev)
+
 
   return (
     <div className={styles.content}>
@@ -122,12 +127,21 @@ const ContentStudy = ({isModerate}) => {
       </div>
 
       {
-        isModerate &&
-        <div className={styles.remark}><Remark fnSave={handleSaveRemark} fnDelete={handleDelRemark} rowsCount={5}/></div>
+        isModerate ?
+          <div className={styles.remark}><Remark fnSave={handleSaveRemark} fnDelete={handleDelRemark} rowsCount={5}/>
+          </div>
+          :
+          <CommentsBlock
+            items={lesson?.comments}
+            isLoading={false}
+            fnUpdate={updateComments}
+          >
+            <AddComment fnUpdate={updateComments}/>
+          </CommentsBlock>
       }
     </div>
-  )
-}
+  );
+};
 
 function typeContent(lesson, isModerate) {
   switch (lesson?.type) {
@@ -136,18 +150,20 @@ function typeContent(lesson, isModerate) {
     case 'video':
       return <VideoLesson desc={lesson.desc} videoUrl={lesson.videoUrl} isModerate={isModerate}/>;
     case 'sentence':
-      return <SentenceLesson sentence={lesson.sentence} translate={lesson.translate} isModerate={isModerate}/>
+      return <SentenceLesson sentence={lesson.sentence} translate={lesson.translate} isModerate={isModerate}/>;
     case 'translate':
-      return <TranslateLesson question={lesson.question} options={lesson.options} answer={lesson.answer} isModerate={isModerate}/>
+      return <TranslateLesson question={lesson.question} options={lesson.options} answer={lesson.answer}
+                              isModerate={isModerate}/>;
     case 'test':
-      return <TestLesson items={lesson.itemsTest} totalScore={lesson.totalScore} isModerate={isModerate}/>
+      return <TestLesson items={lesson.itemsTest} totalScore={lesson.totalScore} isModerate={isModerate}/>;
     case 'passes':
       const parts = lesson.sentence.split(/\[(.*?)\]/g);
       const size = Math.trunc(parts.length / 2);
 
       const [options, answers] = setParamsPasses(lesson.sentence);
 
-      return <PassesLesson sentence={lesson.sentence} size={size} options={options} answers={answers} isModerate={isModerate}/>;
+      return <PassesLesson sentence={lesson.sentence} size={size} options={options} answers={answers}
+                           isModerate={isModerate}/>;
     default:
       return;
   }
@@ -164,7 +180,7 @@ function setParamsPasses(sentence) {
 
     answers.push(values[0]);
     options.push(values.sort(() => Math.random() - 0.5));
-  })
+  });
 
   return [options, answers];
 }

@@ -12,8 +12,9 @@ import cn from 'classnames';
 import Remark from "../../Remark/Remark";
 import AddComment from "../../Comments/AddComment";
 import CommentsBlock from "../../Comments/CommentsBlock";
+import {fetchCourses} from "../../../redux/slices/courses";
 
-const Course = ({isModerator}) => {
+const Course = ({isModerator, isStudy=false}) => {
   const {courseId} = useParams();
   const navigate = useNavigate();
 
@@ -132,6 +133,7 @@ const Course = ({isModerator}) => {
       await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'active'});
 
       setIsModerate(false);
+      dispatch(fetchCourses());
       navigate('/moderate');
       alert('Курс одобрен');
     } catch (err) {
@@ -168,9 +170,8 @@ const Course = ({isModerator}) => {
       await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'fail'});
 
       setIsModerate(false);
+      dispatch(fetchCourses());
       navigate('/moderate');
-
-      // await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'fail'});
 
       alert('Вы отклонили курс на размещение на платформе');
     } catch (err) {
@@ -222,14 +223,16 @@ const Course = ({isModerator}) => {
               }
             </div>
 
-            <CommentsBlock
-              items={dataCourse?.comments}
-              isLoading={false}
-              data={dataCourse}
-              setData={setDataCourse}
-            >
-              <AddComment fnUpdate={updateComments} dataCourse={dataCourse} setDataCourse={setDataCourse}/>
-            </CommentsBlock>
+            {
+              isStudy &&
+              <CommentsBlock
+                items={dataCourse?.comments}
+                isLoading={false}
+                fnUpdate={updateComments}
+              >
+                {(isSubscript || isAuthor) && <AddComment fnUpdate={updateComments}/>}
+              </CommentsBlock>
+            }
           </div>
 
           <div className={styles.manageCourse}>

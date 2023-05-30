@@ -53,38 +53,32 @@ const Sample = () => {
   return (
     <div className={styles.container}>
       <h1>{sampleLesson.welcomeText}</h1>
-      {/*<div className={styles.content}>*/}
-        {/*<div style={{width: '700px'}}>*/}
-          <TextField
-            id={'name-lesson'}
-            value={sampleLesson.title}
-            label="Название урока"
-            onChange={handleInput}
-            variant="outlined"
-            fullWidth
-            style={{marginBottom: '20px'}}
-          />
+      <TextField
+        id={'name-lesson'}
+        value={sampleLesson.title}
+        label="Название урока"
+        onChange={handleInput}
+        variant="outlined"
+        fullWidth
+        style={{marginBottom: '20px'}}
+      />
 
-          {setSampleComponent(sampleLesson)}
+      {setSampleComponent(sampleLesson)}
 
-          <div className={styles.buttons}>
-            <button
-              onClick={handleSaveBtn}
-              style={{marginRight: '15px'}}
-              className={styles.button}
-            >
-              Сохранить
-            </button>
-            <button
-              onClick={handleNavigate}
-              className={styles.button}
-            >
-              Отмена
-            </button>
-          {/*</div>*/}
-        {/*</div>*/}
-
-        {/*<div style={{width: '350px'}}><RemarkTeach value={findRemark()} rowsCount={15}/></div>*/}
+      <div className={styles.buttons}>
+        <button
+          onClick={handleSaveBtn}
+          style={{marginRight: '15px'}}
+          className={styles.button}
+        >
+          Сохранить
+        </button>
+        <button
+          onClick={handleNavigate}
+          className={styles.button}
+        >
+          Отмена
+        </button>
       </div>
     </div>
   );
@@ -93,17 +87,17 @@ const Sample = () => {
 function setSampleComponent(sample) {
   switch (sample.type) {
     case 'video':
-      return <VideoSample desc={sample.desc} videoUrl={sample.videoUrl} />;
+      return <VideoSample desc={sample.desc} videoUrl={sample.videoUrl}/>;
     case 'text':
       return <TextSample desc={sample.desc} remarks={sample.remarks}/>;
     case 'sentence':
       return <SentenceSample sentence={sample.sentence} translate={sample.translate}/>;
     case 'passes':
-      return <PassesSample sentence={sample.sentence} />;
+      return <PassesSample sentence={sample.sentence}/>;
     case 'test':
       return <TestSample itemsTest={sample.itemsTest}/>;
     case 'translate':
-      return <TranslateSample question={sample.question} answer={sample.answer} options={sample.options}/>
+      return <TranslateSample question={sample.question} answer={sample.answer} options={sample.options}/>;
     default:
       return;
   }
