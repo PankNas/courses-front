@@ -12,15 +12,16 @@ import {IconButton} from "@mui/material";
 import {pathFolder} from "../../../App";
 import Avatar from "@mui/material/Avatar";
 import {selectFlag, setFlag, setIdCourse} from "../../../redux/slices/lessons";
+import Search from "../../Search/Search";
 
 const PersonCourses = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isAuth = useSelector(selectIsAuth);
-  const flag = useSelector(selectFlag);
 
   const teachCourses = useSelector(state => state.auth.teachCourses);
   const [isChange, setIsChange] = useState(false);
+
+  const [courses, setCourses] = useState(teachCourses);
 
   useEffect(() => {
     dispatch(fetchAuthMe());
@@ -59,9 +60,6 @@ const PersonCourses = () => {
       console.log(err);
     }
   };
-  const handleEditCourse = (event, id) => {
-    navigate(`${event.target.id}/edit`);
-  };
 
   const setStatus = (status) => {
     let res;
@@ -82,7 +80,7 @@ const PersonCourses = () => {
   const handleClickCheck = async (event, id) => {
     try {
       let course = (await axios.get(`/courses/${id}`)).data;
-      console.log('course', course);
+
       course.status = 'check';
       await axios.patch(`/courses/${course._id}`, course);
       dispatch(fetchTeachCourses());
@@ -104,9 +102,14 @@ const PersonCourses = () => {
         </IconButton>
       </div>
 
+      <Search
+        items={teachCourses}
+        setCourses={setCourses}
+      />
+
       <div className={styles.catalog}>
         {
-          teachCourses?.map((item, index) =>
+          courses?.map((item, index) =>
             <div key={item._id} className={styles.courseCard}>
               <div>
                 <h3>{item.title}</h3>

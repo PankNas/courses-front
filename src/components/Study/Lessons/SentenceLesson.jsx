@@ -4,6 +4,7 @@ import cn from 'classnames';
 import Button from "@mui/material/Button";
 import {setFinishLesson} from "./finishLesson";
 import {useParams} from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 const SentenceLesson = ({sentence, translate, isModerate}) => {
   const {courseId, lessonId} = useParams();
@@ -55,7 +56,8 @@ const SentenceLesson = ({sentence, translate, isModerate}) => {
   return (
     <>
       <p>Составьте текст из слов</p>
-      <p>{translate}</p>
+      <pre><ReactMarkdown children={translate}/></pre>
+      {/*<p>{translate}</p>*/}
       <ul className={cn(styles.wordsBox, styles.textBox)}>
         {
           text.map((word, index) =>

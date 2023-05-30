@@ -3,6 +3,7 @@ import {useParams} from "react-router-dom";
 import {setFinishLesson} from "./finishLesson";
 import Button from "@mui/material/Button";
 import CheckboxItem from "../../CheckboxItem";
+import ReactMarkdown from "react-markdown";
 
 const TranslateLesson = ({question, options, answer, isModerate}) => {
   const {courseId, lessonId} = useParams();
@@ -27,27 +28,13 @@ const TranslateLesson = ({question, options, answer, isModerate}) => {
   return (
     <>
       <p>Переведите текст</p>
-      <p style={{textAlign: "center"}}>{question}</p>
+      <pre style={{textAlign: "center"}}><ReactMarkdown children={question}/></pre>
+      {/*<p style={{textAlign: "center"}}>{question}</p>*/}
       <CheckboxItem
         options={options}
         answer={curAnswer}
         fnChange={handleChangeCheckBox}
       />
-      {/*<FormGroup>*/}
-      {/*  {*/}
-      {/*    options.map((option, index) =>*/}
-      {/*      <FormControlLabel*/}
-      {/*        key={index}*/}
-      {/*        control={*/}
-      {/*          <Checkbox*/}
-      {/*            id={index}*/}
-      {/*            checked={isChecked(index)}*/}
-      {/*            onChange={(event) => handleChangeCheckBox(event, index)}/>*/}
-      {/*        }*/}
-      {/*        label={option}/>*/}
-      {/*    )*/}
-      {/*  }*/}
-      {/*</FormGroup>*/}
       <Button
         style={{marginTop: "20px"}}
         variant={'outlined'}

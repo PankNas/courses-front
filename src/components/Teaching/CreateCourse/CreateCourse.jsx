@@ -48,7 +48,6 @@ const CreateCourse = () => {
 
     getCourse()
       .then(res => {
-        console.log('res', res);
         setCourse(res);
 
         setTitle(res.title);
@@ -207,7 +206,13 @@ const CreateCourse = () => {
             </div>
           </div>
 
-          <AddLessons/>
+          <AddLessons
+            title={title}
+            desc={desc}
+            language={language}
+            level={levelLanguage}
+            image={imageUrl}
+          />
 
           <div style={{display: "flex", justifyContent: 'center'}}>
             <button

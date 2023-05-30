@@ -4,6 +4,7 @@ import {setFinishLesson} from "./finishLesson";
 import Button from "@mui/material/Button";
 import styles from './style.module.scss';
 import CheckboxItem from "../../CheckboxItem";
+import ReactMarkdown from "react-markdown";
 
 const TestLesson = ({items, totalScore, isModerate}) => {
   const {courseId, lessonId} = useParams();
@@ -35,7 +36,8 @@ const TestLesson = ({items, totalScore, isModerate}) => {
       {
         items.map((item, index) =>
           <div key={item.id} className={styles.testItem}>
-            <p>{item?.question}</p>
+            <pre><ReactMarkdown children={item?.question}/></pre>
+            {/*<p>{item?.question}</p>*/}
             <CheckboxItem
               options={item?.options}
               answer={answers[index]}

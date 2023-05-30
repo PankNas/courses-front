@@ -13,7 +13,7 @@ import axios from '../../../axios';
 import Avatar from "@mui/material/Avatar";
 import {pathFolder} from "../../../App";
 
-const AddLessons = () => {
+const AddLessons = ({title, desc, language, level, image}) => {
   // const {course} = useSelector(state => state.lessons);
 
   const {id} = useParams();
@@ -110,6 +110,21 @@ const AddLessons = () => {
 
   useEffect(() => {
     dispatch(fetchLessons(id));
+
+    const saveDataCourse = async () => {
+      const fields = {
+        title,
+        image,
+        desc,
+        language,
+        level,
+        status: 'passive'
+      };
+
+      await axios.patch(`/courses/${id}`, fields);
+    }
+
+    saveDataCourse().then()
   }, []);
 
   const selectIcon = (type) => {

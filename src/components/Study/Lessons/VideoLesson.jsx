@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import ReactPlayer from "react-player";
 import {useParams} from "react-router-dom";
 import {setFinishLesson} from "./finishLesson";
+import ReactMarkdown from "react-markdown";
 
 const VideoLesson = ({desc, videoUrl, isModerate}) => {
   const {courseId, lessonId} = useParams();
@@ -18,7 +19,8 @@ const VideoLesson = ({desc, videoUrl, isModerate}) => {
 
   return (
     <>
-      <p>{desc}</p>
+      <pre><ReactMarkdown children={desc}/></pre>
+      {/*<p>{desc}</p>*/}
       <ReactPlayer
         url={`${videoUrl}`}
         controls={true}

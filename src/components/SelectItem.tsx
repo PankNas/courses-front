@@ -9,7 +9,7 @@ type SelectItemType = {
   height?: any,
   label?: string,
   onChange(event: any): void,
-  required: boolean,
+  required?: boolean,
 }
 
 const SelectItem = (props:SelectItemType):JSX.Element => {

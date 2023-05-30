@@ -4,6 +4,7 @@ import styles from './style.module.scss';
 import Button from "@mui/material/Button";
 import {setFinishLesson} from "./finishLesson";
 import {useParams} from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 const PassesLesson = ({sentence, size, options, answers, isModerate}) => {
   const {courseId, lessonId} = useParams();
@@ -55,7 +56,8 @@ const PassesLesson = ({sentence, size, options, answers, isModerate}) => {
 
   return (
     <>
-      <p style={{lineHeight: "25px"}}>{text}</p>
+      <pre style={{lineHeight: "25px"}}><ReactMarkdown children={text}/></pre>
+      {/*<p style={{lineHeight: "25px"}}>{text}</p>*/}
       <Button variant={'outlined'} onClick={handleClick}>Проверить</Button>
     </>
   )
