@@ -17,9 +17,8 @@ const Moderate = () => {
   }, []);
 
   const getActive = () => {
-    const checkReviewers = (item) => item.find(reviewer => reviewer._id !== data?._id)
+    const checkReviewers = (item) => item.find(reviewer => reviewer._id === data?._id)
 
-    // dispatch(fetchCourses());
     return items?.filter(item =>
       (item.status === 'check' || item.status === 'moderate') &&
       item.reviewers.length < 2 &&
