@@ -5,7 +5,7 @@ import SelectItem from "../SelectItem";
 import {languages, levelLanguages} from "../languages";
 import TextField from "@mui/material/TextField";
 
-const Search = ({items, setCourses}) => {
+const Search = ({items, setCourses, fnSearch}) => {
   const [input, setInput] = useState('');
   const [language, setLanguage] = useState({
     level: '',
@@ -19,22 +19,26 @@ const Search = ({items, setCourses}) => {
   }
 
   const handleSearch = () => {
-    let search = items.filter(item => item.title.includes(input.toLowerCase().trim()));
+    let search = items?.filter(item => item?.title?.includes(input.toLowerCase().trim()));
     // search = search.filter(item => item.language === language.language);
     // search = search.filter(item => item.levelLanguage === language.level);
 
     if (language.language !== '') {
-      search = search.filter(item => item.language === language.language);
+      search = search?.filter(item => item.language === language.language);
     }
 
     if (language.level !== '') {
-      search = search.filter(item => item.levelLanguage === language.level);
+      search = search?.filter(item => item.levelLanguage === language.level);
     }
 
-    setCourses(search);
+    fnSearch(search, true)
+    // setCourses(search);
   }
   const handleClear = () => {
-    setCourses(items);
+    // fnUpdate(items)
+    fnSearch([], false)
+
+    // setCourses(items);
     setInput('');
     setLanguage({
       level: '',

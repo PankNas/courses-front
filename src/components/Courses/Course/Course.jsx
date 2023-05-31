@@ -101,7 +101,7 @@ const Course = ({isModerator, isStudy=false}) => {
   const handleAddMod = async () => {
     try {
       await axios.post('/moderate', {course: courseId});
-      await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'moderate'});
+      await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'moderate', reviewer: data?._id});
 
       setIsModerate(true);
       alert('Вы стали модератором курса');
@@ -114,7 +114,7 @@ const Course = ({isModerator, isStudy=false}) => {
   const handleDelMod = async () => {
     try {
       await axios.delete(`/moderate/${courseId}`);
-      await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'check'});
+      await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'check', reviewer: data?._id});
       dispatch(fetchAuthMe());
 
       setIsModerate(false);
@@ -130,7 +130,9 @@ const Course = ({isModerator, isStudy=false}) => {
       await axios.delete(`/moderate/${courseId}`);
       dispatch(fetchAuthMe());
 
-      await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'active'});
+      const statusOld = curCourse?.status;
+
+      await axios.patch(`/courses/${courseId}`, {...curCourse, status:  'active', statusOld});
 
       setIsModerate(false);
       dispatch(fetchCourses());

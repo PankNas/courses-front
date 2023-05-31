@@ -210,7 +210,7 @@ const CreateCourse = () => {
             title={title}
             desc={desc}
             language={language}
-            level={levelLanguage}
+            levelLanguage={levelLanguage}
             image={imageUrl}
           />
 

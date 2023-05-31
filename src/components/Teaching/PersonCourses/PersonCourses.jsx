@@ -20,12 +20,18 @@ const PersonCourses = () => {
 
   const teachCourses = useSelector(state => state.auth.teachCourses);
   const [isChange, setIsChange] = useState(false);
+  const [isSearch, setIsSearch] = useState(false);
 
   const [courses, setCourses] = useState(teachCourses);
 
   useEffect(() => {
     dispatch(fetchAuthMe());
-    dispatch(fetchTeachCourses());
+    // dispatch(fetchTeachCourses());
+
+    const update = async () => await dispatch(fetchTeachCourses());
+
+    update().then(res => setCourses(teachCourses))
+    console.log('hello');
   }, [isChange]);
 
   // if (!isAuth) {
@@ -47,7 +53,6 @@ const PersonCourses = () => {
   };
   const handleDelCourse = (event) => {
     try {
-      console.log('del', event.target.id);
       dispatch(fetchRemoveCourse(event.target.id));
       dispatch(fetchTeachCourses());
 
@@ -83,12 +88,19 @@ const PersonCourses = () => {
 
       course.status = 'check';
       await axios.patch(`/courses/${course._id}`, course);
-      dispatch(fetchTeachCourses());
+      // dispatch(fetchTeachCourses());
+      // setCourses(teachCourses)
+      setIsChange(prev => !prev);
     } catch (err) {
       console.log(err);
       alert('Не удалось отправить курс на модерацию');
     }
   };
+
+  const handleSearch = (items, isSearch) => {
+    setCourses(items);
+    setIsSearch(isSearch)
+  }
 
   return (
     <div className={styles.container}>
@@ -104,16 +116,21 @@ const PersonCourses = () => {
 
       <Search
         items={teachCourses}
-        setCourses={setCourses}
+        // setCourses={setCourses}
+        fnSearch={handleSearch}
       />
 
       <div className={styles.catalog}>
         {
-          courses?.map((item, index) =>
+          (isSearch ? courses : teachCourses)?.map((item, index) =>
             <div key={item._id} className={styles.courseCard}>
               <div>
                 <h3>{item.title}</h3>
                 <h4>Статус: {setStatus(item.status)}</h4>
+                {
+                  (item?.status === 'check' || item?.status === 'moderate') &&
+                  <p>Пройдено проверок: {item.countCheck} из 2</p>
+                }
                 <div className={styles.buttons}>
                   <Link to={`${item._id}/edit`}>
                     <button

@@ -16,16 +16,24 @@ const CatalogStudy = ({items, title}) => {
     dispatch(fetchProgressCourses());
   }, []);
 
+  const [isSearch, setIsSearch] = useState(false);
+
+  const handleSearch = (items, isSearch) => {
+    setCourses(items);
+    setIsSearch(isSearch)
+  }
+
   return (
     <div className={styles.content}>
       <h1 className={styles.title}>{title}</h1>
       <Search
         items={items}
-        setCourses={setCourses}
+        // setCourses={setCourses}
+        fnSearch={handleSearch}
       />
       <div className={styles.catalog}>
         {
-          courses?.map((item, index) => {
+          (isSearch ? courses : items)?.map((item, index) => {
             const countLessons = item.modules.reduce((acc, elem) => acc + elem?.lessons.length, 0);
             const isActive = item.status === 'active';
             const level = setLevel(item.levelLanguage);

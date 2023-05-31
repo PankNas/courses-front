@@ -23,17 +23,24 @@ export const setLevel = (level) => {
 
 const CatalogAll = ({items, title, isStudy}) => {
   const [courses, setCourses] = useState(items);
+  const [isSearch, setIsSearch] = useState(false);
+
+  const handleSearch = (items, isSearch) => {
+    setCourses(items);
+    setIsSearch(isSearch)
+  }
 
   return (
     <div className={styles.content}>
       <h1 className={styles.title}>{title}</h1>
       <Search
         items={items}
-        setCourses={setCourses}
+        // setCourses={setCourses}
+        fnSearch={handleSearch}
       />
       <div className={styles.catalog}>
         {
-          courses?.map((item) => {
+          (isSearch ? courses : items)?.map((item) => {
             const level = setLevel(item.levelLanguage);
 
             return <Link key={item._id} to={`${item._id}`} className={styles.link}>

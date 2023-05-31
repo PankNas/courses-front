@@ -13,7 +13,7 @@ import axios from '../../../axios';
 import Avatar from "@mui/material/Avatar";
 import {pathFolder} from "../../../App";
 
-const AddLessons = ({title, desc, language, level, image}) => {
+const AddLessons = ({title, desc, language, levelLanguage, image}) => {
   // const {course} = useSelector(state => state.lessons);
 
   const {id} = useParams();
@@ -23,10 +23,23 @@ const AddLessons = ({title, desc, language, level, image}) => {
   const {modules} = useSelector(state => state.lessons);
   const [anchorEls, setAnchorEls] = useState(Array(modules?.length).fill(null));
 
-  const handleClick = (index, event) => {
+  const handleClick = async (index, event) => {
     const newAnchorEls = [...anchorEls];             // создаем новый массив якорей
     newAnchorEls[index] = event.currentTarget;      // устанавливаем соответствующий якорь для элемента меню
     setAnchorEls(newAnchorEls);                      // обновляем состояние якорей
+
+    const fields = {
+      title,
+      image,
+      desc,
+      language,
+      levelLanguage,
+      status: 'passive'
+    };
+
+    console.log('hi', fields);
+
+    await axios.patch(`/courses/${id}`, fields);
   };
 
   const handleMove = async (event) => {
@@ -110,21 +123,6 @@ const AddLessons = ({title, desc, language, level, image}) => {
 
   useEffect(() => {
     dispatch(fetchLessons(id));
-
-    const saveDataCourse = async () => {
-      const fields = {
-        title,
-        image,
-        desc,
-        language,
-        level,
-        status: 'passive'
-      };
-
-      await axios.patch(`/courses/${id}`, fields);
-    }
-
-    saveDataCourse().then()
   }, []);
 
   const selectIcon = (type) => {
