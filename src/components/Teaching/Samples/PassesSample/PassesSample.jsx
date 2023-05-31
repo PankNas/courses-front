@@ -9,6 +9,7 @@ import styles from './PassesSample.module.scss';
 import stylesSample from '../Sample.module.css';
 import RemarkTeach from "../RemarkTeach";
 import {findRemark} from "../Sample";
+import {setRemarks} from "../../CreateCourse/CreateCourse";
 
 const PassesSample = ({sentence}) => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const PassesSample = ({sentence}) => {
 
   return (
     <div className={stylesSample.content}>
-      <div style={{width: '700px'}}>
+      <div style={{minWidth: '700px'}}>
         <p>Правила оформления шаблона</p>
         <ol>
           <li className={styles.listItem}>Место пропуска отмечается квадратными скобками - []</li>
@@ -67,9 +68,14 @@ const PassesSample = ({sentence}) => {
       </div>
 
       {
-        course?.remarks !== '' &&
-        <div style={{width: '350px'}}><RemarkTeach value={course?.remarks} rowsCount={15}/></div>
+        (course?.status !== 'check' || course?.status !== 'moderate') &&
+        <div style={{width: '350px'}}>{setRemarks(course?.remarks)}</div>
       }
+
+      {/*{*/}
+      {/*  course?.remarks !== '' && (course?.status !== 'check' || course?.status !== 'moderate') &&*/}
+      {/*  <div style={{width: '350px'}}><RemarkTeach value={course?.remarks} rowsCount={15}/></div>*/}
+      {/*}*/}
     </div>
   );
 }

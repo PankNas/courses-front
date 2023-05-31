@@ -7,6 +7,7 @@ import {setDataSentenceSample, setSentence, setTranslate} from "../../../../redu
 import stylesSample from '../Sample.module.css';
 import RemarkTeach from "../RemarkTeach";
 import {findRemark} from "../Sample";
+import {setRemarks} from "../../CreateCourse/CreateCourse";
 
 const SentenceSample = ({sentence, translate}) => {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const SentenceSample = ({sentence, translate}) => {
 
   return (
     <div className={stylesSample.content}>
-      <div style={{width: '700px'}}>
+      <div style={{minWidth: '700px'}}>
         <TextField
           id={'sentence'}
           value={sentence}
@@ -77,8 +78,8 @@ const SentenceSample = ({sentence, translate}) => {
       </div>
 
       {
-        course?.remarks !== '' &&
-        <div style={{width: '350px'}}><RemarkTeach value={course?.remarks} rowsCount={15}/></div>
+        (course?.status !== 'check' || course?.status !== 'moderate') &&
+        <div style={{width: '350px'}}>{setRemarks(course?.remarks)}</div>
       }
     </div>
   );

@@ -25,7 +25,7 @@ const ContentStudy = ({isModerate}) => {
   const navigate = useNavigate();
 
   const [lesson, setLesson] = useState({});
-  const {progressCourses} = useSelector(state => state.auth);
+  const {progressCourses, data} = useSelector(state => state.auth);
   const [isUpdate, setIsUpdate] = useState(false);
 
   useEffect(() => {
@@ -86,7 +86,7 @@ const ContentStudy = ({isModerate}) => {
 
   const handleSaveRemark = async (text) => {
     try {
-      await axios.patch(`/remarks/course/${courseId}/lesson/${lessonId}`, {text: text});
+      await axios.patch(`/remarks/course/${courseId}/lesson/${lessonId}`, {text: text, reviewer: data?._id});
 
       alert('Замечание сохранено');
     } catch (err) {
@@ -128,7 +128,8 @@ const ContentStudy = ({isModerate}) => {
 
       {
         isModerate ?
-          <div className={styles.remark}><Remark fnSave={handleSaveRemark} fnDelete={handleDelRemark} rowsCount={5}/>
+          <div className={styles.remark}>
+            <Remark id={data?._id} fnSave={handleSaveRemark} fnDelete={handleDelRemark} rowsCount={5}/>
           </div>
           :
           <CommentsBlock

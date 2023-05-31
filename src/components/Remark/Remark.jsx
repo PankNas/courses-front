@@ -6,39 +6,44 @@ import Avatar from "@mui/material/Avatar";
 import {pathFolder} from "../../App";
 import {useParams} from "react-router-dom";
 import axios from "../../axios";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchAuthMe} from "../../redux/slices/auth";
 
-const Remark = ({fnSave, fnDelete, isCourse, rowsCount, isRead = false}) => {
+const Remark = ({fnSave, fnDelete, isCourse, rowsCount, isRead = false, id}) => {
   const {courseId, lessonId} = useParams();
+  const {data} = useSelector(state => state.auth);
+  const dispatch = useDispatch();
 
   const [comment, setComment] = useState('');
 
   useEffect(() => {
-    if (isCourse) {
-      const getCourse = async () => (await axios.get(`/courses/${courseId}`)).data;
-      getCourse()
-        .then(res => setComment(res?.remarkForCourse || ''))
-    } else {
-      const getLesson = async () => (await axios.get(`/lessons/${lessonId}`)).data;
-      getLesson()
-        .then(res => setComment(res?.remarks || ''))
-    }
+    dispatch(fetchAuthMe())
+    const getCourse = async () => (await axios.get(`/courses/${courseId}`)).data;
+    const getLesson = async () => (await axios.get(`/lessons/${lessonId}`)).data;
 
-    // const getCourse = async () => (await axios.get(`/courses/${courseId}`)).data;
-    //
-    // getCourse()
-    //   .then(res => {
-    //     if (isCourse) {
-    //       setComment(res.remarkForCourse)
-    //     } else {
-    //       const remark = res.remarks.find(item => item.id === lessonId);
-    //       console.log('rem', res, remark);
-    //       if (!remark) {
-    //         setComment('');
-    //       } else {
-    //         setComment(remark.text);
-    //       }
-    //     }
-    //   })
+    getCourse()
+      .then(res => {
+        const index = res.reviewers.findIndex(elem => elem._id === data?._id);
+        console.log(index, res.reviewers, id);
+
+        if (isCourse) {
+          const curIndex = res?.reviewers[1] ? 1 : 0
+          setComment(res?.remarkForCourse[curIndex])
+        } else {
+          getLesson()
+            .then(res => setComment(res?.remarks[index]))
+        }
+      })
+
+    // if (isCourse) {
+    //   const getCourse = async () => (await axios.get(`/courses/${courseId}`)).data;
+    //   getCourse()
+    //     .then(res => setComment(res?.remarkForCourse || ''))
+    // } else {
+    //   const getLesson = async () => (await axios.get(`/lessons/${lessonId}`)).data;
+    //   getLesson()
+    //     .then(res => setComment(res?.remarks || ''))
+    // }
   }, [lessonId]);
 
   const handleChange = (event) => setComment(event.target.value);

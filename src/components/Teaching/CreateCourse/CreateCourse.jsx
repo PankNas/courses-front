@@ -156,11 +156,14 @@ const CreateCourse = () => {
             </>
           )}
           {
-            (course?.status === 'passive' || course?.status === 'fail') && course?.remarkForCourse !== '' &&
-            <div className={styles.remarkBlock}>
-              <RemarkTeach value={course?.remarkForCourse} rowsCount={7}/>
-            </div>
+            (course?.status !== 'check' || course?.status !== 'moderate') && setRemarks(course?.remarkForCourse)
           }
+          {/*{*/}
+          {/*  (course?.status === 'passive' || course?.status === 'fail') && course?.remarkForCourse !== '' &&*/}
+          {/*  <div className={styles.remarkBlock}>*/}
+          {/*    <RemarkTeach value={course?.remarkForCourse} rowsCount={7}/>*/}
+          {/*  </div>*/}
+          {/*}*/}
         </div>
 
         <div style={{width: '750px'}}>
@@ -211,7 +214,8 @@ const CreateCourse = () => {
             desc={desc}
             language={language}
             levelLanguage={levelLanguage}
-            image={imageUrl}
+            imageUrl={imageUrl}
+            status={course?.status}
           />
 
           <div style={{display: "flex", justifyContent: 'center'}}>
@@ -229,5 +233,21 @@ const CreateCourse = () => {
     </div>
   );
 };
+
+export function setRemarks(remarks) {
+  const res = [];
+
+  remarks?.forEach(remark => {
+    if (remark !== '') {
+      res.push(
+        <div className={styles.remarkBlock}>
+          <RemarkTeach value={remark} rowsCount={7}/>
+        </div>
+      )
+    }
+  })
+
+  return res;
+}
 
 export default CreateCourse;

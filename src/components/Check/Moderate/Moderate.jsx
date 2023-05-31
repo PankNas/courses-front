@@ -20,7 +20,7 @@ const Moderate = () => {
     const checkReviewers = (item) => item.find(reviewer => reviewer._id === data?._id)
 
     return items?.filter(item =>
-      (item.status === 'check' || item.status === 'moderate') &&
+      (item.status === 'check') &&
       item.reviewers.length < 2 &&
       !checkReviewers(item?.reviewers) &&
       item?.user?._id !== data?._id

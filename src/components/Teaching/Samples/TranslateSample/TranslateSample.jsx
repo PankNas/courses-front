@@ -9,6 +9,7 @@ import styles from "../TestSample/ItemTest/ItemTest.module.scss";
 import stylesSample from '../Sample.module.css';
 import RemarkTeach from "../RemarkTeach";
 import {findRemark} from "../Sample";
+import {setRemarks} from "../../CreateCourse/CreateCourse";
 
 const TranslateSample = ({question, answer, options}) => {
   const dispatch = useDispatch();
@@ -58,7 +59,7 @@ const TranslateSample = ({question, answer, options}) => {
 
   return (
     <div className={stylesSample.content}>
-      <div style={{width: '700px'}}>
+      <div style={{minWidth: '700px'}}>
         <TextField
           value={question}
           label="Введите текст для перевода"
@@ -97,8 +98,8 @@ const TranslateSample = ({question, answer, options}) => {
       </div>
 
       {
-        course?.remarks !== '' &&
-        <div style={{width: '350px'}}><RemarkTeach value={course?.remarks} rowsCount={15}/></div>
+        (course?.status !== 'check' || course?.status !== 'moderate') &&
+        <div style={{width: '350px'}}>{setRemarks(course?.remarks)}</div>
       }
     </div>
   )

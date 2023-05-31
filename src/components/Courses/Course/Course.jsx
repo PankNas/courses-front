@@ -85,7 +85,7 @@ const Course = ({isModerator, isStudy=false}) => {
     }
   };
 
-  const handleClickDel = async (event) => {
+  const handleClickDel = async () => {
     if (!window.confirm('Вы уверены, что хотите отписаться от курса?')) return;
 
     try {
@@ -130,9 +130,7 @@ const Course = ({isModerator, isStudy=false}) => {
       await axios.delete(`/moderate/${courseId}`);
       dispatch(fetchAuthMe());
 
-      const statusOld = curCourse?.status;
-
-      await axios.patch(`/courses/${courseId}`, {...curCourse, status:  'active', statusOld});
+      await axios.patch(`/courses/${courseId}`, {...curCourse, status:  'active'});
 
       setIsModerate(false);
       dispatch(fetchCourses());
@@ -146,7 +144,7 @@ const Course = ({isModerator, isStudy=false}) => {
 
   const handleSave = async (text) => {
     try {
-      await axios.patch(`/remarks/course/${courseId}`, {remarkForCourse: text});
+      await axios.patch(`/remarks/course/${courseId}`, {remarkForCourse: text, reviewer: data?._id});
 
       alert('Замечание сохранено');
     } catch (err) {
@@ -279,7 +277,7 @@ const Course = ({isModerator, isStudy=false}) => {
                       <button className={cn(styles.button, styles.buttonFail)} onClick={handleReject}>
                         Отклонить
                       </button>
-                      <Remark fnSave={handleSave} fnDelete={handleDelRemark} isCourse={true} rowsCount={5}/>
+                      <Remark id={data?._id} fnSave={handleSave} fnDelete={handleDelRemark} isCourse={true} rowsCount={5}/>
                     </div>
                 }
               </>

@@ -87,6 +87,8 @@ const PersonCourses = () => {
       let course = (await axios.get(`/courses/${id}`)).data;
 
       course.status = 'check';
+      course.delete = true;
+
       await axios.patch(`/courses/${course._id}`, course);
       // dispatch(fetchTeachCourses());
       // setCourses(teachCourses)

@@ -8,6 +8,7 @@ import styles from '../Sample.module.css';
 import RemarkTeach from "../RemarkTeach";
 import {findRemark} from "../Sample";
 import Remark from "../../../Remark/Remark";
+import {setRemarks} from "../../CreateCourse/CreateCourse";
 
 const TextSample = ({desc, remarks}) => {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const TextSample = ({desc, remarks}) => {
 
   return (
     <div className={styles.content}>
-      <div style={{width: '700px'}}>
+      <div style={{minWidth: '700px'}}>
         <Editor
           value={desc}
           placeholder={'Введите описание урока...'}
@@ -55,8 +56,8 @@ const TextSample = ({desc, remarks}) => {
         />
       </div>
       {
-        course?.remarks !== '' &&
-        <div style={{width: '350px'}}><RemarkTeach value={course?.remarks} rowsCount={15}/></div>
+        (course?.status !== 'check' || course?.status !== 'moderate') &&
+        <div style={{width: '350px'}}>{setRemarks(course?.remarks)}</div>
       }
     </div>
   );

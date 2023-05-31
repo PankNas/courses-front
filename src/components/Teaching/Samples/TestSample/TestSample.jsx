@@ -14,6 +14,7 @@ import {pathFolder} from "../../../../App";
 import {IconButton} from "@mui/material";
 import RemarkTeach from "../RemarkTeach";
 import {findRemark} from "../Sample";
+import {setRemarks} from "../../CreateCourse/CreateCourse";
 
 const TestSample = ({itemsTest}) => {
   const {sampleId, id} = useParams();
@@ -64,7 +65,7 @@ const TestSample = ({itemsTest}) => {
 
   return (
     <div className={stylesSample.content}>
-      <div style={{width: '700px'}}>
+      <div style={{minWidth: '700px'}}>
         <IconButton
           onClick={handleAddItem}
           // className={styles.addCourse}
@@ -80,8 +81,8 @@ const TestSample = ({itemsTest}) => {
       </div>
 
       {
-        course?.remarks !== '' &&
-        <div style={{width: '350px'}}><RemarkTeach value={course?.remarks} rowsCount={15}/></div>
+        (course?.status !== 'check' || course?.status !== 'moderate') &&
+        <div style={{width: '350px'}}>{setRemarks(course?.remarks)}</div>
       }
     </div>
   );

@@ -18,6 +18,7 @@ import axios from "../../../../axios";
 import {useParams} from "react-router-dom";
 import Editor from "../Editor";
 import RemarkTeach from "../RemarkTeach";
+import {setRemarks} from "../../CreateCourse/CreateCourse";
 
 const VideoSample = ({desc, videoUrl}) => {
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ const VideoSample = ({desc, videoUrl}) => {
 
   return (
     <div className={stylesSample.content}>
-      <div style={{width: '700px'}}>
+      <div style={{minWidth: '700px'}}>
         <TextField
           id={'url-video'}
           value={videoUrl}
@@ -115,8 +116,8 @@ const VideoSample = ({desc, videoUrl}) => {
       </div>
 
       {
-        course?.remarks !== '' &&
-        <div style={{width: '350px'}}><RemarkTeach value={course?.remarks} rowsCount={15}/></div>
+        (course?.status !== 'check' || course?.status !== 'moderate') &&
+        <div style={{width: '350px'}}>{setRemarks(course?.remarks)}</div>
       }
     </div>
   );

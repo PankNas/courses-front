@@ -13,7 +13,7 @@ import axios from '../../../axios';
 import Avatar from "@mui/material/Avatar";
 import {pathFolder} from "../../../App";
 
-const AddLessons = ({title, desc, language, levelLanguage, image}) => {
+const AddLessons = ({title, desc, language, levelLanguage, imageUrl, status}) => {
   // const {course} = useSelector(state => state.lessons);
 
   const {id} = useParams();
@@ -30,14 +30,12 @@ const AddLessons = ({title, desc, language, levelLanguage, image}) => {
 
     const fields = {
       title,
-      image,
+      imageUrl,
       desc,
       language,
       levelLanguage,
       status: 'passive'
     };
-
-    console.log('hi', fields);
 
     await axios.patch(`/courses/${id}`, fields);
   };
@@ -179,7 +177,17 @@ const AddLessons = ({title, desc, language, levelLanguage, image}) => {
                         <ListItemIcon>
                           <Avatar src={`${pathFolder}/my/${selectIcon(item.type)}.svg`}/>
                         </ListItemIcon>
-                        <ListItemText primary={item.title}/>
+                        <ListItemText
+                          primary={item.title}
+                          secondary={
+                            <span style={{color: 'red'}}>
+                              {
+                                (status !== 'check' || status !== 'moderate') &&
+                                setRemarks(item.remarks)
+                              }
+                            </span>
+                          }
+                        />
                         <IconButton onClick={(event) => onClickEdit(event, index, indexLesson)}>
                           <Avatar src={`${pathFolder}/my/edit.svg`}/>
                         </IconButton>
@@ -226,5 +234,9 @@ const AddLessons = ({title, desc, language, levelLanguage, image}) => {
     </div>
   );
 };
+
+function setRemarks(remarks) {
+  return remarks.find(remark => remark !== '') ? 'Есть замечания!' : undefined;
+}
 
 export default AddLessons;
