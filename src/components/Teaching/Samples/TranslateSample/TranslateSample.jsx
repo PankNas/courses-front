@@ -17,6 +17,7 @@ const TranslateSample = ({question, answer, options}) => {
   const {sampleId, id} = useParams();
   const [course, setCourse] = useState(null);
 
+  let isStatus;
 
   useEffect(() => {
     if (!sampleId) {
@@ -41,6 +42,8 @@ const TranslateSample = ({question, answer, options}) => {
           answer: data.answer,
           options: data.options,
         }))
+
+        isStatus = course?.status !== 'check' || course?.status !== 'moderate';
       });
   }, []);
 
@@ -59,7 +62,7 @@ const TranslateSample = ({question, answer, options}) => {
 
   return (
     <div className={stylesSample.content}>
-      <div style={{minWidth: '700px'}}>
+      <div style={{width: isStatus ? `700px` : `100%`}}>
         <TextField
           value={question}
           label="Введите текст для перевода"

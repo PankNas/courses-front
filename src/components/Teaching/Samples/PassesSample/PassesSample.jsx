@@ -16,6 +16,7 @@ const PassesSample = ({sentence}) => {
 
   const {sampleId, id} = useParams();
   const [course, setCourse] = useState(null);
+  let isStatus;
 
   useEffect(() => {
     if (!sampleId) {
@@ -36,6 +37,8 @@ const PassesSample = ({sentence}) => {
           title: data.title,
           sentence: data.sentence,
         }))
+
+        isStatus = course?.status !== 'check' || course?.status !== 'moderate';
       });
   }, []);
 
@@ -43,7 +46,7 @@ const PassesSample = ({sentence}) => {
 
   return (
     <div className={stylesSample.content}>
-      <div style={{minWidth: '700px'}}>
+      <div style={{width: isStatus ? `700px` : `100%`}}>
         <p>Правила оформления шаблона</p>
         <ol>
           <li className={styles.listItem}>Место пропуска отмечается квадратными скобками - []</li>
@@ -68,7 +71,7 @@ const PassesSample = ({sentence}) => {
       </div>
 
       {
-        (course?.status !== 'check' || course?.status !== 'moderate') &&
+        isStatus &&
         <div style={{width: '350px'}}>{setRemarks(course?.remarks)}</div>
       }
 

@@ -15,6 +15,7 @@ const SentenceSample = ({sentence, translate}) => {
   const {sampleId, id} = useParams();
   const [course, setCourse] = useState(null);
 
+  let isStatus;
 
   useEffect(() => {
     if (!sampleId) {
@@ -30,13 +31,15 @@ const SentenceSample = ({sentence, translate}) => {
     axios
       .get(`lessons/${sampleId}`)
       .then(({data}) => {
-        setCourse(data)
+        setCourse(data);
 
         dispatch(setDataSentenceSample({
           title: data.title,
           sentence: data.sentence,
           translate: data.translate,
-        }))
+        }));
+
+        isStatus = course?.status !== 'check' || course?.status !== 'moderate';
       });
   }, []);
 
@@ -46,13 +49,14 @@ const SentenceSample = ({sentence, translate}) => {
         return dispatch(setSentence(event.target.value));
       case 'translate':
         return dispatch(setTranslate(event.target.value));
-      default: break;
+      default:
+        break;
     }
   };
 
   return (
     <div className={stylesSample.content}>
-      <div style={{minWidth: '700px'}}>
+      <div style={{width: isStatus ? `700px` : `100%`}}>
         <TextField
           id={'sentence'}
           value={sentence}
@@ -78,11 +82,11 @@ const SentenceSample = ({sentence, translate}) => {
       </div>
 
       {
-        (course?.status !== 'check' || course?.status !== 'moderate') &&
+        isStatus &&
         <div style={{width: '350px'}}>{setRemarks(course?.remarks)}</div>
       }
     </div>
   );
-}
+};
 
 export default SentenceSample;

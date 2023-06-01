@@ -21,6 +21,7 @@ const TestSample = ({itemsTest}) => {
   const dispatch = useDispatch();
   const [course, setCourse] = useState(null);
 
+  let isStatus;
 
   useEffect(() => {
     if (!sampleId) {
@@ -42,6 +43,8 @@ const TestSample = ({itemsTest}) => {
           itemsTest: data.itemsTest,
           totalScore: data.totalScore,
         }))
+
+        isStatus = course?.status !== 'check' || course?.status !== 'moderate';
       });
   }, []);
 
@@ -65,7 +68,7 @@ const TestSample = ({itemsTest}) => {
 
   return (
     <div className={stylesSample.content}>
-      <div style={{minWidth: '700px'}}>
+      <div style={{width: isStatus ? `700px` : `100%`}}>
         <IconButton
           onClick={handleAddItem}
           // className={styles.addCourse}

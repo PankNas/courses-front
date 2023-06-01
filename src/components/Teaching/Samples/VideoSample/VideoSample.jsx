@@ -28,6 +28,7 @@ const VideoSample = ({desc, videoUrl}) => {
   const [isReadyVideo, setIsReady] = useState(false);
 
   const {sampleId, id} = useParams();
+  let isStatus;
 
   useEffect(() => {
     if (!sampleId) {
@@ -50,6 +51,8 @@ const VideoSample = ({desc, videoUrl}) => {
           desc: data.desc,
           videoUrl: data.videoUrl,
         }))
+
+        isStatus = course?.status !== 'check' || course?.status !== 'moderate';
       });
   }, []);
 
@@ -68,7 +71,7 @@ const VideoSample = ({desc, videoUrl}) => {
 
   return (
     <div className={stylesSample.content}>
-      <div style={{minWidth: '700px'}}>
+      <div style={{width: isStatus ? `700px` : `100%`}}>
         <TextField
           id={'url-video'}
           value={videoUrl}
