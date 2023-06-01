@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchProgressCourses} from "../../redux/slices/auth";
 import {setLevel} from "./CatalogAll";
 import Search from "../Search/Search";
+import {pathFolder} from "../../App";
 
 const CatalogStudy = ({items, title}) => {
   const dispatch = useDispatch();
@@ -37,11 +38,16 @@ const CatalogStudy = ({items, title}) => {
             const countLessons = item.modules.reduce((acc, elem) => acc + elem?.lessons.length, 0);
             const isActive = item.status === 'active';
             const level = setLevel(item.levelLanguage);
+            const score = item.scores.reduce((acc, elem) => acc + elem.score, 0) / item.scores.length || 0;
 
             return <Link key={item._id} to={isActive ? `${item._id}` : ''} className={styles.link}>
               <div className={styles.courseCard}>
                 <div className={styles.cartContent}>
-                  <h4>{item.title}</h4>
+                  <div className={styles.headerCard}>
+                    <h4 style={{margin: '0'}}>{item.title}</h4>
+                    <img className={styles.imgHeader} src={`${pathFolder}/my/star_fill.svg`} alt="star"/>
+                    {score}
+                  </div>
                   {/*<p>Автор: {item.user.fullName}</p>*/}
                   <div className={styles.tags}>
                     <div style={{marginBottom: '10px'}}>

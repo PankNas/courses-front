@@ -3,6 +3,7 @@ import styles from './Catalogs.module.css';
 import cn from 'classnames';
 import {Link} from "react-router-dom";
 import Search from "../Search/Search";
+import {pathFolder} from "../../App";
 
 export const setLevel = (level) => {
   switch (level) {
@@ -42,11 +43,16 @@ const CatalogAll = ({items, title, isStudy}) => {
         {
           (isSearch ? courses : items)?.map((item) => {
             const level = setLevel(item.levelLanguage);
+            const score = item.scores.reduce((acc, elem) => acc + elem.score, 0) / item.scores.length || 0;
 
             return <Link key={item._id} to={`${item._id}`} className={styles.link}>
               <div className={styles.courseCard}>
                 <div className={styles.cartContent}>
-                  <h4>{item.title}</h4>
+                  <div className={styles.headerCard}>
+                    <h4 style={{margin: '0'}}>{item.title}</h4>
+                    <img className={styles.imgHeader} src={`${pathFolder}/my/star_fill.svg`} alt="star"/>
+                    {score}
+                  </div>
                   {/*<p>Автор: {item.user.fullName}</p>*/}
                   <div className={styles.tags}>
                     <div className={styles.language}>{item.language}</div>

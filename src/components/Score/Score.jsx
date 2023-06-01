@@ -6,7 +6,7 @@ import styles from "../Courses/Course/Course.module.scss";
 import axios from "../../axios";
 import {useParams} from "react-router-dom";
 
-const Score = () => {
+const Score = ({fnUpdateScore}) => {
   const {courseId} = useParams();
   const {data} = useSelector(state => state.auth);
 
@@ -30,7 +30,7 @@ const Score = () => {
         score: +event.target.id + 1,
       });
 
-      // setIsUpdate(prev => !prev);
+      fnUpdateScore()
       setIsChange(prev => !prev);
     } catch (err) {
       console.log(err);

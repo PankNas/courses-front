@@ -17,7 +17,7 @@ import {IconButton} from "@mui/material";
 import {pathFolder} from "../../../App";
 import Score from "../../Score/Score";
 
-const Course = ({isModerator, isStudy=false}) => {
+const Course = ({isModerator, isStudy = false}) => {
   const {courseId} = useParams();
   const navigate = useNavigate();
 
@@ -40,9 +40,16 @@ const Course = ({isModerator, isStudy=false}) => {
   const [isModerate, setIsModerate] = useState(false);
   const [curCourse, setCurCourse] = useState(null);
   const [isAuthor, setIsAuthor] = useState(false);
+  const [score, setScore] = useState(0);
+
   const {data} = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
+
+  const countMiddleScore = () => {
+    // console.log('hy');
+    setIsUpdate(prev => !prev)
+  }
 
   useEffect(() => {
     dispatch(fetchStudentCourses());
@@ -60,6 +67,10 @@ const Course = ({isModerator, isStudy=false}) => {
           return;
         }
 
+        const curScore = res?.scores.reduce((acc, elem) => acc + elem.score, 0) / res?.scores.length || 0;
+        // console.log(curScore, res);
+        setScore(curScore);
+
         (findCourse() && !isModerator) ? setIsSubscript(true) : setIsSubscript(false);
 
         if (!isModerator) return;
@@ -70,12 +81,14 @@ const Course = ({isModerator, isStudy=false}) => {
         if (course) {
           setIsModerate(true);
         }
+
+        // countMiddleScore()
       });
   }, [isModerate, isSubscript, isUpdate]);
 
   const updateComments = () => {
-    setIsUpdate(prev => !prev)
-  }
+    setIsUpdate(prev => !prev);
+  };
 
   const handleClickRecord = async () => {
     try {
@@ -134,7 +147,7 @@ const Course = ({isModerator, isStudy=false}) => {
       await axios.delete(`/moderate/${courseId}`);
       dispatch(fetchAuthMe());
 
-      await axios.patch(`/courses/${courseId}`, {...curCourse, status:  'active'});
+      await axios.patch(`/courses/${courseId}`, {...curCourse, status: 'active'});
 
       setIsModerate(false);
       dispatch(fetchCourses());
@@ -164,7 +177,7 @@ const Course = ({isModerator, isStudy=false}) => {
     } catch (err) {
 
     }
-  }
+  };
 
   const handleReject = async () => {
     try {
@@ -191,13 +204,13 @@ const Course = ({isModerator, isStudy=false}) => {
             <div className={styles.textPromo}>
               <p style={{color: '#fffff', fontSize: '25px'}}>{dataCourse.title}</p>
 
-              <div style={{marginBottom: '15px'}}>
-                <Score/>
-              </div>
-
               <div className={styles.languageBlock}>
-                <div className={styles.language}>{dataCourse?.language} язык</div>
-                <div className={styles.language}>{dataCourse?.levelLanguage} уровень</div>
+                <img className={styles.languageBlockImg} src={`${pathFolder}/my/star_fill.svg`} alt="score"/>
+                <p className={styles.languageText}>{score}</p>
+                <img className={styles.languageBlockImg} src={`${pathFolder}/my/translate.svg`} alt="language"/>
+                <p className={styles.languageText}>{dataCourse?.language}</p>
+                <img className={styles.languageBlockImg} src={`${pathFolder}/my/level.svg`} alt="level"/>
+                <p className={styles.languageText}>{dataCourse?.levelLanguage}</p>
               </div>
             </div>
             <img
@@ -247,7 +260,7 @@ const Course = ({isModerator, isStudy=false}) => {
           <div className={styles.manageCourse}>
             {
               (isAuthor || isModerator || isSubscript) &&
-              <Link to={isModerator ?`/check/${courseId}/lessons` : `/study/${courseId}/lessons`}>
+              <Link to={isModerator ? `/check/${courseId}/lessons` : `/study/${courseId}/lessons`}>
                 <button className={styles.button}>
                   К урокам
                 </button>
@@ -263,9 +276,15 @@ const Course = ({isModerator, isStudy=false}) => {
             }
             {
               isSubscript &&
-              <button className={styles.button} onClick={handleClickDel}>
-                Отписаться
-              </button>
+              <>
+                <button className={styles.button} onClick={handleClickDel}>
+                  Отписаться
+                </button>
+                <div className={styles.score}>
+                  <p style={{margin: '0'}}>Оцените курс</p>
+                  <Score fnUpdateScore={countMiddleScore}/>
+                </div>
+              </>
             }
             {
               isModerator &&
@@ -286,7 +305,8 @@ const Course = ({isModerator, isStudy=false}) => {
                       <button className={cn(styles.button, styles.buttonFail)} onClick={handleReject}>
                         Отклонить
                       </button>
-                      <Remark id={data?._id} fnSave={handleSave} fnDelete={handleDelRemark} isCourse={true} rowsCount={5}/>
+                      <Remark id={data?._id} fnSave={handleSave} fnDelete={handleDelRemark} isCourse={true}
+                              rowsCount={5}/>
                     </div>
                 }
               </>
