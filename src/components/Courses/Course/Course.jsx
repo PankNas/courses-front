@@ -13,6 +13,9 @@ import Remark from "../../Remark/Remark";
 import AddComment from "../../Comments/AddComment";
 import CommentsBlock from "../../Comments/CommentsBlock";
 import {fetchCourses} from "../../../redux/slices/courses";
+import {IconButton} from "@mui/material";
+import {pathFolder} from "../../../App";
+import Score from "../../Score/Score";
 
 const Course = ({isModerator, isStudy=false}) => {
   const {courseId} = useParams();
@@ -29,6 +32,7 @@ const Course = ({isModerator, isStudy=false}) => {
     imageUrl: '',
     comments: [],
     modules: [],
+    scores: [],
   });
 
   const [isSubscript, setIsSubscript] = useState(false);
@@ -186,6 +190,11 @@ const Course = ({isModerator, isStudy=false}) => {
           <div className={styles.promoContent}>
             <div className={styles.textPromo}>
               <p style={{color: '#fffff', fontSize: '25px'}}>{dataCourse.title}</p>
+
+              <div style={{marginBottom: '15px'}}>
+                <Score/>
+              </div>
+
               <div className={styles.languageBlock}>
                 <div className={styles.language}>{dataCourse?.language} язык</div>
                 <div className={styles.language}>{dataCourse?.levelLanguage} уровень</div>

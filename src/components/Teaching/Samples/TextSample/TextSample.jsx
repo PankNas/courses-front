@@ -16,6 +16,7 @@ const TextSample = ({desc, remarks}) => {
 
   const {sampleId, id} = useParams();
   // const [remark, setRemark] = useState('');
+  let isStatus;
 
   useEffect(() => {
     if (!sampleId) {
@@ -32,7 +33,6 @@ const TextSample = ({desc, remarks}) => {
 
     getLesson()
       .then(res => {
-        console.log('res', res);
 
         setCourse(res);
         dispatch(setDataTextSample({
@@ -40,6 +40,8 @@ const TextSample = ({desc, remarks}) => {
           desc: res.desc,
           remarks: res.remarks,
         }));
+
+        isStatus = course?.status !== 'check' || course?.status !== 'moderate';
       });
   }, []);
 
@@ -47,7 +49,7 @@ const TextSample = ({desc, remarks}) => {
 
   return (
     <div className={styles.content}>
-      <div style={{minWidth: '700px'}}>
+      <div style={{width: isStatus ? `700px` : `100%`}}>
         <Editor
           value={desc}
           placeholder={'Введите описание урока...'}
@@ -56,7 +58,7 @@ const TextSample = ({desc, remarks}) => {
         />
       </div>
       {
-        (course?.status !== 'check' || course?.status !== 'moderate') &&
+        isStatus &&
         <div style={{width: '350px'}}>{setRemarks(course?.remarks)}</div>
       }
     </div>
