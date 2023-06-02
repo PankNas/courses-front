@@ -49,7 +49,7 @@ const TextSample = ({desc, remarks}) => {
 
   return (
     <div className={styles.content}>
-      <div style={{width: isStatus ? `700px` : `100%`}}>
+      <div style={{width: `700px`}}>
         <Editor
           value={desc}
           placeholder={'Введите описание урока...'}
@@ -58,7 +58,7 @@ const TextSample = ({desc, remarks}) => {
         />
       </div>
       {
-        isStatus &&
+        (course?.status !== 'check' || course?.status !== 'moderate') &&
         <div style={{width: '350px'}}>{setRemarks(course?.remarks)}</div>
       }
     </div>

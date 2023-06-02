@@ -62,7 +62,7 @@ const TranslateSample = ({question, answer, options}) => {
 
   return (
     <div className={stylesSample.content}>
-      <div style={{width: isStatus ? `700px` : `100%`}}>
+      <div style={{width: `700px`}}>
         <TextField
           value={question}
           label="Введите текст для перевода"

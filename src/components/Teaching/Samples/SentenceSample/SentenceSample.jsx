@@ -56,7 +56,7 @@ const SentenceSample = ({sentence, translate}) => {
 
   return (
     <div className={stylesSample.content}>
-      <div style={{width: isStatus ? `700px` : `100%`}}>
+      <div style={{width: `700px`}}>
         <TextField
           id={'sentence'}
           value={sentence}
@@ -82,7 +82,7 @@ const SentenceSample = ({sentence, translate}) => {
       </div>
 
       {
-        isStatus &&
+        (course?.status !== 'check' || course?.status !== 'moderate') &&
         <div style={{width: '350px'}}>{setRemarks(course?.remarks)}</div>
       }
     </div>

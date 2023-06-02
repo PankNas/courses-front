@@ -46,7 +46,7 @@ const PassesSample = ({sentence}) => {
 
   return (
     <div className={stylesSample.content}>
-      <div style={{width: isStatus ? `700px` : `100%`}}>
+      <div style={{width: `700px`}}>
         <p>Правила оформления шаблона</p>
         <ol>
           <li className={styles.listItem}>Место пропуска отмечается квадратными скобками - []</li>
@@ -71,7 +71,7 @@ const PassesSample = ({sentence}) => {
       </div>
 
       {
-        isStatus &&
+        (course?.status !== 'check' || course?.status !== 'moderate') &&
         <div style={{width: '350px'}}>{setRemarks(course?.remarks)}</div>
       }
 

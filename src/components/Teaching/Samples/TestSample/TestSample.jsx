@@ -68,7 +68,7 @@ const TestSample = ({itemsTest}) => {
 
   return (
     <div className={stylesSample.content}>
-      <div style={{width: isStatus ? `700px` : `100%`}}>
+      <div style={{width: `700px`}}>
         <IconButton
           onClick={handleAddItem}
           // className={styles.addCourse}

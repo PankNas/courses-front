@@ -7,6 +7,7 @@ import {Link, Navigate} from "react-router-dom";
 import MySlider from "../../components/Slider/Slider";
 import Avatar from "@mui/material/Avatar";
 import {setLevel} from "../../components/Catalogs/CatalogAll";
+import {fetchCourses} from "../../redux/slices/courses";
 
 const adventures = [
   {
@@ -60,7 +61,7 @@ const Main = () => {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchStudentCourses());
+    dispatch(fetchCourses());
 
     setCourses(items?.filter(item => item.status === 'active'))
   }, []);

@@ -71,7 +71,7 @@ const VideoSample = ({desc, videoUrl}) => {
 
   return (
     <div className={stylesSample.content}>
-      <div style={{width: isStatus ? `700px` : `100%`}}>
+      <div style={{width: `700px`}}>
         <TextField
           id={'url-video'}
           value={videoUrl}
