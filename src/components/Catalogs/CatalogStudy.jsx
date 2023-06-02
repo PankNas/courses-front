@@ -46,7 +46,7 @@ const CatalogStudy = ({items, title}) => {
                   <div className={styles.headerCard}>
                     <h4 style={{margin: '0'}}>{item.title}</h4>
                     <img className={styles.imgHeader} src={`${pathFolder}/my/star_fill.svg`} alt="star"/>
-                    {score}
+                    {score.toFixed(1)}
                   </div>
                   {/*<p>Автор: {item.user.fullName}</p>*/}
                   <div className={styles.tags}>

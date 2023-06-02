@@ -117,7 +117,7 @@ const Main = () => {
         <h2 className={styles.headerCourses}>Подборка наших курсов</h2>
         <div className={styles.blockCourses}>
           {
-            courses?.map((item) => {
+            items?.filter(item => item.status === 'active')?.map((item) => {
               const level = setLevel(item.levelLanguage);
 
               return <Link key={item._id} to={isAuth ? `/catalog/${item._id}` : '/login'}>

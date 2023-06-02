@@ -69,7 +69,7 @@ const Course = ({isModerator, isStudy = false}) => {
 
         const curScore = res?.scores.reduce((acc, elem) => acc + elem.score, 0) / res?.scores.length || 0;
         // console.log(curScore, res);
-        setScore(curScore);
+        setScore(curScore.toFixed(1));
 
         (findCourse() && !isModerator) ? setIsSubscript(true) : setIsSubscript(false);
 

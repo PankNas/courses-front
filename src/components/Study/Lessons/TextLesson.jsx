@@ -21,7 +21,9 @@ const TextLesson = ({desc, isModerate}) => {
 
   return (
     // <p>{desc}</p>
-    <pre><ReactMarkdown children={desc}/></pre>
+    <div style={{width: '100%'}}>
+      <ReactMarkdown children={desc}/>
+    </div>
   );
 };
 

@@ -19,7 +19,9 @@ const VideoLesson = ({desc, videoUrl, isModerate}) => {
 
   return (
     <>
-      <pre><ReactMarkdown children={desc}/></pre>
+      <div style={{width: '100%'}}>
+        <ReactMarkdown children={desc}/>
+      </div>
       {/*<p>{desc}</p>*/}
       <ReactPlayer
         url={`${videoUrl}`}

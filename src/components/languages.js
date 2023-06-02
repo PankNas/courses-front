@@ -1,4 +1,4 @@
-export const languages = ['Английский', 'Немецкий', 'Французский'];
+export const languages = ['Английский', 'Немецкий', 'Французский', 'Итальянский', 'Польский'];
 
 export const levelLanguages = [
   'Начальный',
