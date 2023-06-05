@@ -52,9 +52,11 @@ const CatalogAll = ({items, title, isStudy}) => {
               <div className={styles.courseCard}>
                 <div className={styles.cartContent}>
                   <div className={styles.headerCard}>
-                    <h4 style={{margin: '0'}}>{item.title}</h4>
-                    <img className={styles.imgHeader} src={`${pathFolder}/my/star_fill.svg`} alt="star"/>
-                    {score.toFixed(1)}
+                    <h4 style={{margin: '0', width: '125px'}}>{item.title}</h4>
+                    <div style={{display: 'flex'}}>
+                      <img className={styles.imgHeader} src={`${pathFolder}/my/star_fill.svg`} alt="star"/>
+                      {score.toFixed(1)}
+                    </div>
                   </div>
                   {/*<p>Автор: {item.user.fullName}</p>*/}
                   <div className={styles.tags}>
