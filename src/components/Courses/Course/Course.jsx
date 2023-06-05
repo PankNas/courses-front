@@ -16,6 +16,7 @@ import {fetchCourses} from "../../../redux/slices/courses";
 import {IconButton} from "@mui/material";
 import {pathFolder} from "../../../App";
 import Score from "../../Score/Score";
+import {setLanguage, setLevel} from "../../../redux/slices/lessons";
 
 const Course = ({isModerator, isStudy = false}) => {
   const {courseId} = useParams();
@@ -53,6 +54,8 @@ const Course = ({isModerator, isStudy = false}) => {
 
   useEffect(() => {
     dispatch(fetchStudentCourses());
+    dispatch(setLevel(''))
+    dispatch(setLanguage(''))
 
     const getCourse = async () => (await axios.get(`/courses/${courseId}`)).data;
     const findCourse = () => studentCourses?.find(item => item._id === courseId);
@@ -196,6 +199,18 @@ const Course = ({isModerator, isStudy = false}) => {
     }
   };
 
+  const onClickLanguage = (event) => {
+    console.log(event.target);
+    dispatch(setLanguage(event.target.id))
+
+    navigate('/catalog')
+  }
+
+  const onClickLevel = (event) => {
+    dispatch(setLevel(event.target.id))
+    navigate('/catalog')
+  }
+
   return (
     <>
       <div className={styles.promo}>
@@ -208,9 +223,27 @@ const Course = ({isModerator, isStudy = false}) => {
                 <img className={styles.languageBlockImg} src={`${pathFolder}/my/star_fill.svg`} alt="score"/>
                 <p className={styles.languageText}>{score}</p>
                 <img className={styles.languageBlockImg} src={`${pathFolder}/my/translate.svg`} alt="language"/>
-                <p className={styles.languageText}>{dataCourse?.language}</p>
+                {/*<Link className={styles.link} onClick={onClickLanguage} to={'/catalog'}>*/}
+                  <p
+                    id={dataCourse?.language}
+                    className={styles.languageText}
+                    onClick={onClickLanguage}
+                    style={{textDecoration: 'underline'}}
+                  >
+                    {dataCourse?.language}
+                  </p>
+                {/*</Link>*/}
                 <img className={styles.languageBlockImg} src={`${pathFolder}/my/level.svg`} alt="level"/>
-                <p className={styles.languageText}>{dataCourse?.levelLanguage}</p>
+                {/*<Link className={styles.link} onClick={onClickLevel} to={'/catalog'}>*/}
+                  <p
+                    id={dataCourse?.levelLanguage}
+                    className={styles.languageText}
+                    onClick={onClickLevel}
+                    style={{textDecoration: 'underline'}}
+                  >
+                    {dataCourse?.levelLanguage}
+                  </p>
+                {/*</Link>*/}
               </div>
             </div>
             <img

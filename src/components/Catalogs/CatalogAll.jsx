@@ -4,6 +4,7 @@ import cn from 'classnames';
 import {Link} from "react-router-dom";
 import Search from "../Search/Search";
 import {pathFolder} from "../../App";
+import {useSelector} from "react-redux";
 
 export const setLevel = (level) => {
   switch (level) {

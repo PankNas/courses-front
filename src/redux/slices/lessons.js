@@ -21,6 +21,10 @@ export const fetchRemoveModule = createAsyncThunk(
 );
 
 const initialState = {
+  // for Course.jsx
+  language: '',
+  level: '',
+
   modules: [],
   course: {
     id: '',
@@ -78,6 +82,14 @@ const lessonsSlice = createSlice({
     setImageUrlCourse: (state, action) => {
       state.course.imageUrl = action.payload;
     },
+
+    // for Course.jsx
+    setLevel: (state, action) => {
+      state.level = action.payload;
+    },
+    setLanguage: (state, action) => {
+      state.language = action.payload;
+    },
   },
   extraReducers: {
     [fetchLessons.pending]: (state) => {
@@ -117,6 +129,9 @@ export const {
   setDataCourse,
   setFlag,
   setIdCourse,
+
+  setLanguage,
+  setLevel,
 } = lessonsSlice.actions;
 export const lessonsReducer = lessonsSlice.reducer;
 export const selectFlag = (state) => state.lessons.flag;

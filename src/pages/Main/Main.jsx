@@ -8,6 +8,7 @@ import MySlider from "../../components/Slider/Slider";
 import Avatar from "@mui/material/Avatar";
 import {setLevel} from "../../components/Catalogs/CatalogAll";
 import {fetchCourses} from "../../redux/slices/courses";
+import {pathFolder} from "../../App";
 
 const adventures = [
   {
@@ -119,11 +120,16 @@ const Main = () => {
           {
             items?.filter(item => item.status === 'active')?.map((item) => {
               const level = setLevel(item.levelLanguage);
+              const score = item.scores.reduce((acc, elem) => acc + elem.score, 0) / item.scores.length || 0;
 
-              return <Link key={item._id} to={isAuth ? `/catalog/${item._id}` : '/login'}>
+              return <Link key={item._id} to={isAuth ? `/study/${item._id}` : '/login'} className={styles.link}>
                 <div className={styles.courseCard}>
                   <div className={styles.cartContent}>
-                    <h4>{item.title}</h4>
+                    <div className={styles.headerCard}>
+                      <h4 style={{margin: '0'}}>{item.title}</h4>
+                      <img className={styles.imgHeader} src={`${pathFolder}/my/star_fill.svg`} alt="star"/>
+                      {score.toFixed(1)}
+                    </div>
                     {/*<p>Автор: {item.user.fullName}</p>*/}
                     <div className={styles.tags}>
                       <div className={styles.language}>{item.language}</div>

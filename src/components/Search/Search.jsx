@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import styles from './Search.module.css';
 import SelectItem from "../SelectItem";
 import {languages, levelLanguages} from "../languages";
 import TextField from "@mui/material/TextField";
+import {useDispatch, useSelector} from "react-redux";
+import {setLevel, setLanguage as updateLanguage} from "../../redux/slices/lessons";
 
 const Search = ({items, setCourses, fnSearch}) => {
   const [input, setInput] = useState('');
@@ -11,7 +13,36 @@ const Search = ({items, setCourses, fnSearch}) => {
     level: '',
     language: ''
   });
-  // const [courses, setCourses] = useState(items);
+  const data = useSelector(state => state.lessons);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('data', data.language, items);
+    let search = items;
+
+    if (data.language !== '') {
+      search = search?.filter(item => item.language === data.language);
+      fnSearch(search, true)
+      setLanguage({
+        level: '',
+        language: data.language
+      })
+      dispatch(updateLanguage(''))
+      // console.log(data);
+    } else if (data.level !== '') {
+      search = search?.filter(item => item.levelLanguage === data.level);
+      fnSearch(search, true)
+      setLanguage({
+        level: data.level,
+        language: ''
+      })
+      dispatch(setLevel(''))
+    }
+
+    console.log('hi', search);
+
+    // fnSearch(search, true)
+  }, []);
 
   const handleInput = (event) => setInput(event.target.value);
   const handleChangeLanguage = async (event) => {

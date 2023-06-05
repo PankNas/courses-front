@@ -133,7 +133,7 @@ const PersonCourses = () => {
                   (item?.status === 'check' || item?.status === 'moderate') &&
                   <p>Пройдено проверок: {item.countCheck} из 2</p>
                 }
-                <div className={styles.buttons}>
+                <div>
                   <Link to={`${item._id}/edit`}>
                     <button
                       className={styles.button}

@@ -2,8 +2,18 @@ import React, {useEffect, useRef, useState} from 'react';
 import styles from './Slider.module.css';
 import debounce from "lodash.debounce";
 import cn from "classnames";
+import {IconButton} from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import {setLanguage} from "../../redux/slices/lessons";
+import {useNavigate} from "react-router-dom";
+import {selectIsAuth} from "../../redux/slices/auth";
 
 const MySlider = ({slides}) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const isAuth = useSelector(selectIsAuth)
+
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
@@ -34,20 +44,32 @@ const MySlider = ({slides}) => {
     };
   }, []);
 
+  const moveLanguage = (event, language) => {
+    if (isAuth) {
+      dispatch(setLanguage(language));
+      console.log('hello');
+      navigate('/catalog')
+    } else {
+      navigate('/login')
+    }
+  }
+
   return (
     <div className={styles.blocksLanguages}>
       <div className={styles.scrollableContainer}>
         <ul className={styles.list} ref={listRef}>
           {
             slides.map((item, index) =>
-              <li style={{marginRight: "1.5em"}} key={index}>
-                <div className={styles.block}>
-                  <img src={item.src} alt="flag" className={styles.flag}/>
-                  <div className={styles.languageName}>
-                    <p className={styles.languageText}>{item.title}</p>
+              <IconButton onClick={(event) => moveLanguage(event, item.title)} key={index}>
+                <li style={{marginRight: "1.5em"}}>
+                  <div className={styles.block}>
+                    <img src={item.src} alt="flag" className={styles.flag}/>
+                    <div className={styles.languageName}>
+                      <p className={styles.languageText}>{item.title}</p>
+                    </div>
                   </div>
-                </div>
-              </li>
+                </li>
+              </IconButton>
             )
           }
         </ul>
