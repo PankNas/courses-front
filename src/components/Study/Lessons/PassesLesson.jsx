@@ -56,8 +56,8 @@ const PassesLesson = ({sentence, size, options, answers, isModerate}) => {
 
   return (
     <>
-      <pre style={{lineHeight: "25px"}}><ReactMarkdown children={text}/></pre>
-      {/*<p style={{lineHeight: "25px"}}>{text}</p>*/}
+      {/*<pre style={{lineHeight: "25px"}}><ReactMarkdown children={text}/></pre>*/}
+      <p style={{lineHeight: "25px"}}>{text}</p>
       <Button variant={'outlined'} onClick={handleClick}>Проверить</Button>
     </>
   )

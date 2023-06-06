@@ -36,8 +36,8 @@ const TestLesson = ({items, totalScore, isModerate}) => {
       {
         items.map((item, index) =>
           <div key={item.id} className={styles.testItem}>
-            <pre><ReactMarkdown children={item?.question}/></pre>
-            {/*<p>{item?.question}</p>*/}
+            {/*<pre><ReactMarkdown children={item?.question}/></pre>*/}
+            <p>{item?.question}</p>
             <CheckboxItem
               options={item?.options}
               answer={answers[index]}

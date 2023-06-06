@@ -37,6 +37,10 @@ const AddLessons = ({title, desc, language, levelLanguage, imageUrl, status}) =>
       status: 'passive'
     };
 
+    for (const module of modules) {
+      await axios.patch(`/modules/${module._id}`, module);
+    }
+
     await axios.patch(`/courses/${id}`, fields);
   };
 
@@ -113,10 +117,11 @@ const AddLessons = ({title, desc, language, levelLanguage, imageUrl, status}) =>
   };
 
   const handleChangeTitle = (event) => {
+    console.log(event.target.id, modules, 'hello');
     // modules[+event.target.id].title = event.target.value;
 
     // setModules(modules);
-    // dispatch(setTitle({id: +event.target.id, value: event.target.value}));
+    dispatch(setTitle({id: +event.target.id, value: event.target.value}));
   };
 
   useEffect(() => {
