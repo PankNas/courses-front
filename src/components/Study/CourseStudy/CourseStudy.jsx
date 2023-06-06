@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import styles from './CourseStudy.module.scss';
 
@@ -17,14 +17,17 @@ const CourseStudy = ({isModerate}) => {
   const navigate = useNavigate();
 
   const {course} = useSelector(state => state.courses);
-  const {progressCourses} = useSelector(state => state.auth);
+  const {progressCourses, data} = useSelector(state => state.auth);
+  const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
     dispatch(fetchGetCourse(courseId));
+
+    setIsAuth(course?.user?._id === data?._id);
   }, []);
 
   const handleClickNav = async (event) => {
-    if (isModerate) {
+    if (isModerate || isAuth) {
       navigate(`${event.target.id}`);
       return;
     }
@@ -87,42 +90,6 @@ const CourseStudy = ({isModerate}) => {
         {/*}*/}
       </div>
     </div>
-
-
-
-
-    // <div className={styles.courseStudy}>
-    //   <div className={styles.lessons}>
-    //     <ol>
-    //       {
-    //         course?.modules.map(module =>
-    //           <li
-    //             key={module._id}
-    //             className={styles.lessonItem}
-    //             style={{marginBottom: "8px"}}
-    //           >
-    //             {module.title}
-    //             <ol>
-    //               {
-    //                 module.lessons.map(lesson =>
-    //                   <li key={lesson._id}>
-    //                     <button id={lesson._id} onClick={handleClickNav}>
-    //                       {lesson.title}
-    //                     </button>
-    //                   </li>
-    //                 )
-    //               }
-    //             </ol>
-    //           </li>
-    //         )
-    //       }
-    //     </ol>
-    //   </div>
-    //
-    //   <Routes>
-    //     <Route path={'lesson/:lessonId'} element={<ContentStudy isActive={isActive}/>}/>
-    //   </Routes>
-    // </div>
   );
 };
 

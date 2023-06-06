@@ -7,7 +7,6 @@ import remarkGfm from 'remark-gfm'
 
 const TextLesson = ({desc, isModerate}) => {
   const {courseId, lessonId} = useParams();
-  console.log(desc);
 
   useEffect(() => {
     try {

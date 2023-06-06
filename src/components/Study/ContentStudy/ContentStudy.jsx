@@ -8,7 +8,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import axios from "../../../axios";
 import Button from "@mui/material/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchProgressCourses} from "../../../redux/slices/auth";
+import {fetchAuthMe, fetchProgressCourses} from "../../../redux/slices/auth";
 import TranslateLesson from "../Lessons/TranslateLesson";
 import TestLesson from "../Lessons/TestLesson";
 import PassesLesson from "../Lessons/PassesLesson";
@@ -25,8 +25,9 @@ const ContentStudy = ({isModerate}) => {
   const navigate = useNavigate();
 
   const [lesson, setLesson] = useState({});
-  const {progressCourses, data} = useSelector(state => state.auth);
+  const {data} = useSelector(state => state.auth);
   const [isUpdate, setIsUpdate] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
     // dispatch(fetchProgressCourses());
@@ -36,6 +37,8 @@ const ContentStudy = ({isModerate}) => {
     getLesson()
       .then(res => {
         setLesson(res);
+
+        setIsAuth(res.course.user._id === data?._id)
       });
   }, [lessonId, isUpdate]);
 
@@ -47,7 +50,7 @@ const ContentStudy = ({isModerate}) => {
 
     if (indexLesson === 0) return;
 
-    if (isModerate) {
+    if (isModerate || isAuth) {
       navigate(`/check/${courseId}/lessons/${lessons[indexLesson - 1]._id}`);
       return;
     }
@@ -62,20 +65,19 @@ const ContentStudy = ({isModerate}) => {
 
     if (indexLesson === lessons.length - 1) return;
 
-    if (isModerate) {
+    if (isModerate || isAuth) {
       navigate(`/check/${courseId}/lessons/${lessons[indexLesson + 1]._id}`);
       return;
     }
 
-    dispatch(fetchProgressCourses());
+    const user = (await axios.get('/auth/me')).data;
 
-    const progress = progressCourses.find(course => course.course === courseId);
+    const progress = user.progressCourses.find(course => course.course === courseId);
     let nextLesson = progress.lessonsEnd.find(lesson => lesson === lessons[indexLesson + 1]._id);
 
     if (!nextLesson) {
       const lastLessonId = progress.lessonsEnd[progress.lessonsEnd.length - 1];
       const lastLessonIndex = lessons.findIndex(lesson => lesson._id === lastLessonId);
-
       if (indexLesson + 1 - lastLessonIndex !== 1) return;
 
       nextLesson = lessons[indexLesson + 1]._id;
