@@ -15,7 +15,7 @@ const VideoLesson = ({desc, videoUrl, isModerate}) => {
     } catch (err) {
       alert('Ошибка прохождения курса!')
     }
-  }, [lessonId]);
+  }, []);
 
   return (
     <>

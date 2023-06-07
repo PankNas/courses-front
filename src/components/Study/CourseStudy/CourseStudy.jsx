@@ -10,6 +10,7 @@ import {fetchProgressCourses} from "../../../redux/slices/auth";
 import axios from "../../../axios";
 import Remark from "../../Remark/Remark";
 import Button from "@mui/material/Button";
+import {IconButton} from "@mui/material";
 
 const CourseStudy = ({isModerate}) => {
   const {courseId} = useParams();
@@ -32,7 +33,8 @@ const CourseStudy = ({isModerate}) => {
       return;
     }
 
-    await dispatch(fetchProgressCourses());
+    // await dispatch(fetchProgressCourses());
+    const user = (await axios.get('/auth/me')).data
 
     const course = (await axios.get(`/courses/${courseId}`)).data;
     const lessons = course.modules.flatMap(module => module.lessons);
@@ -41,7 +43,7 @@ const CourseStudy = ({isModerate}) => {
 
     if (indexLesson === 0) navigate(`${event.target.id}`);
 
-    const progress = progressCourses.find(course => course.course === courseId);
+    const progress = user.progressCourses.find(course => course.course === courseId);
 
     if (progress?.lessonsEnd.length - 1 - indexLesson < -1) return;
 
@@ -57,7 +59,7 @@ const CourseStudy = ({isModerate}) => {
             to={isModerate ? `/check/${courseId}` : `/study/${courseId}`}
             className={styles.link}
           >
-            <Button className={styles.desc}>К описанию курса</Button>
+            <button className={styles.button}>К описанию курса</button>
           </Link>
           {
             course?.modules.map(module =>
@@ -67,9 +69,9 @@ const CourseStudy = ({isModerate}) => {
                   {
                     module.lessons.map(lesson =>
                       <li className={styles.lesson} key={lesson._id} id={lesson._id} onClick={handleClickNav}>
-                        <Button className={styles.buttonLesson} variant={'text'} id={lesson._id}>
+                        <button className={styles.buttonLesson} id={lesson._id}>
                           {lesson.title}
-                        </Button>
+                        </button>
                       </li>
                     )
                   }

@@ -48,6 +48,20 @@
   padding: 0;
 }
 
+.button {
+  width: 100%;
+  padding: 15px;
+  color: white;
+  background-color: #FF9F67;
+  border-style: none;
+  border-radius: 5px;
+
+  font-size: 18px;
+  //font-weight: normal;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
 .module {
   padding: 10px;
   //border-radius: 20px;
@@ -70,6 +84,31 @@
   width: 100%;
   background-color: transparent;
   text-align: left;
+  border-style: none;
+
+  color: #4255A4;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.buttonLesson:hover{
+  color: #FF9F67;
+}
+
+//.link {
+//  width: 100%;
+//  background-color: green;
+//  color: #4255A4;
+//  font-size: 18px;
+//  margin-bottom: 10px;
+//}
+
+.linkActive {
+  width: 100%;
+  background-color: red;
+  color: #4255A4;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
 .content {

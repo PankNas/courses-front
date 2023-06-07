@@ -1,6 +1,7 @@
 import axios from "../../../axios";
 
 export const setFinishLesson = async (courseId, lessonId) => {
+  console.log('finish', lessonId);
   const {data} = await axios.get('/auth/me');
 
   const {progressCourses} = data;
