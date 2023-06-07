@@ -86,6 +86,11 @@ const PersonCourses = () => {
     try {
       let course = (await axios.get(`/courses/${id}`)).data;
 
+      if (!course?.modules[0]?.lessons[0]) {
+        alert('В курсе отсутствует хотя бы один урок')
+        return;
+      }
+
       course.status = 'check';
       course.delete = true;
 

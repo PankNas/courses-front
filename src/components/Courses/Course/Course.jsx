@@ -211,6 +211,13 @@ const Course = ({isModerator, isStudy = false}) => {
     navigate('/catalog')
   }
 
+  const toLesson = () => {
+    const curCourse = data?.progressCourses.find(course => course.course === courseId);
+    const lastLesson = curCourse.lessonsEnd.at(-1) || curCourse.lessonsEnd[0];
+
+    navigate(isModerator ? `/check` : `/study` + `/${courseId}/lessons/${lastLesson}`)
+  }
+
   return (
     <>
       <div className={styles.promo}>
@@ -293,19 +300,19 @@ const Course = ({isModerator, isStudy = false}) => {
           <div className={styles.manageCourse}>
             {
               (isAuthor || isModerator || isSubscript) &&
-              <Link to={isModerator ? `/check/${courseId}/lessons` : `/study/${courseId}/lessons`}>
-                <button className={styles.button}>
+              // <Link to={isModerator ? `/check/${courseId}/lessons` : `/study/${courseId}/lessons`}>
+                <button className={styles.button} onClick={toLesson}>
                   К урокам
                 </button>
-              </Link>
+              // </Link>
             }
             {
               (!isSubscript && !isAuthor && !isModerator) &&
-              <Link to={''}>
+              // <Link to={''}>
                 <button className={styles.button} onClick={handleClickRecord}>
                   Записаться
                 </button>
-              </Link>
+              // </Link>
             }
             {
               isSubscript &&
