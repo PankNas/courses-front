@@ -32,7 +32,7 @@ const CatalogAll = ({items, title, isStudy}) => {
     setIsSearch(isSearch)
   }
 
-  console.log(items);
+  // console.log('items', items);
 
   return (
     <div className={styles.content}>

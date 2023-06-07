@@ -17,7 +17,6 @@ const Search = ({items, setCourses, fnSearch}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('data', data.language, items);
     let search = items;
 
     if (data.language !== '') {
@@ -28,7 +27,6 @@ const Search = ({items, setCourses, fnSearch}) => {
         language: data.language
       })
       dispatch(updateLanguage(''))
-      // console.log(data);
     } else if (data.level !== '') {
       search = search?.filter(item => item.levelLanguage === data.level);
       fnSearch(search, true)
@@ -39,8 +37,6 @@ const Search = ({items, setCourses, fnSearch}) => {
       dispatch(setLevel(''))
     }
 
-    console.log('hi', search);
-
     // fnSearch(search, true)
   }, []);
 
@@ -50,10 +46,11 @@ const Search = ({items, setCourses, fnSearch}) => {
   }
 
   const handleSearch = () => {
-    let search = items?.filter(item => item?.title?.includes(input.toLowerCase().trim()));
-    // search = search.filter(item => item.language === language.language);
-    // search = search.filter(item => item.levelLanguage === language.level);
-    console.log('or', search, items, input);
+    let search = items?.filter(item => {
+      const title = item?.title.toLowerCase().trim();
+
+      return title.includes(input.toLowerCase().trim());
+    });
 
     if (language.language !== '') {
       search = search?.filter(item => item.language === language.language);
@@ -62,7 +59,6 @@ const Search = ({items, setCourses, fnSearch}) => {
     if (language.level !== '') {
       search = search?.filter(item => item.levelLanguage === language.level);
     }
-    console.log('hi', search);
 
     fnSearch(search, true)
     // setCourses(search);
