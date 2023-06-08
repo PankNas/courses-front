@@ -15,6 +15,7 @@ import Teaching from "./components/Teaching/Teaching";
 import Check from "./components/Check/Check";
 import Adm from "./components/Adm/Adm";
 import Moderate from "./components/Check/Moderate/Moderate";
+import Settings from "./pages/Register/Settings";
 
 export const pathFolder = `http://localhost:8000/uploads`
 
@@ -33,6 +34,7 @@ function App() {
           <Route path={'/'} element={<Main />}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
+          <Route path="/settings" element={<Settings/>}/>
 
           <Route path="/catalog/*" element={<Courses/>}/>
           <Route path="/study/*" element={<Study/>}/>

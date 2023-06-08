@@ -16,16 +16,6 @@ const Header = () => {
   const {login, register} = useParams();
 
   const {data} = useSelector(state => state.auth);
-  // const fullPath = (name) => {
-  //   console.log(window.location.pathname ,  name);
-  //   return window.location.pathname === name;
-  // };
-  //
-  // const checkPath = (name) => {
-  //   const fullPath = window.location.pathname;
-  //
-  //   return fullPath.includes(name);
-  // }
 
   return (
     <div className={styles.container}>
@@ -50,8 +40,6 @@ const Header = () => {
               <li><Link className={styles.navLink} to={'adm'}>Админ</Link></li>
             }
 
-            {/*<li><Link className={styles.navLink} to={isAuth ? '' : '/login'}>Каталог</Link></li>*/}
-            {/*<li><a className={styles.navLink} href="#">О нас</a></li>*/}
             {
               isAuth ?
                 <>

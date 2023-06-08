@@ -13,14 +13,18 @@ import {Link, Navigate, useNavigate} from "react-router-dom";
 import axios from "../../axios";
 import {pathFolder} from "../../App";
 
-const Register = () => {
+const Settings = () => {
   const isAuth = useSelector(selectIsAuth);
-  const user = useSelector(state => state.auth);
+  const {data} = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const inputFileRef = useRef(null);
 
   const [imageUrl, setImageUrl] = useState('');
+
+  useEffect(() => {
+    setImageUrl(data?.avatarUrl)
+  }, [])
 
   const {
     register,
@@ -29,38 +33,34 @@ const Register = () => {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      fullName: "Vasya Pypkin",
-      email: "vasya@test.ru",
-      password: "12345",
-      // codeAccess: '',
+      fullName: data?.fullName,
+      email: data?.email,
+      password: data?.password,
     },
     mode: "onChange",
   });
 
   const onSubmit = async (values) => {
-    let fields = {
-      ...values,
-      avatarUrl: imageUrl,
+    try {
+      let fields = {
+        ...values,
+        avatarUrl: imageUrl,
+      }
+
+      await axios.patch('/auth/me', fields);
+
+      dispatch(fetchAuthMe())
+
+      navigate(-1)
+    } catch (err) {
+      console.log(err);
+      alert('Не удалось обновить данные пользователя!')
     }
-
-    const data = await dispatch(fetchRegister(fields));
-
-    if (!data.payload) {
-      return alert("Не удалось зарегистрироваться!");
-    }
-
-    dispatch(fetchAuthMe())
-
-    if ("token" in data.payload.data) {
-      localStorage.setItem("token", data.payload.data.token);
-    }
-
-    navigate(`/catalog`)
   };
 
-  if (isAuth) {
-    return <Navigate to="/" />;
-  }
+  // if (isAuth) {
+  //   return <Navigate to="/" />;
+  // }
 
   const handleChangeFile = async (event) => {
     try {
@@ -68,9 +68,9 @@ const Register = () => {
 
       formData.append("file", event.target.files[0]);
 
-      const {data} = await axios.post("/upload", formData);
+      const img = (await axios.post("/upload", formData)).data;
 
-      setImageUrl(data.url.slice(4));
+      setImageUrl(img.url.slice(4));
       console.log(imageUrl);
       // dispatch(fetchAuthMe())
     } catch (err) {
@@ -82,7 +82,7 @@ const Register = () => {
   return (
     <Paper classes={{ root: styles.root }}>
       <Typography classes={{ root: styles.title }} variant="h5">
-        Создание аккаунта
+        Настройка аккаунта
       </Typography>
       <div className={styles.avatar}>
         <Avatar
@@ -130,11 +130,11 @@ const Register = () => {
           style={{backgroundColor: "rgb(98, 116, 255)"}}
           fullWidth
         >
-          Зарегистрироваться
+          Сохранить
         </Button>
       </form>
     </Paper>
   );
 };
 
-export default Register;
+export default Settings;

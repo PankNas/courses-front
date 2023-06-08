@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import axios from "../../axios";
 
 import styles from './Avatar.module.css';
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const AvatarUser = () => {
   const [open, setOpen] = React.useState(false);
@@ -125,16 +125,22 @@ const AvatarUser = () => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                  <MenuItem onClick={() => inputFileRef.current.click()}>
-                    <button
-                      style={{width: '100%', margin: '0'}}
+                  {/*<MenuItem onClick={() => inputFileRef.current.click()}>*/}
+                  <MenuItem>
+                    <Link to={'/settings'}
+                      // style={{width: '100%', margin: '0'}}
                       // variant={'text'}
                       // onClick={() => inputFileRef.current.click()}
-                      className={styles.button}
+                      // className={styles.button}
                     >
-                      Изменить аватарку
-                    </button>
-                    <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>
+                      <button
+                        style={{width: '100%', margin: '0'}}
+                        className={styles.button}
+                      >
+                        Настройки
+                      </button>
+                    </Link>
+                    {/*<input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>*/}
                   </MenuItem>
 
                   <MenuItem onClick={handleLogOut}>
