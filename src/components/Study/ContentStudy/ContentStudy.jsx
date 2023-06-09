@@ -178,7 +178,7 @@ function setParamsPasses(sentence) {
   let options = [];
   let answers = [];
 
-  parts.forEach((elem) => {
+  parts?.forEach((elem) => {
     const values = elem.split(',').map(item => item.trim().replace(/\[|]/g, ''));
 
     answers.push(values[0]);

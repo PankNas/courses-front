@@ -67,7 +67,7 @@ const TranslateSample = ({question, answer, options}) => {
           value={question}
           label="Введите текст для перевода"
           multiline
-          rows={3}
+          rows={8}
           onChange={handleChangeQuestion}
           variant="outlined"
           fullWidth

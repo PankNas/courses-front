@@ -62,7 +62,7 @@ const PassesSample = ({sentence}) => {
           value={sentence}
           label="Введите текст на иностранном языке"
           multiline
-          rows={4}
+          rows={8}
           onChange={handleChange}
           variant="outlined"
           fullWidth

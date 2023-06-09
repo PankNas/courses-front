@@ -17,6 +17,7 @@ import {IconButton} from "@mui/material";
 import {pathFolder} from "../../../App";
 import Score from "../../Score/Score";
 import {setLanguage, setLevel} from "../../../redux/slices/lessons";
+import ReactMarkdown from "react-markdown";
 
 const Course = ({isModerator, isStudy = false}) => {
   const {courseId} = useParams();
@@ -211,11 +212,26 @@ const Course = ({isModerator, isStudy = false}) => {
     navigate('/catalog')
   }
 
-  const toLesson = () => {
-    const curCourse = data?.progressCourses.find(course => course.course === courseId);
-    const lastLesson = curCourse.lessonsEnd.at(-1) || curCourse.lessonsEnd[0];
+  const toLesson = async () => {
+    const course_ = (await axios.get(`/courses/${courseId}`)).data;
+    const user = (await axios.get(`/auth/me`)).data;
+    console.log(course_);
 
-    navigate(isModerator ? `/check` : `/study` + `/${courseId}/lessons/${lastLesson}`)
+    if (isModerator) {
+      navigate(`/check/${courseId}/lessons/${course_.modules[0].lessons[0]._id}`)
+      return;
+    }
+
+    if (isAuthor) {
+      navigate(`/study/${courseId}/lessons/${course_.modules[0].lessons[0]._id}`)
+      return;
+    }
+
+    const curCourse = user?.progressCourses.find(course => course.course === courseId);
+
+    const lastLesson = curCourse?.lessonsEnd.at(-1) || course_.modules[0].lessons[0]._id;
+
+    navigate(`/study/${courseId}/lessons/${lastLesson}`)
   }
 
   return (
@@ -266,7 +282,10 @@ const Course = ({isModerator, isStudy = false}) => {
         <div className={cn(styles.desc)}>
           <div className={styles.infoCourse}>
             <h2>О курсе</h2>
-            <p>{dataCourse?.desc}</p>
+            <div>
+              <ReactMarkdown children={dataCourse?.desc}/>
+            </div>
+            {/*<p>{dataCourse?.desc}</p>*/}
             <h2>Программа курса</h2>
             <div>
               {

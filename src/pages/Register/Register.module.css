@@ -6,6 +6,15 @@
   z-index: 0;
 }
 
+.img {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .field {
   margin-bottom: 20px !important;
 }

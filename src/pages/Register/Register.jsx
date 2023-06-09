@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import axios from "../../axios";
 import {pathFolder} from "../../App";
+import {IconButton} from "@mui/material";
 
 const Register = () => {
   const isAuth = useSelector(selectIsAuth);
@@ -29,9 +30,9 @@ const Register = () => {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      fullName: "Vasya Pypkin",
-      email: "vasya@test.ru",
-      password: "12345",
+      fullName: "",
+      email: "",
+      password: "",
       // codeAccess: '',
     },
     mode: "onChange",
@@ -79,6 +80,8 @@ const Register = () => {
     }
   };
 
+  const handleDelImg = () => setImageUrl('');
+
   return (
     <Paper classes={{ root: styles.root }}>
       <Typography classes={{ root: styles.title }} variant="h5">
@@ -91,6 +94,18 @@ const Register = () => {
           src={`http://localhost:8000${imageUrl}`}
         />
         <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden/>
+        {
+          imageUrl &&
+          <IconButton
+            onClick={handleDelImg}
+          >
+            <img
+              className={styles.img}
+              alt={'delete'}
+              src={`http://localhost:8000/uploads/my/close.svg`}
+            />
+          </IconButton>
+        }
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField

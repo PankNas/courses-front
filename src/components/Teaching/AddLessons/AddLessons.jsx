@@ -41,7 +41,7 @@ const AddLessons = ({title, desc, language, levelLanguage, imageUrl, status}) =>
       await axios.patch(`/modules/${module._id}`, module);
     }
 
-    await axios.patch(`/courses/${id}`, fields);
+    await axios.patch(`/courses/update/${id}`, fields);
   };
 
   const handleMove = async (event) => {
@@ -92,7 +92,22 @@ const AddLessons = ({title, desc, language, levelLanguage, imageUrl, status}) =>
     }
   };
 
-  const onClickEdit = (event, indexModule, indexLesson) => {
+  const onClickEdit = async (event, indexModule, indexLesson) => {
+    for (const module of modules) {
+      await axios.patch(`/modules/${module._id}`, module);
+    }
+
+    const fields = {
+      title,
+      imageUrl,
+      desc,
+      language,
+      levelLanguage,
+      status: 'passive'
+    };
+
+    await axios.patch(`/courses/update/${id}`, fields);
+
     dispatch(setType(modules[indexModule].lessons[indexLesson].type));
 
     navigate(`module/${modules[indexModule]._id}/sample/${modules[indexModule].lessons[indexLesson]._id}`);

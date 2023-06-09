@@ -56,8 +56,11 @@ const SentenceLesson = ({sentence, translate, isModerate}) => {
   return (
     <>
       <p>Составьте текст из слов</p>
-      {/*<pre><ReactMarkdown children={translate}/></pre>*/}
-      <p>{translate}</p>
+      <div style={{width: '100%'}}>
+        <ReactMarkdown children={translate}/>
+      </div>
+      {/*<p>{translate}</p>*/}
+
       <ul className={cn(styles.wordsBox, styles.textBox)}>
         {
           text.map((word, index) =>

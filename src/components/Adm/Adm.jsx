@@ -48,9 +48,10 @@ const Adm = () => {
   const handleMakeModerator = async (event, id, index) => {
     try {
       await axios.patch(`/users/${id}`, {role: 'moderator'});
+      console.log(users, index);
 
-      users[index].role = 'moderator';
-      setUsers(users);
+      // users[2][index].role = 'moderator';
+      // setUsers(users);
       alert('Вы добавили модератора');
       setIsChange(prev => !prev);
     } catch (e) {

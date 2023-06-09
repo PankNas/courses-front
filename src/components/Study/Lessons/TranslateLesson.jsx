@@ -28,11 +28,11 @@ const TranslateLesson = ({question, options, answer, isModerate}) => {
   return (
     <>
       <p>Переведите текст</p>
-      {/*<div style={{width: '100%'}}>*/}
-      {/*  <ReactMarkdown children={question}/>*/}
-      {/*</div>*/}
-      {/*<pre style={{textAlign: "center"}}><ReactMarkdown children={question}/></pre>*/}
-      <p style={{textAlign: "center"}}>{question}</p>
+      <div style={{width: '100%'}}>
+        <ReactMarkdown children={question}/>
+      </div>
+      {/*<p style={{textAlign: "center"}}>{question}</p>*/}
+
       <CheckboxItem
         options={options}
         answer={curAnswer}

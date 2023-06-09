@@ -62,7 +62,7 @@ const SentenceSample = ({sentence, translate}) => {
           value={sentence}
           label="Введите текст на иностранном языке"
           multiline
-          rows={4}
+          rows={8}
           onChange={handleChange}
           variant="outlined"
           fullWidth
@@ -73,7 +73,7 @@ const SentenceSample = ({sentence, translate}) => {
           value={translate}
           label="Введите перевод"
           multiline
-          rows={4}
+          rows={8}
           onChange={handleChange}
           variant="outlined"
           fullWidth
