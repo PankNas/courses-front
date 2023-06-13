@@ -12,9 +12,10 @@
 - Redux-toolkit
 - Material-UI
 - React-Player
+- React-Router
 
 ## Описание
-Приложение предназначено для прохождения и создания языковых курсов.
+Приложение предназначено для прохождения и создания языковых курсов. В приложении каждый авторизированный пользователь может создавать свои онлайн-курсы.
 
 ## Функционал
 1)	общий функционал:
@@ -43,6 +44,64 @@
 ![image](https://github.com/PankNas/courses-front/assets/114266522/ed75585c-e131-44e0-811c-a84825bdea33)
 
 ### 2. Главная страница
+Если пользователь не авторизован, то ему доступны лишь главная страница и формы с регистрацией и авторизацией.
+![image](https://github.com/PankNas/courses-front/assets/114266522/f953c84d-662e-4142-9ddd-ff398d19a9ab)
+
+Если пользователь авторизированный, то при нажатии на флаг, пользователя переносит на страницу каталога, где ему отображаются только курсы языка с флага.
+
+![image](https://github.com/PankNas/courses-front/assets/114266522/dd218b97-1029-4f14-a88b-13509e967f6a)
+
+При нажатии на карточку курса, авторизирвоанного пользователя переносит на страницу с информацией по данному курсу.
+
+![image](https://github.com/PankNas/courses-front/assets/114266522/b975a1dd-9f83-4add-8aac-245efe4c8390)
+
+### 3. Регистрация
+![image](https://github.com/PankNas/courses-front/assets/114266522/3efaa6f9-0311-4798-b723-84978d9dd6a1)
+
+### 4. Авторизация
+![image](https://github.com/PankNas/courses-front/assets/114266522/6e8e80d4-7f2c-427f-8f90-0053be428868)
+
+### 5. Страница администратора
+![image](https://github.com/PankNas/courses-front/assets/114266522/caf48b1e-d64c-4150-a615-3248a16adf53)
+
+### 6. Конструктор курсов
+6.1. Страница со списком курсов, которые создал пользователь
+![image](https://github.com/PankNas/courses-front/assets/114266522/cb8b6082-dd10-4d9f-abe6-195435c55b27)
+
+6.2. Форма создания/редактирвания курса
+![image](https://github.com/PankNas/courses-front/assets/114266522/a8166704-b563-4973-8676-cb06afe81447)
+
+6.3. Шаблоны уроков
+- Теория
+![image](https://github.com/PankNas/courses-front/assets/114266522/b34eb628-15ee-41ab-bea8-702ac22a147b)
+
+- Видеоурок
+![image](https://github.com/PankNas/courses-front/assets/114266522/d3b74774-001d-4575-b702-6a17d80a7a1d)
+
+- Перевод
+![image](https://github.com/PankNas/courses-front/assets/114266522/05af2e77-bb65-4d02-9bd0-dd77be2e838c)
+
+- Составление текста
+![image](https://github.com/PankNas/courses-front/assets/114266522/7e42d642-9999-4f21-85fe-5a4c210c5f02)
+
+- Заполнение пропусков
+![image](https://github.com/PankNas/courses-front/assets/114266522/f8764f89-b289-4e57-9a3c-93db920e5010)
+
+- Тест\n
+![image](https://github.com/PankNas/courses-front/assets/114266522/d36c27e0-f288-4e6a-81b6-f3c5630c6c06)
+
+## 6.4. Прохождение курсов
+- Страница со всеми курсами, которые сейчас проходит пользователь.
+![image](https://github.com/PankNas/courses-front/assets/114266522/23551900-6bd5-445e-a7dd-0fc5d8d6c2ad)
+
+- Страница курса
+Оценку по курсу можно поменять или снять совсем.
+![image](https://github.com/PankNas/courses-front/assets/114266522/81bd3249-1f39-4b14-bc4c-97e6e8603796)
+
+- 
+
+
+
 
 
 
