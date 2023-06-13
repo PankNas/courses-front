@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# Система-конструктор онлайн-курсов для изучения иностранных языков
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Запуск
+- Установка пакетов: `npm install`
+- Запуск проекта: `npm run start`
 
-## Available Scripts
+[backend часть приложения](https://github.com/PankNas/app_diploma)
 
-In the project directory, you can run:
+## Стек технологий
+- React
+- Axios
+- Redux-toolkit
+- Material-UI
+- React-Player
 
-### `npm start`
+## Описание
+Приложение предназначено для прохождения и создания языковых курсов.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Функционал
+1)	общий функционал:
+-	регистрация и авторизация пользователей;
+-	различные манипуляции с собственными курсами: создание при помощи встроенного конструктора, состоящего из набора готовых шаблонов для проектирования уроков, редактирование и удаление;
+-	взаимодействие с чужими курсами: запись, отписка, прохождение уроков в последовательном режиме, комментирование курса и его уроков, выставление оценок;
+-	отслеживание прогресса прохождения уроков.
+2)	функционал администратора:
+-	добавление и удаление модераторов,
+-	удаление пользователей.
+3)	функционал модератора:
+-	просмотр всех курсов, представленных к проверке;
+-	принятие на модерацию и отказ от проверки, а также права на разрешение и запрет на размещение курса на платформе;
+-	возможность оставлять замечания по материалам у проверяемых онлайн-курсов;
+-	удаление комментариев у курсов и уроков.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Демонстрация
+### 1. Header
+1.1. Заголовок неавтризованого пользователя
+![image](https://github.com/PankNas/courses-front/assets/114266522/699b67a1-ce6c-4362-8ff0-774cbc0b30ef)
+1.2. Заголовок авторизованного пользователя
+![image](https://github.com/PankNas/courses-front/assets/114266522/ff39901f-6008-4f16-a3d8-84411a239349)
+1.3. Заголовок авторизованного модератора
+![image](https://github.com/PankNas/courses-front/assets/114266522/fcd65fa8-9b53-461c-9540-9ca587ce7739)
+1.4. Заголовок авторизованного администратора
+![image](https://github.com/PankNas/courses-front/assets/114266522/ed75585c-e131-44e0-811c-a84825bdea33)
 
-### `npm test`
+### 2. Главная страница
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
