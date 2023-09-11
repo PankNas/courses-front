@@ -174,7 +174,7 @@ const CreateCourse = () => {
             onChange={handleChange}
             variant="outlined"
             fullWidth
-            style={{marginBottom: '20px', marginTop: '20px'}}
+            style={{marginBottom: '20px', marginTop: '20px', fontSize: '22px'}}
             required
           />
           <TextField
@@ -186,25 +186,25 @@ const CreateCourse = () => {
             onChange={handleChange}
             variant="outlined"
             fullWidth
-            style={{marginBottom: '20px'}}
+            style={{marginBottom: '20px', fontSize: '22px'}}
             required
           />
           <div className={styles.block}>
-            <p style={{marginTop: '0'}}>Языковая группа</p>
+            <p style={{marginTop: '0', fontSize: '22px'}}>Языковая группа</p>
             <div className={styles.selectors}>
               <SelectItem
                 value={language}
                 id={'languages'}
                 options={languages}
                 onChange={handleChange}
-                style={{width: '360px'}}
+                style={{width: '360px', fontSize: '22px'}}
               />
               <SelectItem
                 value={levelLanguage}
                 id={'levelLanguages'}
                 options={levelLanguages}
                 onChange={handleChange}
-                style={{width: '360px'}}
+                style={{width: '360px', fontSize: '22px'}}
               />
             </div>
           </div>

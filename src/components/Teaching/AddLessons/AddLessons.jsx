@@ -163,10 +163,11 @@ const AddLessons = ({title, desc, language, levelLanguage, imageUrl, status}) =>
   return (
     <div style={{marginBottom: '20px'}}>
       <div className={styles.header}>
-        <p style={{margin: '0'}}>Программа курса</p>
+        <p style={{margin: '0', fontSize: '22px'}}>Программа курса</p>
         <button
           onClick={handleAddModel}
           className={styles.addCourse}
+          style={{fontSize: '22px'}}
         >
           + Новый модуль
         </button>
@@ -176,14 +177,14 @@ const AddLessons = ({title, desc, language, levelLanguage, imageUrl, status}) =>
             modules?.map((block, index) =>
               <div key={block._id} className={styles.moduleCard}>
                 <div className={styles.moduleHeader}>
-                  <p style={{padding: "10px"}}>{index + 1}</p>
+                  <p style={{padding: "10px", fontSize: '22px'}}>{index + 1}</p>
                   <TextField
                     id={`${index}`}
                     value={block.title}
                     label="Название модуля"
                     onChange={handleChangeTitle}
                     variant="outlined"
-                    style={{marginBottom: '20px', marginTop: '20px', width: "90%"}}
+                    style={{marginBottom: '20px', marginTop: '20px', width: "90%", fontSize: '22px'}}
                   />
                   <IconButton id={index} onClick={(event) => onClickRemoveModule(event, index)} color="error">
                     <Avatar src={`${pathFolder}/my/delete.svg`}/>
@@ -200,7 +201,7 @@ const AddLessons = ({title, desc, language, levelLanguage, imageUrl, status}) =>
                         <ListItemText
                           primary={item.title}
                           secondary={
-                            <span style={{color: 'red'}}>
+                            <span style={{color: 'red', fontSize: '22px'}}>
                               {
                                 (status !== 'check' || status !== 'moderate') &&
                                 setRemarks(item.remarks)
@@ -222,6 +223,7 @@ const AddLessons = ({title, desc, language, levelLanguage, imageUrl, status}) =>
                 <div style={{marginTop: "15px"}}>
                   <button
                     // style={{padding: '0'}}
+                    style={{fontSize: '22px'}}
                     className={styles.button}
                     onClick={(e) => handleClick(index, e)}
                     aria-controls={`simple-menu-${index}`}
@@ -235,7 +237,7 @@ const AddLessons = ({title, desc, language, levelLanguage, imageUrl, status}) =>
                     keepMounted
                     open={Boolean(anchorEls[index])}
                     onClose={handleMove}
-                    PaperProps={{sx: {width: '650px'}}}
+                    PaperProps={{sx: {width: '650px', fontSize: '22px'}}}
                     // ref={menuRef}
                   >
                     <MenuItem id={`text`} data-index={index} onClick={handleMove}>Теория</MenuItem>
